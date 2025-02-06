@@ -1,0 +1,30 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+g2p_agencies_admin,Admin Access Agencies,g2p_pbms.model_g2p_agencies,,1,1,1,1
+g2p_agencies_registrar,Registrar Access Agencies,g2p_pbms.model_g2p_agencies,,1,1,1,1
+
+g2p_agency_regions_admin,Admin Access Agency Regions,g2p_pbms.model_g2p_agency_regions,,1,1,1,1
+g2p_agency_regions_registrar,Registrar Access Agency Regions,g2p_pbms.model_g2p_agency_regions,,1,1,1,1
+
+g2p_delivery_classification_codes_admin,Admin Access Delivery Classification Codes,g2p_pbms.model_g2p_delivery_classification_codes,,1,1,1,1
+g2p_delivery_classification_codes_registrar,Registrar Access Delivery Classification Codes,g2p_pbms.model_g2p_delivery_classification_codes,,1,1,1,1
+
+g2p_delivery_codes_admin,Admin Access Delivery Codes,g2p_pbms.model_g2p_delivery_codes,,1,1,1,1
+g2p_delivery_codes_registrar,Registrar Access Delivery Codes,g2p_pbms.model_g2p_delivery_codes,,1,1,1,1
+
+g2p_agency_delivery_codes_admin,Admin Access Agency Delivery Codes,g2p_pbms.model_g2p_agency_delivery_codes,,1,1,1,1
+g2p_agency_delivery_codes_registrar,Registrar Access Agency Delivery Codes,g2p_pbms.model_g2p_agency_delivery_codes,,1,1,1,1
+
+g2p_program_definition_admin,Admin Access Programs,g2p_pbms.model_g2p_program_definition,,1,1,1,1
+g2p_program_definition_registrar,Registrar Access Programs,g2p_pbms.model_g2p_program_definition,,1,1,1,1
+
+g2p_student_registry_admin,Admin Access Student Registry,g2p_pbms.model_g2p_student_registry,,1,1,1,1
+g2p_student_registry_registrar,Registrar Access Student Registry,g2p_pbms.model_g2p_student_registry,,1,1,1,1
+
+g2p_farmer_registry_admin,Admin Access Farmer Registry,g2p_pbms.model_g2p_farmer_registry,,1,1,1,1
+g2p_farmer_registry_registrar,Registrar Access Farmer Registry,g2p_pbms.model_g2p_farmer_registry,,1,1,1,1
+
+g2p_eligibility_rule_definition_admin,Admin Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
+g2p_eligibility_rule_definition_registrar,Registrar Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
+
+g2p_registry_type_admin,Admin Access Registry Type,g2p_pbms.model_g2p_registry_type,,1,1,1,1
+g2p_registry_type_registrar,Registrar Access Registry Type,g2p_pbms.model_g2p_registry_type,,1,1,1,1
