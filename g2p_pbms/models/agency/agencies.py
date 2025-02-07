@@ -10,6 +10,8 @@ class G2PAgencies(models.Model):
 
     name = fields.Char(string="Name", required=True)
     mnemonic = fields.Text(string="Agency Mnemonic")
+    delivery_codes = fields.One2many("g2p.agency.delivery.codes", "agency_id", "Delivery Codes")
+    region_ids = fields.One2many("g2p.agency.regions", "agency_id","Regions")
 
 
 class G2PDeliveryClassificationCodes(models.Model):

@@ -38,6 +38,24 @@
                         <field name="name"/>
                         <field name="mnemonic"/>
                     </group>
+                    <notebook>
+                        <page string="Agency Regions">
+                            <field name="region_ids">
+                                <tree default_order="id desc">
+                                    <field name="agency_id" string="Agency" />
+                                    <field name="region_id" string="Region ID" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Agency Delivery Code">
+                            <field name="delivery_codes">
+                                <tree default_order="id desc">
+                                    <field name="agency_id" string="Agency"/>
+                                    <field name="delivery_id" string="Delivery ID" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
