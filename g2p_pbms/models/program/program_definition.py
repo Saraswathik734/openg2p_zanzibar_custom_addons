@@ -1,4 +1,5 @@
 from odoo import models, fields
+from ..registries import G2PRegistryType
 
 
 class G2PProgramDefinition(models.Model):
@@ -11,8 +12,8 @@ class G2PProgramDefinition(models.Model):
     delivery_id = fields.Many2one(
         "g2p.delivery.codes", string="Delivery Code", required=True
     )
-    target_registrant_type = fields.Many2one(
-        "g2p.registry.type", string="Target Registrant Type", required=True
+    target_registry_type = fields.Selection(
+        selection=G2PRegistryType.selection(), string="Registry Type", required=True
     )
     program_status = fields.Selection(
         [

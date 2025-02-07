@@ -14,9 +14,19 @@
             <form string="Eligibility Rule">
                 <sheet>
                     <group>
-                        <field name="mneumonic"/>
+                        <field name="mnemonic"/>
                         <field name="description"/>
-                        <field name="target_registrant_type"/>
+                        
+                        <field name="target_registry_type"/>
+                        <!-- Domain widget for the 'farmer' type -->
+                         <field name="domain" widget="domain"
+                        options="{'model': 'g2p.farmer.registry'}"
+                        invisible="target_registry_type != 'farmer'"/>
+                    
+                        <!-- Domain widget for the Student type -->
+                         <field name="domain" widget="domain"
+                        options="{'model': 'g2p.student.registry'}"
+                        invisible="target_registry_type != 'student'"/>
                         <field name="domain"/>
                     </group>
                 </sheet>
@@ -29,9 +39,9 @@
         <field name="model">g2p.eligibility.rule.definition</field>
         <field name="arch" type="xml">
             <tree string="Eligibility Rule">
-                <field name="mneumonic"/>
+                <field name="mnemonic"/>
                 <field name="description"/>
-                <field name="target_registrant_type"/>
+                <field name="target_registry_type"/>
                 <field name="domain"/>
             </tree>
         </field>
