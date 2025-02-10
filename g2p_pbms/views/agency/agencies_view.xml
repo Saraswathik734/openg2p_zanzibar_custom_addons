@@ -186,11 +186,11 @@
 
     <menuitem id="menu_g2p_agencies_action" name="Agencies" parent="menu_g2p_agencies" action="action_g2p_agencies" sequence="1"/>
 
-    <menuitem id="menu_g2p_agency_regions_action" name="Agency Regions" parent="menu_g2p_agencies" action="action_g2p_agency_regions" sequence="2" />
+    <!-- <menuitem id="menu_g2p_agency_regions_action" name="Agency Regions" parent="menu_g2p_agencies" action="action_g2p_agency_regions" sequence="2" /> -->
 
     <menuitem id="menu_g2p_delivery_classification_codes_action" name="Delivery Classification Codes" parent="menu_g2p_agencies" action="action_g2p_delivery_classification_codes"  sequence="3"/>
 
     <menuitem id="menu_g2p_delivery_codes_action" name="Delivery Codes" parent="menu_g2p_agencies" action="action_g2p_delivery_codes"  sequence="4"/>
 
-    <menuitem id="menu_g2p_agency_delivery_codes_action" name="Agency Delivery Codes" parent="menu_g2p_agencies" action="action_g2p_agency_delivery_codes"  sequence="5"/>
+    <!-- <menuitem id="menu_g2p_agency_delivery_codes_action" name="Agency Delivery Codes" parent="menu_g2p_agencies" action="action_g2p_agency_delivery_codes"  sequence="5"/> -->
 </odoo>
