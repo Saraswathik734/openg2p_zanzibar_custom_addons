@@ -65,61 +65,6 @@ class G2PDeliveryCodes(models.Model):
         )
     ]
 
-    def action_test_domain(self):
-        """
-        This method tests a domain on the G2PDeliveryCodes model.
-        The domain filters records where:
-         - delivery_mnemonic contains 'Test' (case-insensitive)
-         - delivery_type is 'SERVICE'
-         - delivery_classification_id equals 1
-        It then logs the found records and returns an action to open a tree view.
-        """
-        domain = [
-            "&",
-            ("delivery_description", "!=", False),
-            "|",
-            "|",
-            "&",
-            ("delivery_mnemonic", "ilike", "Test"),
-            ("delivery_type", "=", "SERVICE"),
-            "&",
-            ("delivery_mnemonic", "ilike", "Prod"),
-            ("delivery_type", "=", "COMMODITY"),
-            ("delivery_classification_id", "=", 2),
-        ]
-        query = self.get_query(domain)
-        records = self.search(domain)
-        _logger.info("Query: %s", query)
-        _logger.info("Found %s records matching the domain.", len(records))
-        for rec in records:
-            _logger.info("Record: %s", rec.delivery_mnemonic)
-
-        return {
-            "type": "ir.actions.act_window",
-            "name": "Test Delivery Codes",
-            "res_model": "g2p.delivery.codes",
-            "view_mode": "tree,form",
-            "domain": domain,
-            "target": "current",
-        }
-
-    def get_query(self, args, apply_ir_rules=False):
-
-        query = self._where_calc(args)
-
-        if apply_ir_rules:
-            self._apply_ir_rules(query, "read")
-
-        from_clause, where_clause, where_clause_params = query.get_sql()
-
-        where_str = where_clause and (" WHERE %s" % where_clause) or ""
-
-        query_str = 'SELECT "%s".id FROM ' % self._table + from_clause + where_str
-
-        where_clause_params = map(lambda x: "'" + str(x) + "'", where_clause_params)
-
-        return query_str % tuple(where_clause_params)
-
 
 class G2PAgencyDeliveryCodes(models.Model):
     _name = "g2p.agency.delivery.codes"
