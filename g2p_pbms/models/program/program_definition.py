@@ -24,6 +24,7 @@ class G2PProgramDefinition(models.Model):
         string="Program Status",
         required=True,
     )
+    eligibility_rule_ids = fields.One2many("g2p.program.eligibility.rule", "program_id", "Eligibility Rule")
 
     _sql_constraints = [
         (

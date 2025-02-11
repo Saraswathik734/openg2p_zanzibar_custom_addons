@@ -20,6 +20,17 @@
                         <field name="target_registry_type"/>
                         <field name="program_status"/>
                     </group>
+                    <notebook>
+                        <page string="Eligibility Rule">
+                            <field name="eligibility_rule_ids">
+                                <tree default_order="id desc">
+                                    <field name="eligibility_rule_id" string="Eligibility Rule ID" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Registrants List">
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
