@@ -25,3 +25,6 @@ g2p_farmer_registry_registrar,Registrar Access Farmer Registry,g2p_pbms.model_g2
 
 g2p_eligibility_rule_definition_admin,Admin Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
 g2p_eligibility_rule_definition_registrar,Registrar Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
+
+g2p_program_eligibility_rule_admin,Admin Access Program Eligibility Rule,g2p_pbms.model_g2p_program_eligibility_rule,,1,1,1,1
+g2p_program_eligibility_rule_registrar,Registrar Access Program Eligibility Rule,g2p_pbms.model_g2p_program_eligibility_rule,,1,1,1,1
