@@ -67,6 +67,8 @@
             <tree string="G2P Agencies">
                 <field name="name"/>
                 <field name="mnemonic"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil"/>
+                <button name="action_open_view" type="object" class="fa fa-eye"/>
             </tree>
         </field>
     </record>

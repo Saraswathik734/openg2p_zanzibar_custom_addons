@@ -13,6 +13,28 @@ class G2PAgencies(models.Model):
     delivery_codes = fields.One2many("g2p.agency.delivery.codes", "agency_id", "Delivery Codes")
     region_ids = fields.One2many("g2p.agency.regions", "agency_id","Regions")
 
+    def action_open_edit(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Edit Record',
+            'res_model': self._name,
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'new',
+            'flags': {'mode': 'edit'},
+        }
+
+    def action_open_view(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'View Record',
+            'res_model': self._name,
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'new',
+            'flags': {'mode': 'readonly'}
+        }
+
 
 class G2PDeliveryClassificationCodes(models.Model):
     _name = "g2p.delivery.classification.codes"
