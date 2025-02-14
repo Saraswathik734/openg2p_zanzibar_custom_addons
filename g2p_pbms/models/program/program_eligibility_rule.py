@@ -11,3 +11,7 @@ class G2PProgramEligibilityRule(models.Model):
     eligibility_rule_id = fields.Many2one(
         "g2p.eligibility.rule.definition", string="Eligibility Rule", required=True
     )
+    eligibility_rule_description = fields.Char(
+        string="Description",
+        related="eligibility_rule_id.description"
+    )

@@ -28,6 +28,7 @@
                             <field name="eligibility_rule_ids">
                                 <tree default_order="id desc">
                                     <field name="eligibility_rule_id" string="Eligibility Rule ID" />
+                                    <field name="eligibility_rule_description" string="Description"/>
                                 </tree>
                             </field>
                         </page>
