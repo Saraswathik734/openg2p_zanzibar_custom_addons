@@ -51,6 +51,8 @@
                 <field name="delivery_id"/>
                 <field name="target_registry_type"/>
                 <field name="program_status"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil"/>
+                <button name="action_open_view" type="object" class="fa fa-eye"/>
             </tree>
         </field>
     </record>

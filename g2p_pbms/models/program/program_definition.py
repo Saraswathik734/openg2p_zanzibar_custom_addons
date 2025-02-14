@@ -33,3 +33,25 @@ class G2PProgramDefinition(models.Model):
             "The program mnemonic must be unique!",
         )
     ]
+
+    def action_open_edit(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Edit Program Deatils',
+            'res_model': self._name,
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'new',
+            'flags': {'mode': 'edit'},
+        }
+
+    def action_open_view(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'View Program Details',
+            'res_model': self._name,
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'new',
+            'flags': {'mode': 'readonly'}
+        }
