@@ -15,3 +15,16 @@ class G2PProgramEligibilityRule(models.Model):
         string="Description",
         related="eligibility_rule_id.description"
     )
+
+    def action_open_view_eligibility_domain(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Eligibility Rule Details',
+            'res_model': 'g2p.eligibility.rule.definition',
+            'res_id': self.eligibility_rule_id.id,
+            'view_mode': 'form',
+            "view_id": self.env.ref("g2p_pbms.view_g2p_eligibility_rule_definition_modal").id,
+            'target': 'new',
+            'flags': {'mode': 'readonly'},
+        }

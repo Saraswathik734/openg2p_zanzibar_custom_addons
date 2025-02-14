@@ -29,6 +29,7 @@
                                 <tree default_order="id desc">
                                     <field name="eligibility_rule_id" string="Eligibility Rule ID" />
                                     <field name="eligibility_rule_description" string="Description"/>
+                                    <button name="action_open_view_eligibility_domain" type="object" class="fa fa-info-circle"/>
                                 </tree>
                             </field>
                         </page>
