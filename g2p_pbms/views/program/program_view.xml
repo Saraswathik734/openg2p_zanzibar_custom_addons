@@ -13,13 +13,30 @@
         <field name="arch" type="xml">
             <form string="G2P Programs">
                 <sheet>
+                <group colspan='2'>
                     <group>
                         <field name="program_mnemonic"/>
                         <field name="description"/>
+                    </group>
+                    <group>
                         <field name="delivery_id"/>
                         <field name="target_registry_type"/>
                         <field name="program_status"/>
                     </group>
+                    <notebook>
+                        <page string="Eligibility Rule">
+                            <field name="eligibility_rule_ids">
+                                <tree default_order="id desc">
+                                    <field name="eligibility_rule_id" string="Eligibility Rule ID" />
+                                    <field name="eligibility_rule_description" string="Description"/>
+                                    <button name="action_open_view_eligibility_domain" type="object" class="fa fa-eye"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Registrants List">
+                        </page>
+                    </notebook>
+                </group>
                 </sheet>
             </form>
         </field>
@@ -34,6 +51,8 @@
                 <field name="delivery_id"/>
                 <field name="target_registry_type"/>
                 <field name="program_status"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil"/>
+                <button name="action_open_view" type="object" class="fa fa-eye"/>
             </tree>
         </field>
     </record>

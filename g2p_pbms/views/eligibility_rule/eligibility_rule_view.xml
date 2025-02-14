@@ -6,6 +6,33 @@
         <field name="res_model">g2p.eligibility.rule.definition</field>
         <field name="view_mode">tree,form</field>
     </record>
+
+    <record id="view_g2p_eligibility_rule_definition" model="ir.ui.view">
+        <field name="name">g2p.eligibility.rule.definition</field>
+        <field name="model">g2p.eligibility.rule.definition</field>
+        <field name="arch" type="xml">
+            <form string="Eligibility Rule">
+                <sheet>
+                    <group>
+                        <field name="mnemonic"/>
+                        <field name="description"/>
+                        <field name="target_registry_type"/>
+                        <!-- Domain widget for the 'farmer' type -->
+                         <field name="domain" widget="domain"
+                        options="{'model': 'g2p.farmer.registry'}"
+                        invisible="target_registry_type != 'farmer'"/>
+                    
+                        <!-- Domain widget for the Student type -->
+                         <field name="domain" widget="domain"
+                        options="{'model': 'g2p.student.registry'}"
+                        invisible="target_registry_type != 'student'"/>
+                        
+                        <field name='sql_query'/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
     
     <record id="view_g2p_eligibility_rule_definition_form" model="ir.ui.view">
         <field name="name">g2p.eligibility.rule.definition.form</field>
