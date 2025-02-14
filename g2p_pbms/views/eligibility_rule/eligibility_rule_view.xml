@@ -7,8 +7,8 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record id="view_g2p_eligibility_rule_definition_modal" model="ir.ui.view">
-        <field name="name">g2p.eligibility.rule.definition.modal</field>
+    <record id="view_g2p_eligibility_rule_definition" model="ir.ui.view">
+        <field name="name">g2p.eligibility.rule.definition</field>
         <field name="model">g2p.eligibility.rule.definition</field>
         <field name="arch" type="xml">
             <form string="Eligibility Rule">

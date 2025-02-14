@@ -24,7 +24,7 @@ class G2PProgramEligibilityRule(models.Model):
             'res_model': 'g2p.eligibility.rule.definition',
             'res_id': self.eligibility_rule_id.id,
             'view_mode': 'form',
-            "view_id": self.env.ref("g2p_pbms.view_g2p_eligibility_rule_definition_modal").id,
+            "view_id": self.env.ref("g2p_pbms.view_g2p_eligibility_rule_definition").id,
             'target': 'new',
             'flags': {'mode': 'readonly'},
         }
