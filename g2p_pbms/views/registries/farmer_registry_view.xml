@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions -->
+    <record id="action_g2p_farmer_registry" model="ir.actions.act_window">
+        <field name="name">Farmer Registry</field>
+        <field name="res_model">g2p.farmer.registry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="view_g2p_farmer_registry_form" model="ir.ui.view">
+        <field name="name">g2p.farmer.registry.form</field>
+        <field name="model">g2p.farmer.registry</field>
+        <field name="arch" type="xml">
+            <form string="G2P Farmer Registry">
+                <sheet>
+                    <group>
+                        <field name="unique_id"/>
+                        <field name="name"/>
+                        <field name="land_area"/>
+                        <field name="no_of_cattle_heads"/>
+                        <field name="no_of_poultry_heads"/>
+                        <field name="registration_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_g2p_farmer_registry_tree" model="ir.ui.view">
+        <field name="name">g2p.farmer.registry.tree</field>
+        <field name="model">g2p.farmer.registry</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Farmer Registry">
+                <field name="unique_id"/>
+                <field name="name"/>
+                <field name="land_area"/>
+                <field name="no_of_cattle_heads"/>
+                <field name="no_of_poultry_heads"/>
+                <field name="registration_date"/>
+            </tree>
+        </field>
+    </record>
+    
+<!-- Menus -->
+<menuitem id="menu_g2p_root" name="PBMS" sequence="1"/>
+<menuitem id="menu_g2p_registry" name="Registry Models" parent="menu_g2p_root" sequence="3"/>
+
+<menuitem id="menu_g2p_farmer_registry" name="Farmer Registry" parent="menu_g2p_registry" action="action_g2p_farmer_registry" sequence="2"/>
+</odoo>

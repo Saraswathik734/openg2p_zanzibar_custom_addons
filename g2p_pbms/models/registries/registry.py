@@ -1,0 +1,11 @@
+from odoo import models, fields
+
+
+class G2PRegistry(models.AbstractModel):
+    _name = "g2p.registry"
+    _description = "Abstract G2P Registry"
+
+    unique_id = fields.Char(string="Unique ID", required=False)
+    registration_date = fields.Date(
+        string="Registration Date", required=True, default=fields.Date.today
+    )
