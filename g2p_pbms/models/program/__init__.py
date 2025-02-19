@@ -1,2 +1,4 @@
 from .program_definition import G2PProgramDefinition
 from .program_eligibility_rule import G2PProgramEligibilityRule
+from .eligibility_request_queue import G2PEligibilityRequestQueue
+from .eligibility_list import G2PEligibilityList

@@ -28,3 +28,15 @@ g2p_eligibility_rule_definition_registrar,Registrar Access Eligibility Rule,g2p_
 
 g2p_program_eligibility_rule_admin,Admin Access Program Eligibility Rule,g2p_pbms.model_g2p_program_eligibility_rule,,1,1,1,1
 g2p_program_eligibility_rule_registrar,Registrar Access Program Eligibility Rule,g2p_pbms.model_g2p_program_eligibility_rule,,1,1,1,1
+
+g2p_eligibility_summary_farmer_admin,Admin Access Eligibility Summary Farmer,g2p_pbms.model_g2p_eligibility_summary_farmer,,1,1,1,1
+g2p_eligibility_summary_farmer_registrar,Registrar Access Eligibility Summary Farmer,g2p_pbms.model_g2p_eligibility_summary_farmer,,1,1,1,1
+
+g2p_eligibility_summary_student_admin,Admin Access Eligibility Summary Student,g2p_pbms.model_g2p_eligibility_summary_student,,1,1,1,1
+g2p_eligibility_summary_student_registrar,Registrar Access Eligibility Summary Student,g2p_pbms.model_g2p_eligibility_summary_student,,1,1,1,1
+
+g2p_eligibility_request_queue_admin,Admin Access Eligibility Request Queue,g2p_pbms.model_g2p_eligibility_request_queue,,1,1,1,1
+g2p_eligibility_request_queue_registrar,Registrar Access Eligibility Request Queue,g2p_pbms.model_g2p_eligibility_request_queue,,1,1,1,1
+
+g2p_eligibility_summary_admin,Admin Access Eligibility Summary,g2p_pbms.model_g2p_eligibility_summary,,1,1,1,1
+g2p_eligibility_summary_registrar,Registrar Access Eligibility Summary,g2p_pbms.model_g2p_eligibility_summary,,1,1,1,1
