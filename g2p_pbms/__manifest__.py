@@ -12,6 +12,7 @@
         "views/registries/student_registry_view.xml",
         "views/registries/farmer_registry_view.xml",
         "views/eligibility_rule/eligibility_rule_view.xml",
+        "views/eligibility_summary/eligibility_summary_view.xml",
     ],
     "installable": True,
     "application": True,

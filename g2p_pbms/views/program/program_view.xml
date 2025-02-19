@@ -12,6 +12,12 @@
         <field name="model">g2p.program.definition</field>
         <field name="arch" type="xml">
             <form string="G2P Programs">
+                <header>
+                    <button name="action_create_eligibility_list" type="object" 
+                            string="Create Eligibility List" 
+                            confirm="Are you sure you want to create the eligibility list? Click OK to create, Cancel to abort." 
+                            class="btn-primary"/>
+                </header>
                 <sheet>
                 <group colspan='2'>
                     <group>
@@ -33,7 +39,25 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Registrants List">
+                        <page string="Beneficiaries">
+                          <!-- Show Farmer Summaries only if target_registry_type is 'farmer' -->
+                          <field name="eligibility_summary_farmer_ids" 
+                                invisible="target_registry_type != 'farmer'" nolabel="1">
+                            <tree string="Farmer Eligibility Summaries">
+                              <field name="eligibility_request_id" string="Eligibility Request ID"/>
+                              <field name="number_of_registrants" string="Registrants"/>
+                              <field name="date_created" string="Created On"/>
+                            </tree>
+                          </field>
+                          <!-- Show Student Summaries only if target_registry_type is 'student' -->
+                          <field name="eligibility_summary_student_ids" 
+                                invisible="target_registry_type != 'student'" nolabel="1">
+                            <tree string="Student Eligibility Summaries">
+                              <field name="eligibility_request_id" string="Eligibility Request ID"/>
+                              <field name="number_of_registrants" string="Registrants"/>
+                              <field name="date_created" string="Created On"/>
+                            </tree>
+                          </field>
                         </page>
                     </notebook>
                 </group>
@@ -57,6 +81,94 @@
         </field>
     </record>
     
+      <!-- Farmer Eligibility Summary Form View (Detail) -->
+  <record id="view_g2p_eligibility_summary_farmer_form" model="ir.ui.view">
+    <field name="name">g2p.eligibility.summary.farmer.form</field>
+    <field name="model">g2p.eligibility.summary.farmer</field>
+    <field name="arch" type="xml">
+      <form string="Farmer Eligibility Summary">
+        <sheet>
+          <notebook>
+            <page string="Details">
+              <group>
+                <field name="program_id"/>
+                <field name="program_mnemonic"/>
+                <field name="target_registry_type"/>
+                <field name="eligibility_request_id"/>
+                <field name="number_of_registrants"/>
+                <field name="date_created"/>
+              </group>
+              <group string="Farmer Specific">
+                <field name="land_quartile_25"/>
+                <field name="land_quartile_50"/>
+                <field name="land_quartile_75"/>
+              </group>
+            </page>
+            <page string="Registrants">
+              <field name="eligibility_list_ids" mode="tree,form">
+                <tree string="Eligibility List">
+                  <field name="beneficiary_id"/>
+                </tree>
+                <form string="Eligibility List">
+                  <group>
+                    <field name="beneficiary_id"/>
+                  </group>
+                </form>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+        <footer>
+          <button string="Close" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+  
+  <!-- Student Eligibility Summary Form View (Detail) -->
+  <record id="view_g2p_eligibility_summary_student_form" model="ir.ui.view">
+    <field name="name">g2p.eligibility.summary.student.form</field>
+    <field name="model">g2p.eligibility.summary.student</field>
+    <field name="arch" type="xml">
+      <form string="Student Eligibility Summary">
+        <sheet>
+          <notebook>
+            <page string="Details">
+              <group>
+                <field name="program_id"/>
+                <field name="program_mnemonic"/>
+                <field name="target_registry_type"/>
+                <field name="eligibility_request_id"/>
+                <field name="number_of_registrants"/>
+                <field name="date_created"/>
+              </group>
+              <group string="Student Specific">
+                <field name="age_quartile_25"/>
+                <field name="age_quartile_50"/>
+                <field name="age_quartile_75"/>
+              </group>
+            </page>
+            <page string="Registrants">
+              <field name="eligibility_list_ids" mode="tree,form">
+                <tree string="Eligibility List">
+                  <field name="beneficiary_id"/>
+                </tree>
+                <form string="Eligibility List">
+                  <group>
+                    <field name="beneficiary_id"/>
+                  </group>
+                </form>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+        <footer>
+          <button string="Close" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+  
 <!-- Menus -->
 <menuitem id="menu_g2p_root" name="PBMS" sequence="1"/>
 
