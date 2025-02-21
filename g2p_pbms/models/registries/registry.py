@@ -9,3 +9,14 @@ class G2PRegistry(models.AbstractModel):
     registration_date = fields.Date(
         string="Registration Date", required=True, default=fields.Date.today
     )
+
+    def action_open_view(self):
+        return {
+            "type": "ir.actions.act_window",
+            "name": "View Registry Record",
+            "res_model": self._name,
+            "res_id": self.id,
+            "view_mode": "form",
+            "target": "new",
+            "flags": {"mode": "readonly"},
+        }

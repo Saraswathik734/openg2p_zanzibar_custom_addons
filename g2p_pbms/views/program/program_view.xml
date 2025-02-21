@@ -12,14 +12,14 @@
         <field name="model">g2p.program.definition</field>
         <field name="arch" type="xml">
             <form string="G2P Programs">
-                <header>
+                <!-- <header>
                     <button name="action_create_eligibility_list" type="object" 
                             string="Create Eligibility List" 
                             confirm="Are you sure you want to create the eligibility list? Click OK to create, Cancel to abort." 
                             class="btn-primary"/>
-                </header>
+                </header> -->
                 <sheet>
-                <group colspan='2'>
+                  <group>
                     <group>
                         <field name="program_mnemonic"/>
                         <field name="description"/>
@@ -27,40 +27,37 @@
                     <group>
                         <field name="delivery_id"/>
                         <field name="target_registry_type"/>
-                        <field name="program_status"/>
+                        <field name="program_status" />
                     </group>
-                    <notebook>
-                        <page string="Eligibility Rule">
-                            <field name="eligibility_rule_ids">
-                                <tree default_order="id desc">
-                                    <field name="eligibility_rule_id" string="Eligibility Rule ID" />
-                                    <field name="eligibility_rule_description" string="Description"/>
-                                    <button name="action_open_view_eligibility_domain" type="object" class="fa fa-eye"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Beneficiaries">
-                          <!-- Show Farmer Summaries only if target_registry_type is 'farmer' -->
-                          <field name="eligibility_summary_farmer_ids" 
-                                invisible="target_registry_type != 'farmer'" nolabel="1">
-                            <tree string="Farmer Eligibility Summaries">
-                              <field name="eligibility_request_id" string="Eligibility Request ID"/>
-                              <field name="number_of_registrants" string="Registrants"/>
-                              <field name="date_created" string="Created On"/>
-                            </tree>
+                  </group>
+                  <notebook>
+                      <page string="Eligibility Rule">
+                          <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}">
+                              <tree default_order="id desc">
+                                  <control>
+                                    <create string="Add eligibility rules"/>
+                                  </control>
+                                  <field name="mnemonic" string="Rule Mnemonic" options="{'no_create':True, 'no_edit':True}" />
+                                  <field name="description" string="Description" />
+                                  <button title="View Eligibility Rule" name="action_open_view" type="object" class="fa fa-eye"/>
+                              </tree>
                           </field>
-                          <!-- Show Student Summaries only if target_registry_type is 'student' -->
-                          <field name="eligibility_summary_student_ids" 
-                                invisible="target_registry_type != 'student'" nolabel="1">
-                            <tree string="Student Eligibility Summaries">
-                              <field name="eligibility_request_id" string="Eligibility Request ID"/>
-                              <field name="number_of_registrants" string="Registrants"/>
-                              <field name="date_created" string="Created On"/>
-                            </tree>
-                          </field>
-                        </page>
-                    </notebook>
-                </group>
+                      </page>
+                      <page string="Eligibility List">
+                        <!-- Show Eligibility Request Queues -->
+                        <field name="eligibilty_request_queue_ids" nolabel="1" >
+                          <tree default_order="creation_date desc">
+                            <control>
+                              <create string="Create new eligibility list"/>
+                            </control>
+                            <field name="brief" string="Brief" />
+                            <field name="enumeration_status" string="Status" widget='badge'/>
+                            <field name="creation_date" string="Created On" readonly='1' />
+                            <field name="processed_date" string="Processed On" readonly='1' />
+                          </tree>
+                        </field>
+                      </page>
+                  </notebook>
                 </sheet>
             </form>
         </field>

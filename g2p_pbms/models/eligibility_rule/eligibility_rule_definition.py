@@ -94,3 +94,14 @@ class G2PEligibilityRuleDefinition(models.Model):
                     e,
                 )
                 rec.sql_query = "Error formatting query"
+
+    def action_open_view(self):
+        return {
+            "type": "ir.actions.act_window",
+            "name": "View Eligibility Rule Details",
+            "res_model": self._name,
+            "res_id": self.id,
+            "view_mode": "form",
+            "target": "new",
+            "flags": {"mode": "readonly"},
+        }

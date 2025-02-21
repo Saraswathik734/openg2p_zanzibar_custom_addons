@@ -1,15 +1,13 @@
 from .agency import (
     G2PAgencies,
     G2PDeliveryCodes,
-    G2PAgencyDeliveryCodes,
     G2PDeliveryClassificationCodes,
-    G2PAgencyRegions,
+)
+from .geography import (
+    G2PRegions,
 )
 from .program import (
     G2PProgramDefinition,
-    G2PProgramEligibilityRule,
-    G2PEligibilityRequestQueue,
-    G2PEligibilityList,
 )
 from .registries import (
     G2PRegistry,
@@ -18,7 +16,9 @@ from .registries import (
     G2PRegistryType,
 )
 from .eligibility_rule import G2PEligibilityRuleDefinition
-from .eligibility_summary import (
+from .program_eligibility_list import (
+    G2PEligibilityList,
+    G2PEligibilityRequestQueue,
     G2PEligibilitySummary,
     G2PEligibilitySummaryFarmer,
     G2PEligibilitySummaryStudent,

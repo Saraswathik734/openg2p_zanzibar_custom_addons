@@ -9,9 +9,9 @@ class G2PAgencies(models.Model):
     _description = "Agencies Model"
 
     name = fields.Char(string="Name", required=True)
-    mnemonic = fields.Text(string="Agency Mnemonic")
-    delivery_codes = fields.One2many("g2p.agency.delivery.codes", "agency_id", "Delivery Codes")
-    region_ids = fields.One2many("g2p.agency.regions", "agency_id","Regions")
+    mnemonic = fields.Char(string="Agency Mnemonic")
+    delivery_codes = fields.Many2many("g2p.delivery.codes", string="Delivery Codes")
+    regions = fields.Many2many("g2p.regions", string="Regions")
 
     def action_open_edit(self):
         return {
@@ -77,7 +77,7 @@ class G2PDeliveryCodes(models.Model):
         string="Delivery Classification",
         required=True,
     )
-    delivery_description = fields.Char(string="Delivery Description")
+    delivery_description = fields.Text(string="Delivery Description")
 
     _sql_constraints = [
         (
@@ -86,14 +86,3 @@ class G2PDeliveryCodes(models.Model):
             "The delivery mnemonic must be unique!",
         )
     ]
-
-
-class G2PAgencyDeliveryCodes(models.Model):
-    _name = "g2p.agency.delivery.codes"
-    _description = "Agency Delivery Codes"
-    _table = "g2p_agency_delivery_codes"
-
-    agency_id = fields.Many2one("g2p.agencies", string="Agency", required=True)
-    delivery_id = fields.Many2one(
-        "g2p.delivery.codes", string="Delivery Code", required=True
-    )
