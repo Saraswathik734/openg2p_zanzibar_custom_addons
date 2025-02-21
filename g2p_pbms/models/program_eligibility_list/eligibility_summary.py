@@ -7,7 +7,7 @@ class G2PEligibilitySummary(models.AbstractModel):
     _name = "g2p.eligibility.summary"
     _description = "Abstract Eligibility Summary"
 
-    program_id = fields.Many2one("program.program", string="Program")
+    program_id = fields.Many2one("g2p.program.definition", string="Program")
     program_mnemonic = fields.Char(string="Program Mnemonic")
     target_registry_type = fields.Selection(
         selection=G2PRegistryType.selection(), string="Registry Type", required=True

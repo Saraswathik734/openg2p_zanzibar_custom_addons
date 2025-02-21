@@ -25,10 +25,17 @@ class G2PProgramDefinition(models.Model):
         string="Program Status",
         required=True,
     )
-    eligibility_rule_ids = fields.One2many(
-        "g2p.program.eligibility.rule", "program_id", "Eligibility Rule"
+    eligibility_rule_ids = fields.Many2many(
+        "g2p.eligibility.rule.definition", string="Eligibility Rule",
+        domain="[('target_registry_type', '=', target_registry_type)]",
     )
 
+    eligibilty_request_queue_ids = fields.One2many(
+        "g2p.eligibility.request.queue",
+        "program_id",
+        string="Eligibility Request Queue",
+        states={'draft': [('readonly', False)], 'confirm': [('readonly', True)]},
+    )
     eligibility_summary_farmer_ids = fields.One2many(
         "g2p.eligibility.summary.farmer",
         "program_id",
