@@ -163,32 +163,6 @@
         </field>
     </record>
 
-    <!-- Views for G2P Agency Delivery Codes -->
-    <!-- <record id="view_g2p_agency_delivery_codes_form" model="ir.ui.view">
-        <field name="name">g2p.agency.delivery.codes.form</field>
-        <field name="model">g2p.agency.delivery.codes</field>
-        <field name="arch" type="xml">
-            <form string="Agency Delivery Codes">
-                <sheet>
-                    <group>
-                        <field name="agency_id"/>
-                        <field name="delivery_id"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-    <record id="view_g2p_agency_delivery_codes_tree" model="ir.ui.view">
-        <field name="name">g2p.agency.delivery.codes.tree</field>
-        <field name="model">g2p.agency.delivery.codes</field>
-        <field name="arch" type="xml">
-            <tree string="Agency Delivery Codes">
-                <field name="agency_id"/>
-                <field name="delivery_id"/>
-            </tree>
-        </field>
-    </record> -->
-
     <!-- Menus -->
     <menuitem id="menu_g2p_root" name="PBMS" sequence="1"/>
 
