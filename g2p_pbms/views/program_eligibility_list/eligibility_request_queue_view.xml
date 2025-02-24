@@ -8,9 +8,9 @@
                 <group>
                     <field name="program_id" readonly="1"/>
                     <field name="brief"/>
+                    <!-- Hide fields during creation -->
                     <field name="enumeration_status" invisible="1"/>
                     <field name="processed_date" invisible="1"/>
-                    <!-- Hide this field -->
                     <field name="creation_date" invisible="1"/>
                 </group>
             </form>

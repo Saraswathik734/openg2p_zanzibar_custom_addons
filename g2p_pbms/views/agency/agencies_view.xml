@@ -21,11 +21,6 @@
         <field name="res_model">g2p.delivery.codes</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <record id="action_g2p_agency_delivery_codes" model="ir.actions.act_window">
-        <field name="name">Agency Delivery Codes</field>
-        <field name="res_model">g2p.agency.delivery.codes</field>
-        <field name="view_mode">tree,form</field>
-    </record> -->
 
     <!-- Views for G2P Agencies -->
     <record id="view_g2p_agencies_form" model="ir.ui.view">
@@ -81,7 +76,7 @@
         </field>
     </record>
 
-    <!-- Views for G2P Agency Regions -->
+    <!-- Views for G2P Regions -->
     <record id="view_g2p_regions_form" model="ir.ui.view">
         <field name="name">g2p.regions.form</field>
         <field name="model">g2p.regions</field>
@@ -176,5 +171,4 @@
 
     <menuitem id="menu_g2p_delivery_codes_action" name="Delivery Codes" parent="menu_g2p_agencies" action="action_g2p_delivery_codes"  sequence="4"/>
 
-    <!-- <menuitem id="menu_g2p_agency_delivery_codes_action" name="Agency Delivery Codes" parent="menu_g2p_agencies" action="action_g2p_agency_delivery_codes"  sequence="5"/> -->
 </odoo>
