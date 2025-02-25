@@ -1,3 +1,4 @@
+import json
 from odoo import models, fields, api
 
 
@@ -7,7 +8,7 @@ class G2PEligibilityRequestQueue(models.Model):
 
     program_id = fields.Many2one("g2p.program.definition", string="G2P Program")
     brief = fields.Text(string="Brief")
-    complete_sql_query = fields.Text(string="Complete SQL Query", store=True, readonly=True)
+    sql_query_json = fields.Text(string="Complete SQL Query", store=True, readonly=True)
     enumeration_status = fields.Selection(
         [
             ("pending", "PENDING"),
@@ -34,8 +35,7 @@ class G2PEligibilityRequestQueue(models.Model):
                 if rule.sql_query
             ]
 
-            # Store a snapshot of the complete SQL query for the queue
-            vals["complete_sql_query"] = " INTERSECT ".join(queries) if queries else "SELECT NULL"
-            # vals["complete_sql_query"] = json.dumps(queries) if queries else "[]"
+            # Store a snapshot of the current SQL queries as JSON object
+            vals["sql_query_json"] = json.dumps(queries) if queries else "[]"
 
         return super().create(vals)
