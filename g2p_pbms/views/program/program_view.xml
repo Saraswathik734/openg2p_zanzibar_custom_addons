@@ -41,7 +41,7 @@
                       </page>
                       <!-- Show Eligibility Requests Lists -->
                       <page string="Eligibility List">
-                        <field name="eligibilty_request_queue_ids" nolabel="1" >
+                        <field name="eligibilty_request_ids" nolabel="1" >
                           <tree default_order="creation_date desc">
                             <control>
                               <create string="Create new eligibility list"/>
