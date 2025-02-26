@@ -29,8 +29,8 @@ g2p_eligibility_summary_farmer_registrar,Registrar Access Eligibility Summary Fa
 g2p_eligibility_summary_student_admin,Admin Access Eligibility Summary Student,g2p_pbms.model_g2p_eligibility_summary_student,,1,1,1,1
 g2p_eligibility_summary_student_registrar,Registrar Access Eligibility Summary Student,g2p_pbms.model_g2p_eligibility_summary_student,,1,1,1,1
 
-g2p_eligibility_request_queue_admin,Admin Access Eligibility Request Queue,g2p_pbms.model_g2p_eligibility_request_queue,,1,1,1,1
-g2p_eligibility_request_queue_registrar,Registrar Access Eligibility Request Queue,g2p_pbms.model_g2p_eligibility_request_queue,,1,1,1,1
+g2p_que_eligibility_request_admin,Admin Access Eligibility Request Queue,g2p_pbms.model_g2p_que_eligibility_request,,1,1,1,1
+g2p_que_eligibility_request_registrar,Registrar Access Eligibility Request Queue,g2p_pbms.model_g2p_que_eligibility_request,,1,1,1,1
 
 g2p_eligibility_summary_admin,Admin Access Eligibility Summary,g2p_pbms.model_g2p_eligibility_summary,,1,1,1,1
 g2p_eligibility_summary_registrar,Registrar Access Eligibility Summary,g2p_pbms.model_g2p_eligibility_summary,,1,1,1,1

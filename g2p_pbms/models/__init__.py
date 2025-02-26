@@ -18,7 +18,7 @@ from .registries import (
 from .eligibility_rule import G2PEligibilityRuleDefinition
 from .program_eligibility_list import (
     G2PEligibilityList,
-    G2PEligibilityRequestQueue,
+    G2PQueEligibilityRequest,
     G2PEligibilitySummary,
     G2PEligibilitySummaryFarmer,
     G2PEligibilitySummaryStudent,

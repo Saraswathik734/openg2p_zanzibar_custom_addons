@@ -13,7 +13,7 @@ class G2PEligibilitySummary(models.AbstractModel):
         selection=G2PRegistryType.selection(), string="Registry Type", required=True
     )
     eligibility_request_id = fields.Many2one(
-        "g2p.eligibility.request.queue", string="Eligibility Request ID"
+        "g2p.que.eligibility.request", string="Eligibility Request ID"
     )
     number_of_registrants = fields.Integer(string="Number of Registrants")
     date_created = fields.Datetime(string="Date Created", default=fields.Datetime.now)
