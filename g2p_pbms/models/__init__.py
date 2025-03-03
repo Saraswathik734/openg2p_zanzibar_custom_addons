@@ -19,8 +19,5 @@ from .eligibility_rule import G2PEligibilityRuleDefinition
 from .program_eligibility_list import (
     G2PEligibilityList,
     G2PQueEligibilityRequest,
-    G2PEligibilitySummary,
-    G2PEligibilitySummaryFarmer,
-    G2PEligibilitySummaryStudent,
     G2PEligibilitySummaryWizard,
 )

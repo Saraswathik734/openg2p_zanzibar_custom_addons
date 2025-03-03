@@ -36,16 +36,6 @@ class G2PProgramDefinition(models.Model):
         string="Eligibility Request Queue",
         states={'draft': [('readonly', False)], 'confirm': [('readonly', True)]},
     )
-    eligibility_summary_farmer_ids = fields.One2many(
-        "g2p.eligibility.summary.farmer",
-        "program_id",
-        string="Farmer Eligibility Summary",
-    )
-    eligibility_summary_student_ids = fields.One2many(
-        "g2p.eligibility.summary.student",
-        "program_id",
-        string="Student Eligibility Summary",
-    )
 
     _sql_constraints = [
         (

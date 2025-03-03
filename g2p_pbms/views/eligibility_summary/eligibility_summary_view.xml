@@ -1,77 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <record id="view_g2p_eligibility_summary_tree" model="ir.ui.view">
-    <field name="name">g2p.eligibility.summary.tree</field>
-    <field name="model">g2p.eligibility.summary.farmer</field>
-    <field name="arch" type="xml">
-      <tree string="Eligibility Summary">
-        <field name="program_id"/>
-        <field name="program_mnemonic"/>
-        <field name="target_registry_type"/>
-        <field name="eligibility_request_id"/>
-        <field name="number_of_registrants"/>
-        <field name="date_created"/>
-      </tree>
-    </field>
-  </record>
-
-  <record id="view_g2p_eligibility_summary_form" model="ir.ui.view">
-    <field name="name">g2p.eligibility.summary.form</field>
-    <field name="model">g2p.eligibility.summary.farmer</field>
+  <record id="view_g2p_eligibility_summary_wizard_form" model="ir.ui.view">
+    <field name="name">g2p.eligibility.summary.wizard.form</field>
+    <field name="model">g2p.eligibility.summary.wizard</field>
     <field name="arch" type="xml">
       <form string="Eligibility Summary">
         <sheet>
           <group>
-            <field name="program_id"/>
-            <field name="program_mnemonic"/>
-            <field name="target_registry_type"/>
-            <field name="eligibility_request_id"/>
-            <field name="number_of_registrants"/>
-            <field name="date_created"/>
+            <field name="brief" readonly="1"/>
+            <field name="program_id" readonly="1"/>
           </group>
+          <notebook>
+            <page string="Summary Details">
+              <field name="summary_line_ids" mode="kanban">
+                <kanban>
+                  <templates>
+                    <t t-name="kanban-box">
+                      <div class="oe_kanban_card">
+                        <strong><field name="key"/></strong>
+                        <br/>
+                        <span><field name="value"/></span>
+                      </div>
+                    </t>
+                  </templates>
+                </kanban>
+                <tree create="false">
+                  <field name="key"/>
+                  <field name="value"/>
+                </tree>
+                <form create="false">
+                  <group>
+                    <field name="key"/>
+                    <field name="value"/>
+                  </group>
+                </form>
+              </field>
+            </page>
+
+
+
+            <page string="Beneficiaries">
+              <group>
+                <!-- Inline search field -->
+                <field name="beneficiary_search" placeholder="Search Beneficiary..."/>
+              </group>
+              <field name="eligibility_list_ids" mode="tree,form">
+                <tree create="false">
+                  <field name="beneficiary_id"/>
+                  <field name="name"/>
+                </tree>
+                <form create="false">
+                  <group>
+                    <field name="beneficiary_id"/>
+                    <field name="name"/>
+                  </group>
+                </form>
+              </field>
+            </page>
+          </notebook>
         </sheet>
         <footer>
-          <button name="action_open_summary_wizard" type="object" string="View Details" class="btn-primary"/>
           <button string="Close" class="btn-secondary" special="cancel"/>
-        </footer>
-      </form>
-    </field>
-  </record>
-
-  <record id="view_g2p_eligibility_summary_farmer_wizard_form" model="ir.ui.view">
-    <field name="name">g2p.eligibility.summary.farmer.wizard.form</field>
-    <field name="model">g2p.eligibility.summary.wizard</field>
-    <field name="arch" type="xml">
-      <form string="Farmer Eligibility Details">
-        <sheet>
-          <group>
-            <field name="farmer_registry_summary_id"/>
-            <field name="land_quartile_25"/>
-            <field name="land_quartile_50"/>
-            <field name="land_quartile_75"/>
-          </group>
-        </sheet>
-        <footer>
-          <button string="Close" class="btn-primary" special="cancel"/>
-        </footer>
-      </form>
-    </field>
-  </record>
-
-  <record id="view_g2p_eligibility_summary_student_wizard_form" model="ir.ui.view">
-    <field name="name">g2p.eligibility.summary.student.wizard.form</field>
-    <field name="model">g2p.eligibility.summary.wizard</field>
-    <field name="arch" type="xml">
-      <form string="Student Eligibility Details">
-        <sheet>
-          <group>
-            <field name="student_registry_summary_id"/>
-            <field name="age_quartile_25"/>
-            <field name="age_quartile_50"/>
-            <field name="age_quartile_75"/>
-          </group>
-        </sheet>
-        <footer>
-          <button string="Close" class="btn-primary" special="cancel"/>
         </footer>
       </form>
     </field>

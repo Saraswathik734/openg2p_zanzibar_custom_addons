@@ -14,6 +14,7 @@
         "views/eligibility_rule/eligibility_rule_view.xml",
         "views/eligibility_summary/eligibility_summary_view.xml",
         "views/program_eligibility_list/eligibility_request_que_view.xml",
+        
     ],
     "assets": {
         "web.assets_backend": [

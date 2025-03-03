@@ -1,6 +1,3 @@
-from .eligibility_summary import G2PEligibilitySummary
-from .eligibility_summary_farmer import G2PEligibilitySummaryFarmer
-from .eligibility_summary_student import G2PEligibilitySummaryStudent
 from .eligibility_summary_wizard import G2PEligibilitySummaryWizard
 from .eligibility_request_que import G2PQueEligibilityRequest
 from .eligibility_list import G2PEligibilityList
