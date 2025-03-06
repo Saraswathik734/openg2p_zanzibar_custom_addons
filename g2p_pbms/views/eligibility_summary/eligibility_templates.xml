@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Define the required "kanban-box" template -->
+  <templates id="kanban_box_template" name="Kanban Box Template">
+    <t t-name="template_view">
+      <t t-if="record.wizard_id.target_registry_type.raw_value == 'farmer'">
+        <div class="oe_kanban_card">
+          <strong t-esc="record.key.raw_value"/>
+          <br/>
+          <span t-esc="record.value.raw_value"/> (Farmer View)
+        </div>
+      </t>
+      <t t-if="record.wizard_id.target_registry_type.raw_value == 'student'">
+        <div class="oe_kanban_card">
+          <strong t-esc="record.key.raw_value"/>
+          <br/>
+          <span t-esc="record.value.raw_value"/> (Student View)
+        </div>
+      </t>
+      <t t-if="not (record.wizard_id.target_registry_type.raw_value in ['farmer', 'student'])">
+        <div class="oe_kanban_card">
+          <strong t-esc="record.key.raw_value"/>
+          <br/>
+          <span t-esc="record.value.raw_value"/>
+        </div>
+      </t>
+    </t>
+  </templates>
+</odoo>

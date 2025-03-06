@@ -16,11 +16,27 @@
                 <kanban>
                   <templates>
                     <t t-name="kanban-box">
-                      <div class="oe_kanban_card">
-                        <strong><field name="key"/></strong>
-                        <br/>
-                        <span><field name="value"/></span>
-                      </div>
+                      <t t-if="record.wizard_id.target_registry_type.raw_value == 'farmer'">
+                        <div class="oe_kanban_card">
+                          <strong t-esc="record.key.raw_value"/>
+                          <br/>
+                          <span t-esc="record.value.raw_value"/> (Farmer View)
+                        </div>
+                      </t>
+                      <t t-if="record.wizard_id.target_registry_type.raw_value == 'student'">
+                        <div class="oe_kanban_card">
+                          <strong t-esc="record.key.raw_value"/>
+                          <br/>
+                          <span t-esc="record.value.raw_value"/> (Student View)
+                        </div>
+                      </t>
+                      <t t-if="not (record.wizard_id.target_registry_type.raw_value in ['farmer', 'student'])">
+                        <div class="oe_kanban_card">
+                          <strong t-esc="record.key.raw_value"/>
+                          <br/>
+                          <span t-esc="record.value.raw_value"/>
+                        </div>
+                      </t>
                     </t>
                   </templates>
                 </kanban>
@@ -36,13 +52,21 @@
                 </form>
               </field>
             </page>
-
-
-
             <page string="Beneficiaries">
+
               <group>
-                <!-- Inline search field -->
-                <field name="beneficiary_search" placeholder="Search Beneficiary..."/>
+                <field name="target_registry_type" invisible="true"/>
+                <field name="beneficiary_search" widget="domain"
+                  options="{'model': 'g2p.farmer.registry', 'order': 'name asc'}"
+                  invisible="target_registry_type != 'farmer'"/>
+                      
+                <!-- Domain widget for the Student type -->
+                <field name="beneficiary_search" widget="domain"
+                  options="{'model': 'g2p.student.registry'}"
+                  invisible="target_registry_type != 'student'"/>
+
+                
+                <field name="sql_query"/>
               </group>
               <field name="eligibility_list_ids" mode="tree,form">
                 <tree create="false">
