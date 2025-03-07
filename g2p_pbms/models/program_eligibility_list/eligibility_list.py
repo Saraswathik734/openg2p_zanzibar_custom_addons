@@ -6,7 +6,7 @@ class G2PEligibilityList(models.Model):
     _description = "G2P Eligibility List"
 
     eligibility_request_id = fields.Many2one(
-        "g2p.que.eligibility.request", string="Eligibility Request ID"
+        "g2p.que.eee.request", string="Eligibility Request ID"
     )
     beneficiary_id = fields.Reference(
         selection=[

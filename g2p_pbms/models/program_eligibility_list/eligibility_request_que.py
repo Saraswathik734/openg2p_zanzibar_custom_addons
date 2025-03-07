@@ -2,9 +2,9 @@ import json
 from odoo import models, fields, api
 
 
-class G2PQueEligibilityRequest(models.Model):
-    _name = "g2p.que.eligibility.request"
-    _description = "G2P Eligibility Request Queue"
+class G2PQueEEERequest(models.Model):
+    _name = "g2p.que.eee.request"
+    _description = "G2P EEE Request Queue"
     _rec_name = "brief"
 
     program_id = fields.Many2one("g2p.program.definition", string="G2P Program")

@@ -31,7 +31,7 @@ class G2PProgramDefinition(models.Model):
     )
 
     eligibilty_request_ids = fields.One2many(
-        "g2p.que.eligibility.request",
+        "g2p.que.eee.request",
         "program_id",
         string="Eligibility Request Queue",
         states={'draft': [('readonly', False)], 'confirm': [('readonly', True)]},
@@ -69,7 +69,7 @@ class G2PProgramDefinition(models.Model):
 
     def action_create_eligibility_list(self):
         self.ensure_one()
-        eligibility_obj = self.env["g2p.que.eligibility.request"]
+        eligibility_obj = self.env["g2p.que.eee.request"]
         eligibility_record = eligibility_obj.create(
             {
                 "program_id": self.id,
@@ -79,7 +79,7 @@ class G2PProgramDefinition(models.Model):
         )
         return {
             "type": "ir.actions.act_window",
-            "res_model": "g2p.que.eligibility.request",
+            "res_model": "g2p.que.eee.request",
             "view_mode": "form",
             "res_id": eligibility_record.id,
             "target": "current",
