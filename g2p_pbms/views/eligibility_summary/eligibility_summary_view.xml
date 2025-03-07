@@ -11,63 +11,19 @@
             <field name="program_id" readonly="1"/>
           </group>
           <notebook>
-            <page string="Summary Details">
-              <field name="summary_line_ids" mode="kanban">
-                <kanban>
-                  <templates>
-                    <t t-name="kanban-box">
-                      <t t-if="record.wizard_id.target_registry_type.raw_value == 'farmer'">
-                        <div class="oe_kanban_card">
-                          <strong t-esc="record.key.raw_value"/>
-                          <br/>
-                          <span t-esc="record.value.raw_value"/> (Farmer View)
-                        </div>
-                      </t>
-                      <t t-if="record.wizard_id.target_registry_type.raw_value == 'student'">
-                        <div class="oe_kanban_card">
-                          <strong t-esc="record.key.raw_value"/>
-                          <br/>
-                          <span t-esc="record.value.raw_value"/> (Student View)
-                        </div>
-                      </t>
-                      <t t-if="not (record.wizard_id.target_registry_type.raw_value in ['farmer', 'student'])">
-                        <div class="oe_kanban_card">
-                          <strong t-esc="record.key.raw_value"/>
-                          <br/>
-                          <span t-esc="record.value.raw_value"/>
-                        </div>
-                      </t>
-                    </t>
-                  </templates>
-                </kanban>
-                <tree create="false">
-                  <field name="key"/>
-                  <field name="value"/>
-                </tree>
-                <form create="false">
-                  <group>
-                    <field name="key"/>
-                    <field name="value"/>
-                  </group>
-                </form>
-              </field>
-            </page>
             <page string="Beneficiaries">
-
               <group>
-                <field name="target_registry_type" invisible="true"/>
-                <field name="beneficiary_search" widget="domain"
-                  options="{'model': 'g2p.farmer.registry', 'order': 'name asc'}"
-                  invisible="target_registry_type != 'farmer'"/>
-                      
-                <!-- Domain widget for the Student type -->
-                <field name="beneficiary_search" widget="domain"
-                  options="{'model': 'g2p.student.registry'}"
-                  invisible="target_registry_type != 'student'"/>
-
-                
+                <field name="target_registry_type" invisible="1"/>
+                <!-- Only one beneficiary_search field is shown based on registry type -->
+                <group name="beneficiary_search_farmer" invisible="target_registry_type != 'farmer'">
+                  <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.farmer.registry', 'order': 'name asc'}"/>
+                </group>
+                <group name="beneficiary_search_student" invisible="target_registry_type != 'student'">
+                  <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.student.registry'}"/>
+                </group>
                 <field name="sql_query"/>
               </group>
+              
               <field name="eligibility_list_ids" mode="tree,form">
                 <tree create="false">
                   <field name="beneficiary_id"/>
@@ -79,6 +35,44 @@
                     <field name="name"/>
                   </group>
                 </form>
+              </field>
+              <group>
+                <div class="btn-group d-print-none" aria-atomic="true">
+                  <button name="previous_page" type="object" class="btn btn-secondary o_pager_previous px-2 rounded-start">
+                    <i class="oi oi-chevron-left"/>
+                  </button>
+                  <span class="btn btn-secondary o_pager_info oe_inline" style="border:none;">
+                    <field name="page_info" readonly="1"/>
+                  </span>
+                  <button name="next_page" type="object" class="btn btn-secondary o_pager_next px-2 rounded-end">
+                    <i class="oi oi-chevron-right"/>
+                  </button>
+                </div>
+              </group>
+            </page>
+             <page string="Summary Details">
+              <field name="summary_line_ids" mode="kanban">
+                <kanban class="o_kanban_mobile" sample="1">
+                <field name="key"/>
+                <field name="value"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-12">
+                                    <strong>
+                                        <field name="key"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <t t-if="record.value.value">
+                                <hr class="mt8 mb8"/>
+                                <field name="value"/>
+                            </t>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
               </field>
             </page>
           </notebook>

@@ -23,8 +23,8 @@ g2p_farmer_registry_registrar,Registrar Access Farmer Registry,g2p_pbms.model_g2
 g2p_eligibility_rule_definition_admin,Admin Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
 g2p_eligibility_rule_definition_registrar,Registrar Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
 
-g2p_que_eligibility_request_admin,Admin Access Eligibility Request Queue,g2p_pbms.model_g2p_que_eligibility_request,,1,1,1,1
-g2p_que_eligibility_request_registrar,Registrar Access Eligibility Request Queue,g2p_pbms.model_g2p_que_eligibility_request,,1,1,1,1
+g2p_que_eee_request_admin,Admin Access EEE Request Queue,g2p_pbms.model_g2p_que_eee_request,,1,1,1,1
+g2p_que_eee_request_registrar,Registrar Access EEE Request Queue,g2p_pbms.model_g2p_que_eee_request,,1,1,1,1
 
 g2p_eligibility_summary_wizard_admin,Admin Access Eligibility Summary wizard,g2p_pbms.model_g2p_eligibility_summary_wizard,,1,1,1,1
 g2p_eligibility_summary_wizard_registrar,Registrar Access Eligibility Summary wizard,g2p_pbms.model_g2p_eligibility_summary_wizard,,1,1,1,1

@@ -18,6 +18,6 @@ from .registries import (
 from .eligibility_rule import G2PEligibilityRuleDefinition
 from .program_eligibility_list import (
     G2PEligibilityList,
-    G2PQueEligibilityRequest,
+    G2PQueEEERequest,
     G2PEligibilitySummaryWizard,
 )
