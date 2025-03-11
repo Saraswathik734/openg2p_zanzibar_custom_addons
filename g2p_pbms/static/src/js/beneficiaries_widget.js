@@ -5,12 +5,8 @@ import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 
-// Define the OWL component for beneficiaries.
 export class G2PBeneficiariesComponent extends Component {
     static template = "g2p_beneficiaries_info_tpl";
-    // static template = xml`
-
-    // `;
 
     setup() {
         this.state = useState({
@@ -20,23 +16,34 @@ export class G2PBeneficiariesComponent extends Component {
             pageSize: 3,
             totalCount: 0,
             totalPages: 1,
+            target_registry_type: null,
         });
         this.orm = useService("orm");
-        // this._fetchRecords();
+    }
 
+    searchRegistrants() {
+        this.state.page = 1;
+        this.pageSize = 3;
+        this.target_registry_type = this.props.record.data.target_registry_type;
+        this._fetchRecords();
     }
 
     async _fetchRecords() {
-        // Call a server method to fetch beneficiaries data.
         const result = await this.orm.call(
             'g2p.eligibility.summary.wizard',
             'get_beneficiaries',
             [this.state.page, this.state.pageSize],
             {},
         );
-        this.state.records = result.records;
-        this.state.totalCount = result.total_count;
-        this.state.totalPages = Math.ceil(result.total_count / this.state.pageSize) || 1;
+        if (result.message) {
+            this.state.records = result.message.beneficiaries;
+            this.state.totalCount = result.message.total_beneficiary_count;
+        } else {
+            this.state.records = result.records;
+            this.state.totalCount = result.total_count;
+        }
+        this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
+        this.state.target_registry_type = result.target_registry_type;
     }
 
     async nextPage() {
@@ -54,7 +61,6 @@ export class G2PBeneficiariesComponent extends Component {
     }
 }
 
-// Register the widget in the fields registry.
 export const g2pBeneficiariesWidget = {
     component: G2PBeneficiariesComponent,
 };

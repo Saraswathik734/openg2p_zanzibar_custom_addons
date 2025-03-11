@@ -24,7 +24,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
 
     # Dynamic summary details from API (list of key/value pairs)
     summary_line_ids = fields.One2many(
-        'g2p.api.summary.line', 'wizard_id', string='Summary Details', compute='_compute_summary_lines', store=True
+        'g2p.api.summary.line', 'wizard_id', string='Summary', compute='_compute_summary_lines', store=True
     )
 
     dummy_beneficiaries_field = fields.Text(string="Beneficiaries", compute="_compute_dummy")
@@ -123,29 +123,70 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
 
     @api.model
     def get_beneficiaries(self, page, page_size):
-        # For demo purposes, use a static list of beneficiaries.
-        wizard = self.browse(self.env.context.get('active_id'))
+        wizard = self.env['g2p.eligibility.summary.wizard'].browse(self.env.context.get('active_id'))
+        target_registry_type = wizard.target_registry_type
+        _logger.info("Target registry type: %s", target_registry_type)
         all_beneficiaries = [
-            {'beneficiary_id': 'B001', 'name': 'Beneficiary One'},
-            {'beneficiary_id': 'B002', 'name': 'Beneficiary Two'},
-            {'beneficiary_id': 'B003', 'name': 'Other Beneficiary'},
-            {'beneficiary_id': 'B004', 'name': 'Beneficiary Four'},
-            {'beneficiary_id': 'B005', 'name': 'Beneficiary Five'},
-            {'beneficiary_id': 'B006', 'name': 'Beneficiary Six'},
-            {'beneficiary_id': 'B007', 'name': 'Beneficiary Seven'},
-            {'beneficiary_id': 'B008', 'name': 'Beneficiary Eight'},
+            {
+                "id": 2,
+                "unique_id": "DEF456",
+                "registration_date": "2025-02-27T15:49:33.450868",
+                "name": "Shyam",
+                "land_area": 20,
+                "no_of_cattle_heads": 0,
+                "no_of_poultry_heads": 0
+            },
+            {
+                "id": 3,
+                "unique_id": "ABC456",
+                "registration_date": "2025-02-27T15:49:33.450868",
+                "name": "Govinda",
+                "land_area": 0,
+                "no_of_cattle_heads": 9,
+                "no_of_poultry_heads": 30
+            },
+            {
+                "id": 5,
+                "unique_id": "ABC789",
+                "registration_date": "2025-02-27T15:49:33.450868",
+                "name": "Aditya",
+                "land_area": 50,
+                "no_of_cattle_heads": 0,
+                "no_of_poultry_heads": 700
+            },
+            {
+                "id": 6,
+                "unique_id": "ABC739",
+                "registration_date": "2025-02-27T15:49:33.450868",
+                "name": "Madhu",
+                "land_area": 50,
+                "no_of_cattle_heads": 0,
+                "no_of_poultry_heads": 700
+            },
+            {
+                "id": 7,
+                "unique_id": "ABC799",
+                "registration_date": "2025-02-27T15:49:33.450868",
+                "name": "Sunny",
+                "land_area": 50,
+                "no_of_cattle_heads": 0,
+                "no_of_poultry_heads": 700
+            }
         ]
-        # Optionally filter with wizard.beneficiary_search.
-        if wizard.beneficiary_search:
-            term = wizard.beneficiary_search.lower()
-            all_beneficiaries = [
-                rec for rec in all_beneficiaries if term in rec.get('name', '').lower()
-            ]
         total_count = len(all_beneficiaries)
         start_index = (page - 1) * page_size
         end_index = start_index + page_size
-        records = all_beneficiaries[start_index:end_index]
-        return {'records': records, 'total_count': total_count}
+        beneficiaries = all_beneficiaries[start_index:end_index]
+        _logger.info("Beneficiary type: %s", target_registry_type)
+        return {
+            "message": {
+                "total_beneficiary_count": total_count,
+                "page": page,
+                "page_size": page_size,
+                "beneficiaries": beneficiaries,
+            },
+            "target_registry_type": "farmer",
+        }
 
     @api.depends('target_registry_type', 'beneficiary_search')
     def _compute_summary_lines(self):

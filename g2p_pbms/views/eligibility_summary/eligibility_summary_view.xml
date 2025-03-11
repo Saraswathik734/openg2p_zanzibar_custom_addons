@@ -11,7 +11,27 @@
             <field name="program_id" readonly="1"/>
           </group>
           <notebook>
-           <page string="Beneficiaries">
+           <page string="Summary">
+              <group col="2">
+                <group>
+                  <field name="summary_line_ids" domain="[('key','in',['id','program_id','program_mnemonic','target_registry_type','eligibility_request_id','number_of_registrants','date_created'])]">
+                    <tree string="General Info">
+                      <field name="key"/>
+                      <field name="value"/>
+                    </tree>
+                  </field>
+                </group>
+                <group>
+                  <field name="summary_line_ids" domain="[('key','in',['age_mean','age_quartile_25','age_quartile_50','age_quartile_75'])]">
+                    <tree string="Statistics">
+                      <field name="key"/>
+                      <field name="value"/>
+                    </tree>
+                  </field>
+                </group>
+              </group>
+            </page>
+            <page string="Beneficiaries">
             <group>
                 <field name="target_registry_type" invisible="1"/>
                 <!-- Only one beneficiary_search field is shown based on registry type -->
@@ -26,31 +46,6 @@
             <!-- Container for the QWeb-based beneficiary list -->
             <field name="dummy_beneficiaries_field" widget="g2p_beneficiaries_widget"/>
           </page>
-             <page string="Summary">
-              <field name="summary_line_ids" mode="kanban">
-                <kanban class="o_kanban_mobile" sample="1">
-                <field name="key"/>
-                <field name="value"/>
-                <templates>
-                    <t t-name="kanban-box">
-                        <div t-attf-class="oe_kanban_global_click">
-                            <div class="row">
-                                <div class="col-12">
-                                    <strong>
-                                        <field name="key"/>
-                                    </strong>
-                                </div>
-                            </div>
-                            <t t-if="record.value.value">
-                                <hr class="mt8 mb8"/>
-                                <field name="value"/>
-                            </t>
-                        </div>
-                    </t>
-                </templates>
-            </kanban>
-              </field>
-            </page>
           </notebook>
         </sheet>
         <footer>
