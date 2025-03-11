@@ -36,22 +36,7 @@
                 </table>
             </t>
             <t t-else="">
-                <table class="table table-bordered" style="width: 100%; font-size: 16px;">
-                    <thead>
-                        <tr>
-                            <th><t t-esc="('Beneficiary ID')"/></th>
-                            <th><t t-esc="('Name')"/></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <t t-foreach="state.records" t-as="record" t-key="record.id">
-                            <tr>
-                                <td><t t-esc="record.beneficiary_id"/></td>
-                                <td><t t-esc="record.name"/></td>
-                            </tr>
-                        </t>
-                    </tbody>
-                </table>
+               
             </t>
             <div class="o_beneficiary_pager">
                 <button type="button" class="btn btn-secondary" t-on-click="prevPage" t-att-disabled="state.page &lt;= 1">

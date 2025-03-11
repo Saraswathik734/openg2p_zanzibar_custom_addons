@@ -22,9 +22,19 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
     program_id = fields.Many2one('g2p.program.definition', string='Program')
     beneficiary_search = fields.Char(string='Search Beneficiary')
 
-    # Dynamic summary details from API (list of key/value pairs)
+    # Store all summary lines from the API response
     summary_line_ids = fields.One2many(
-        'g2p.api.summary.line', 'wizard_id', string='Summary', compute='_compute_summary_lines', store=True
+        'g2p.api.summary.line', 'wizard_id', string='Summary Details',
+        compute='_compute_summary_lines', store=True
+    )
+    # Computed filtered fields (not stored) for UI display
+    summary_general_line_ids = fields.One2many(
+        'g2p.api.summary.line', 'wizard_id', string='General Info',
+        compute='_compute_general'
+    )
+    summary_statistics_line_ids = fields.One2many(
+        'g2p.api.summary.line', 'wizard_id', string='Statistics',
+        compute='_compute_statistics'
     )
 
     dummy_beneficiaries_field = fields.Text(string="Beneficiaries", compute="_compute_dummy")
@@ -190,20 +200,15 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
 
     @api.depends('target_registry_type', 'beneficiary_search')
     def _compute_summary_lines(self):
-        for wizard in self:
-            # Clear previous records
-            wizard.summary_line_ids = [(5, 0, 0)]
-            
-            if not wizard.target_registry_type:
-                _logger.warning("No target_registry_type provided; skipping summary computation.")
-                continue
+        general_keys = ['id', 'program_id', 'program_mnemonic', 'target_registry_type',
+                        'eligibility_request_id', 'number_of_registrants', 'date_created']
+        statistics_keys = ['age_mean', 'age_quartile_25', 'age_quartile_50', 'age_quartile_75']
 
-            # Read API URL from system parameters
+        for wizard in self:
+            wizard.summary_line_ids = [(5, 0, 0)]
             api_url = self.env['ir.config_parameter'].sudo().get_param('API_URL')
             if not api_url:
                 _logger.error("API_URL not set in environment")
-                # continue
-
             endpoint = f"{api_url}/get_summary"
             try:
                 response = requests.get(endpoint, params={'type': wizard.target_registry_type}, timeout=10)
@@ -227,14 +232,38 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
                         "age_quartile_75": 12
                     }
                 }
+            lines = []
+            for key, value in api_response.get('message', {}).items():
+                if key in general_keys:
+                    lines.append((0, 0, {
+                        'wizard_id': wizard.id,
+                        'key': key,
+                        'value': str(value),
+                        'summary_type': 'general'
+                    }))
+                elif key in statistics_keys:
+                    lines.append((0, 0, {
+                        'wizard_id': wizard.id,
+                        'key': key,
+                        'value': str(value),
+                        'summary_type': 'statistics'
+                    }))
+            wizard.summary_line_ids = lines
 
-            # Build summary lines, including the linking field wizard_id
-            lines = [
-                (0, 0, {'wizard_id': wizard.id, 'key': key, 'value': str(value)})
-                for key, value in api_response.get('message', {}).items()
-            ]
-            _logger.info("Summary lines: %s", lines)
-            wizard.summary_line_ids = [(5, 0, 0)] + lines
+    @api.depends('summary_line_ids')
+    def _compute_general(self):
+        for wizard in self:
+            wizard.summary_general_line_ids = wizard.summary_line_ids.filtered(
+                lambda r: r.summary_type == 'general'
+            )
+
+    @api.depends('summary_line_ids')
+    def _compute_statistics(self):
+        for wizard in self:
+            wizard.summary_statistics_line_ids = wizard.summary_line_ids.filtered(
+                lambda r: r.summary_type == 'statistics'
+            )
+
 
 class G2PAPISummaryLine(models.TransientModel):
     _name = 'g2p.api.summary.line'
@@ -243,3 +272,8 @@ class G2PAPISummaryLine(models.TransientModel):
     wizard_id = fields.Many2one('g2p.eligibility.summary.wizard', string='Wizard')
     key = fields.Char(string='Field')
     value = fields.Text(string='Value')
+    summary_type = fields.Selection(
+        [('general', 'General'), ('statistics', 'Statistics')],
+        string="Summary Type",
+        default='general'
+    )

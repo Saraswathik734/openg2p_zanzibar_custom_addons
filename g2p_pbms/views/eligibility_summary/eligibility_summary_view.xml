@@ -14,7 +14,7 @@
            <page string="Summary">
               <group col="2">
                 <group>
-                  <field name="summary_line_ids" domain="[('key','in',['id','program_id','program_mnemonic','target_registry_type','eligibility_request_id','number_of_registrants','date_created'])]">
+                  <field name="summary_general_line_ids">
                     <tree string="General Info">
                       <field name="key"/>
                       <field name="value"/>
@@ -22,7 +22,7 @@
                   </field>
                 </group>
                 <group>
-                  <field name="summary_line_ids" domain="[('key','in',['age_mean','age_quartile_25','age_quartile_50','age_quartile_75'])]">
+                  <field name="summary_statistics_line_ids">
                     <tree string="Statistics">
                       <field name="key"/>
                       <field name="value"/>
