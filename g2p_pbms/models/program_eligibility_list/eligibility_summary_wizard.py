@@ -26,16 +26,20 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
     summary_line_ids = fields.One2many(
         'g2p.api.summary.line', 'wizard_id', string='Summary Details', compute='_compute_summary_lines', store=True
     )
-    # Dynamic beneficiaries returned from API
-    eligibility_list_ids = fields.One2many(
-        'g2p.api.beneficiary', 'wizard_id', string='Beneficiaries', compute='_compute_eligibility_list_ids', store=True
-    )
-    sql_query = fields.Char(string="Query", compute="_get_query", store=True)
 
+    dummy_beneficiaries_field = fields.Text(string="Beneficiaries", compute="_compute_dummy")
+
+    sql_query = fields.Char(string="Query", compute="_get_query", store=True)
+    order_by_condition = fields.Char(string="Order By", default="name")
+    
     page = fields.Integer(string='Page', default=1)
     page_size = fields.Integer(string='Page Size', default=3)
     total_count = fields.Integer(string='Total Count', readonly=True)
     page_info = fields.Char(string='Page Info', compute='_compute_page_info')
+
+    def _compute_dummy(self):
+        for wizard in self:
+            wizard.dummy_beneficiaries_field = ""
 
     @api.depends("beneficiary_search", "target_registry_type")
     def _get_query(self):
@@ -117,6 +121,32 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
                 )
                 rec.sql_query = "Error formatting query"
 
+    @api.model
+    def get_beneficiaries(self, page, page_size):
+        # For demo purposes, use a static list of beneficiaries.
+        wizard = self.browse(self.env.context.get('active_id'))
+        all_beneficiaries = [
+            {'beneficiary_id': 'B001', 'name': 'Beneficiary One'},
+            {'beneficiary_id': 'B002', 'name': 'Beneficiary Two'},
+            {'beneficiary_id': 'B003', 'name': 'Other Beneficiary'},
+            {'beneficiary_id': 'B004', 'name': 'Beneficiary Four'},
+            {'beneficiary_id': 'B005', 'name': 'Beneficiary Five'},
+            {'beneficiary_id': 'B006', 'name': 'Beneficiary Six'},
+            {'beneficiary_id': 'B007', 'name': 'Beneficiary Seven'},
+            {'beneficiary_id': 'B008', 'name': 'Beneficiary Eight'},
+        ]
+        # Optionally filter with wizard.beneficiary_search.
+        if wizard.beneficiary_search:
+            term = wizard.beneficiary_search.lower()
+            all_beneficiaries = [
+                rec for rec in all_beneficiaries if term in rec.get('name', '').lower()
+            ]
+        total_count = len(all_beneficiaries)
+        start_index = (page - 1) * page_size
+        end_index = start_index + page_size
+        records = all_beneficiaries[start_index:end_index]
+        return {'records': records, 'total_count': total_count}
+
     @api.depends('target_registry_type', 'beneficiary_search')
     def _compute_summary_lines(self):
         for wizard in self:
@@ -165,84 +195,6 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
             _logger.info("Summary lines: %s", lines)
             wizard.summary_line_ids = [(5, 0, 0)] + lines
 
-
-    @api.depends('beneficiary_search', 'target_registry_type', 'page', 'page_size')
-    def _compute_eligibility_list_ids(self):
-        for wizard in self:
-            # Simulated full API response for beneficiaries.
-            all_beneficiaries = [
-                {'beneficiary_id': 'B001', 'name': 'Beneficiary One'},
-                {'beneficiary_id': 'B002', 'name': 'Beneficiary Two'},
-                {'beneficiary_id': 'B003', 'name': 'Other Beneficiary'},
-                {'beneficiary_id': 'B004', 'name': 'Beneficiary Four'},
-                {'beneficiary_id': 'B005', 'name': 'Beneficiary Five'},
-                {'beneficiary_id': 'B006', 'name': 'Beneficiary Six'},
-                {'beneficiary_id': 'B007', 'name': 'Beneficiary Seven'},
-                {'beneficiary_id': 'B008', 'name': 'Beneficiary Eight'},
-                # Add more mock records as needed for pagination.
-            ]
-            # Apply search filter if provided.
-            if wizard.beneficiary_search:
-                term = wizard.beneficiary_search.lower()
-                _logger.info("Search term: %s", term)
-                all_beneficiaries = [
-                    rec for rec in all_beneficiaries
-                    if term in rec.get('name', '').lower()
-                ]
-            # Set total count for pagination.
-            wizard.total_count = len(all_beneficiaries)
-            # Use wizard.page and wizard.page_size to simulate pagination.
-            page = wizard.page or 1
-            page_size = wizard.page_size or 3
-            start_index = (page - 1) * page_size
-            end_index = start_index + page_size
-            paged_response = all_beneficiaries[start_index:end_index]
-            _logger.info("Paged response: %s", paged_response)
-            # Update eligibility list with the paged data.
-            wizard.eligibility_list_ids = [(5, 0, 0)] + [
-                (0, 0, {'beneficiary_id': rec.get('beneficiary_id'), 'name': rec.get('name')})
-                for rec in paged_response
-            ]
-            _logger.info("Eligibility list: %s", wizard.eligibility_list_ids)
-
-    def previous_page(self):
-        for wizard in self:
-            wizard.page = max(1, wizard.page - 1)
-            wizard._compute_eligibility_list_ids()
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'g2p.eligibility.summary.wizard',
-            'view_mode': 'form',
-            'res_id': self.id,
-            'target': 'current',
-        }
-
-
-    def next_page(self):
-        for wizard in self:
-            total_pages = (wizard.total_count // wizard.page_size) + (wizard.total_count % wizard.page_size and 1 or 0)
-            if wizard.page < total_pages:
-                wizard.page += 1
-                wizard._compute_eligibility_list_ids()
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'g2p.eligibility.summary.wizard',
-            'view_mode': 'form',
-            'res_id': self.id,
-            'target': 'current',
-        }
-    
-    @api.depends('page', 'page_size', 'total_count')
-    def _compute_page_info(self):
-        for wizard in self:
-            if wizard.page_size:
-                total_pages = (wizard.total_count // wizard.page_size) + (1 if wizard.total_count % wizard.page_size else 0)
-            else:
-                total_pages = 0
-            wizard.page_info = f"{wizard.page}/{total_pages}" if total_pages > 0 else "0/0"
-
-
-
 class G2PAPISummaryLine(models.TransientModel):
     _name = 'g2p.api.summary.line'
     _description = 'Dynamic API Summary Line'
@@ -250,12 +202,3 @@ class G2PAPISummaryLine(models.TransientModel):
     wizard_id = fields.Many2one('g2p.eligibility.summary.wizard', string='Wizard')
     key = fields.Char(string='Field')
     value = fields.Text(string='Value')
-
-
-class G2PAPIBeneficiary(models.TransientModel):
-    _name = 'g2p.api.beneficiary'
-    _description = 'Dynamic API Beneficiary'
-
-    wizard_id = fields.Many2one('g2p.eligibility.summary.wizard', string='Wizard')
-    beneficiary_id = fields.Char(string='Beneficiary ID')
-    name = fields.Char(string='Name')

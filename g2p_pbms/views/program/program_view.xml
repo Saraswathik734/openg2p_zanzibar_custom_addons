@@ -39,12 +39,12 @@
                 </tree>
               </field>
             </page>
-            <!-- Eligibility List Page with row-level summary link -->
-            <page string="Eligibility List">
+            <!-- Beneficiary List Page with row-level summary link -->
+            <page string="Beneficiary List">
               <field name="eligibilty_request_ids" nolabel="1">
                 <tree default_order="creation_date desc">
                   <control>
-                    <create string="Create new eligibility list"/>
+                    <create string="Create new beneficiary list"/>
                   </control>
                   <field name="brief" string="Brief"/>
                   <field name="enumeration_status" string="Status" widget="badge"/>

@@ -11,46 +11,22 @@
             <field name="program_id" readonly="1"/>
           </group>
           <notebook>
-            <page string="Beneficiaries">
-              <group>
+           <page string="Beneficiaries">
+            <group>
                 <field name="target_registry_type" invisible="1"/>
                 <!-- Only one beneficiary_search field is shown based on registry type -->
                 <group name="beneficiary_search_farmer" invisible="target_registry_type != 'farmer'">
-                  <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.farmer.registry', 'order': 'name asc'}"/>
+                  <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.farmer.registry'}"/>
                 </group>
                 <group name="beneficiary_search_student" invisible="target_registry_type != 'student'">
                   <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.student.registry'}"/>
                 </group>
-                <field name="sql_query"/>
+                <h6>Query:<field name="sql_query"/></h6>
               </group>
-              
-              <field name="eligibility_list_ids" mode="tree,form">
-                <tree create="false">
-                  <field name="beneficiary_id"/>
-                  <field name="name"/>
-                </tree>
-                <form create="false">
-                  <group>
-                    <field name="beneficiary_id"/>
-                    <field name="name"/>
-                  </group>
-                </form>
-              </field>
-              <group>
-                <div class="btn-group d-print-none" aria-atomic="true">
-                  <button name="previous_page" type="object" class="btn btn-secondary o_pager_previous px-2 rounded-start">
-                    <i class="oi oi-chevron-left"/>
-                  </button>
-                  <span class="btn btn-secondary o_pager_info oe_inline" style="border:none;">
-                    <field name="page_info" readonly="1"/>
-                  </span>
-                  <button name="next_page" type="object" class="btn btn-secondary o_pager_next px-2 rounded-end">
-                    <i class="oi oi-chevron-right"/>
-                  </button>
-                </div>
-              </group>
-            </page>
-             <page string="Summary Details">
+            <!-- Container for the QWeb-based beneficiary list -->
+            <field name="dummy_beneficiaries_field" widget="g2p_beneficiaries_widget"/>
+          </page>
+             <page string="Summary">
               <field name="summary_line_ids" mode="kanban">
                 <kanban class="o_kanban_mobile" sample="1">
                 <field name="key"/>

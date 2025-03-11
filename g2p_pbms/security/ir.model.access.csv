@@ -29,8 +29,5 @@ g2p_que_eee_request_registrar,Registrar Access EEE Request Queue,g2p_pbms.model_
 g2p_eligibility_summary_wizard_admin,Admin Access Eligibility Summary wizard,g2p_pbms.model_g2p_eligibility_summary_wizard,,1,1,1,1
 g2p_eligibility_summary_wizard_registrar,Registrar Access Eligibility Summary wizard,g2p_pbms.model_g2p_eligibility_summary_wizard,,1,1,1,1
 
-g2p_api_beneficiary_admin,Admin Access API Beneficiary,g2p_pbms.model_g2p_api_beneficiary,,1,1,1,1
-g2p_api_beneficiary_registrar,Registrar Access API Beneficiary,g2p_pbms.model_g2p_api_beneficiary,,1,1,1,1
-
 g2p_eligibility_summary_line_admin,Admin Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
 g2p_eligibility_summary_line_registrar,Registrar Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
