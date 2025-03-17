@@ -2,11 +2,8 @@
 <templates xml:space="preserve">
     <t t-name="g2p_beneficiaries_info_tpl">
         <div class="g2p-beneficiaries" style="font-size: 18px;">
-            <button class="btn btn-success"
-                    name="g2p_search_registrant"
-                    t-on-click="searchRegistrants">
-                Search
-            </button>
+            <!-- Search input with search and arch buttons -->
+            
             <t t-if="state.searched">
                 <h3><t t-esc="state.title"/></h3>
             </t>

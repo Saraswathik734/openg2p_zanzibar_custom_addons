@@ -17,13 +17,14 @@ export class G2PBeneficiariesComponent extends Component {
             totalCount: 0,
             totalPages: 1,
             target_registry_type: null,
-            searched: false, // initially hidden
+            searched: false,  // initially hidden title and pagination
+            searchQuery: "",  // bound to the search input
         });
         this.orm = useService("orm");
     }
 
     searchRegistrants() {
-        this.state.searched = true;  // Enable title and pagination display
+        this.state.searched = true;  // show title and pagination when search is clicked
         this.state.page = 1;
         this.state.pageSize = 3;
         this.state.target_registry_type = this.props.record.data.target_registry_type;
