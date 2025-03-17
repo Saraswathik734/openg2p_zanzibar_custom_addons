@@ -31,3 +31,6 @@ g2p_eligibility_summary_wizard_registrar,Registrar Access Eligibility Summary wi
 
 g2p_eligibility_summary_line_admin,Admin Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
 g2p_eligibility_summary_line_registrar,Registrar Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
+
+g2p_entitlement_rule_definition_admin,Admin Access Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,,1,1,1,1
+g2p_entitlement_rule_definition_registrar,Registrar Access Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,,1,1,1,1

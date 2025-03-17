@@ -15,23 +15,26 @@
       <form string="G2P Programs">
         <sheet>
           <group>
-            <group>
+            <group string="Program Information">
               <field name="program_mnemonic"/>
               <field name="description"/>
             </group>
-            <group>
+            <group string="Program Configuration">
               <field name="delivery_id"/>
               <field name="target_registry_type"/>
               <field name="program_status"/>
             </group>
+            <group string="Entitlement Configuration">
+              <field name="max_quantity"/>
+            </group>
           </group>
           <notebook>
             <!-- Eligibility Rule Page -->
-            <page string="Eligibility Rule">
-              <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}">
+            <page string="Eligibility Rules">
+              <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry_type': target_registry_type}">
                 <tree default_order="id desc">
                   <control>
-                    <create string="Add eligibility rules"/>
+                    <create string="Add Eligibility Rule"/>
                   </control>
                   <field name="mnemonic" string="Rule Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
                   <field name="description" string="Description"/>
@@ -39,15 +42,29 @@
                 </tree>
               </field>
             </page>
-            <!-- Beneficiary List Page with row-level summary link -->
-            <page string="Beneficiary List">
-              <field name="eligibilty_request_ids" nolabel="1">
+            <!-- Entitlement Rule Page -->
+            <page string="Entitlement Rules">
+              <field name="entitlement_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry_type': target_registry_type}">
+                <tree default_order="id desc">
+                  <control>
+                    <create string="Add Entitlement Rule"/>
+                  </control>
+                  <field name="mnemonic" string="Rule Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
+                  <field name="description" string="Description"/>
+                  <button name="action_open_view" type="object" class="fa fa-eye" title="View Entitlement Rule"/>
+                </tree>
+              </field>
+            </page>
+            <!-- Beneficiary List Page -->
+            <page string="Beneficiary Lists">
+              <field name="que_eee_request_ids" nolabel="1">
                 <tree default_order="creation_date desc">
                   <control>
-                    <create string="Create new beneficiary list"/>
+                    <create string="Create New Beneficiary List"/>
                   </control>
                   <field name="brief" string="Brief"/>
-                  <field name="enumeration_status" string="Status" widget="badge"/>
+                  <field name="eligibility_process_status" string="Eligibility Process Status" widget="badge"/>
+                  <field name="entitlement_process_status" string=" Entitlement Process Status" widget="badge"/>
                   <field name="creation_date" string="Created On" readonly="1"/>
                   <field name="processed_date" string="Processed On" readonly="1"/>
                   <button name="action_open_summary_wizard" type="object" string="Open Summary" class="oe_link"/>

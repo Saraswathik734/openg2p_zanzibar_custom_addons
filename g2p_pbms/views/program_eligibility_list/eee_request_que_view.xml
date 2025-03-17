@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_g2p_eligibility_request_que_form" model="ir.ui.view">
+    <record id="view_g2p_eee_request_que_form" model="ir.ui.view">
         <field name="name">g2p.que.eee.request.form</field>
         <field name="model">g2p.que.eee.request</field>
         <field name="arch" type="xml">
@@ -9,7 +9,8 @@
                     <field name="program_id" readonly="1"/>
                     <field name="brief"/>
                     <!-- Hide fields during creation -->
-                    <field name="enumeration_status" invisible="1"/>
+                    <field name="eligibility_process_status" invisible="1"/>
+                    <field name="entitlement_process_status" invisible="1"/>
                     <field name="processed_date" invisible="1"/>
                     <field name="creation_date" invisible="1"/>
                 </group>

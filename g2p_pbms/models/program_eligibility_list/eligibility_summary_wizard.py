@@ -201,7 +201,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
     @api.depends('target_registry_type', 'beneficiary_search')
     def _compute_summary_lines(self):
         general_keys = ['id', 'program_id', 'program_mnemonic', 'target_registry_type',
-                        'eligibility_request_id', 'number_of_registrants', 'date_created']
+                        'que_eee_request_id', 'number_of_registrants', 'date_created']
         statistics_keys = ['age_mean', 'age_quartile_25', 'age_quartile_50', 'age_quartile_75']
 
         for wizard in self:
@@ -223,7 +223,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
                         "program_id": 2,
                         "program_mnemonic": "P2",
                         "target_registry_type": "student",
-                        "eligibility_request_id": 2,
+                        "que_eee_request_id": 2,
                         "number_of_registrants": 3,
                         "date_created": "2025-02-28T12:24:00.562302",
                         "age_mean": 10.33,

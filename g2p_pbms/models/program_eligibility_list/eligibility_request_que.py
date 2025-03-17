@@ -1,4 +1,5 @@
 import json
+import uuid
 from odoo import models, fields, api
 
 
@@ -6,40 +7,29 @@ class G2PQueEEERequest(models.Model):
     _name = "g2p.que.eee.request"
     _description = "G2P EEE Request Queue"
     _rec_name = "brief"
-
+    pbms_request_id = fields.Char(string='PBMS Request ID', readonly=True, required=True, default=lambda self: str(uuid.uuid4()))
     program_id = fields.Many2one("g2p.program.definition", string="G2P Program")
     brief = fields.Text(string="Brief")
-    sql_query_json = fields.Text(string="Complete SQL Query", store=True, readonly=True)
-    enumeration_status = fields.Selection(
+    eligibility_process_status = fields.Selection(
         [
+            ("not_applicable", "NOT APPLICABLE"),
             ("pending", "PENDING"),
             ("complete", "COMPLETE"),
         ],
-        string="Enumeration Status",
+        string="Eligibility Process Status",
         default="pending",
+    )
+    entitlement_process_status = fields.Selection(
+        [
+            ("not_applicable", "NOT APPLICABLE"),
+            ("pending", "PENDING"),
+            ("complete", "COMPLETE"),
+        ],
+        string="Entitlement Process Status",
+        default="not_applicable",
     )
     creation_date = fields.Datetime(string="Creation Date", default=fields.Datetime.now , readonly=True)
     processed_date = fields.Datetime(string="Processed Date", default=None, readonly=True)
-
-
-    @api.model
-    def create(self, vals):
-        program_id = vals.get("program_id")
-        if program_id:
-            # Fetch the eligibility rule IDs from the Many2many relation
-            program = self.env["g2p.program.definition"].browse(program_id)
-            eligibility_rules = program.eligibility_rule_ids
-
-            queries = [
-                rule.sql_query
-                for rule in eligibility_rules
-                if rule.sql_query
-            ]
-
-            # Store a snapshot of the current SQL queries as JSON object
-            vals["sql_query_json"] = json.dumps(queries) if queries else "[]"
-
-        return super().create(vals)
     
     def action_open_summary_wizard(self):
         self.ensure_one()

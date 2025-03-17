@@ -15,9 +15,10 @@ from .registries import (
     G2PStudentRegistry,
     G2PRegistryType,
 )
-from .eligibility_rule import G2PEligibilityRuleDefinition
+from .eligibility import G2PEligibilityRuleDefinition
 from .program_eligibility_list import (
     G2PEligibilityList,
     G2PQueEEERequest,
     G2PEligibilitySummaryWizard,
 )
+from .entitlement import G2PEntitlementRuleDefinition 
