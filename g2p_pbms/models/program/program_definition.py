@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 from ..registries import G2PRegistryType
 
 
@@ -25,17 +25,21 @@ class G2PProgramDefinition(models.Model):
         string="Program Status",
         required=True,
     )
-    eligibility_rule_ids = fields.Many2many(
-        "g2p.eligibility.rule.definition", string="Eligibility Rule",
-        domain="[('target_registry_type', '=', target_registry_type)]",
+    eligibility_rule_ids = fields.One2many(
+        'g2p.eligibility.rule.definition', 'program_id', string="Eligibility Rules"
     )
-
-    eligibilty_request_ids = fields.One2many(
+    entitlement_rule_ids = fields.One2many(
+        'g2p.entitlement.rule.definition', 'program_id', string="Entitlement Rules"
+    )
+    que_eee_request_ids = fields.One2many(
         "g2p.que.eee.request",
         "program_id",
         string="Eligibility Request Queue",
         states={'draft': [('readonly', False)], 'confirm': [('readonly', True)]},
     )
+
+    #Entitlement Configuration
+    max_quantity = fields.Integer(string="Max Quantity")
 
     _sql_constraints = [
         (
@@ -44,6 +48,11 @@ class G2PProgramDefinition(models.Model):
             "The program mnemonic must be unique!",
         )
     ]
+
+    @api.depends('entitlement_id')
+    def _compute_entitlement_inline_ids(self):
+        for rec in self:
+            rec.entitlement_inline_ids = rec.entitlement_id or False
 
     def action_open_edit(self):
         return {
@@ -65,22 +74,4 @@ class G2PProgramDefinition(models.Model):
             "view_mode": "form",
             "target": "new",
             "flags": {"mode": "readonly"},
-        }
-
-    def action_create_eligibility_list(self):
-        self.ensure_one()
-        eligibility_obj = self.env["g2p.que.eee.request"]
-        eligibility_record = eligibility_obj.create(
-            {
-                "program_id": self.id,
-                "brief": self.description or "",
-                "enumeration_status": "pending",
-            }
-        )
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "g2p.que.eee.request",
-            "view_mode": "form",
-            "res_id": eligibility_record.id,
-            "target": "current",
         }
