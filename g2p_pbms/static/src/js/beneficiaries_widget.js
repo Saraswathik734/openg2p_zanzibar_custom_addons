@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import { Component, useState, xml } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
@@ -17,14 +17,16 @@ export class G2PBeneficiariesComponent extends Component {
             totalCount: 0,
             totalPages: 1,
             target_registry_type: null,
+            searched: false, // initially hidden
         });
         this.orm = useService("orm");
     }
 
     searchRegistrants() {
+        this.state.searched = true;  // Enable title and pagination display
         this.state.page = 1;
-        this.pageSize = 3;
-        this.target_registry_type = this.props.record.data.target_registry_type;
+        this.state.pageSize = 3;
+        this.state.target_registry_type = this.props.record.data.target_registry_type;
         this._fetchRecords();
     }
 
