@@ -5,6 +5,7 @@
     <field name="name">Programs</field>
     <field name="res_model">g2p.program.definition</field>
     <field name="view_mode">tree,form</field>
+    <field name="context">{'form_view_initial_mode': 'readonly', 'create': False}</field>
   </record>
 
   <!-- Program Form View -->
@@ -16,16 +17,21 @@
         <sheet>
           <group>
             <group string="Program Information">
-              <field name="program_mnemonic"/>
-              <field name="description"/>
+              <field name="program_mnemonic" readonly="1"/>
+              <field name="description" readonly="1"/>
             </group>
             <group string="Program Configuration">
-              <field name="delivery_id"/>
-              <field name="target_registry_type"/>
-              <field name="program_status"/>
+              <field name="delivery_id" readonly="1"/>
+              <field name="target_registry_type" readonly="1"/>
+              <field name="program_status" readonly="1"/>
             </group>
             <group string="Entitlement Configuration">
-              <field name="max_quantity"/>
+              <field name="max_quantity" readonly="1"/>
+            </group>
+            <group string="Cycle Configuration">
+                <field name="disbursement_frequency" readonly="1"/>
+                <field name="disbursement_type" readonly="1"/>
+                <field name="disbursement_cycle_list" readonly="1"/>
             </group>
           </group>
           <notebook>
@@ -57,19 +63,7 @@
             </page>
             <!-- Beneficiary List Page -->
             <page string="Beneficiary Lists">
-              <field name="que_eee_request_ids" nolabel="1">
-                <tree default_order="creation_date desc">
-                  <control>
-                    <create string="Create New Beneficiary List"/>
-                  </control>
-                  <field name="brief" string="Brief"/>
-                  <field name="eligibility_process_status" string="Eligibility Process Status" widget="badge"/>
-                  <field name="entitlement_process_status" string=" Entitlement Process Status" widget="badge"/>
-                  <field name="creation_date" string="Created On" readonly="1"/>
-                  <field name="processed_date" string="Processed On" readonly="1"/>
-                  <button name="action_open_summary_wizard" type="object" string="Open Summary" class="oe_link"/>
-                </tree>
-              </field>
+              <field name="que_eee_request_ids" nolabel="1"/>                
             </page>
           </notebook>
         </sheet>
@@ -82,14 +76,13 @@
     <field name="name">g2p.programs.tree</field>
     <field name="model">g2p.program.definition</field>
     <field name="arch" type="xml">
-      <tree string="G2P Programs">
+      <tree string="G2P Programs" create="false">
         <field name="program_mnemonic"/>
         <field name="description"/>
         <field name="delivery_id"/>
         <field name="target_registry_type"/>
         <field name="program_status"/>
         <button name="action_open_edit" type="object" class="fa fa-pencil"/>
-        <button name="action_open_view" type="object" class="fa fa-eye"/>
       </tree>
     </field>
   </record>

@@ -41,6 +41,27 @@ class G2PProgramDefinition(models.Model):
     #Entitlement Configuration
     max_quantity = fields.Integer(string="Max Quantity")
 
+    # Cycle configuration
+    disbursement_frequency = fields.Selection([
+        ('weekly', 'Weekly'),
+        ('bi_weekly', 'Bi-Weekly'),
+        ('monthly', 'Monthly'),
+        ('quarterly', 'Quarterly'),
+        ('semi_annually', 'Semi-Annually'),
+        ('annually', 'Annually'),
+        ('on_demand', 'On-Demand'),
+    ], string="Disbursement Frequency", required=True, default='on_demand')
+
+    disbursement_type = fields.Selection([
+        ('auto', 'Auto'),
+        ('manual', 'Manual')
+    ], string="Disbursement Type", required=True, default='manual')
+
+    disbursement_cycle_list = fields.Selection([
+        ('latest_always', 'Latest Always'),
+        ('labeled', 'Labeled')
+    ], string="Disbursement Cycle List", required=True, default='latest_always')
+
     _sql_constraints = [
         (
             "unique_program_mnemonic",
@@ -55,23 +76,14 @@ class G2PProgramDefinition(models.Model):
             rec.entitlement_inline_ids = rec.entitlement_id or False
 
     def action_open_edit(self):
+        self.ensure_one()
+        edit_view_id = self.env.ref('g2p_pbms.view_g2p_pgm_edit').id
         return {
-            "type": "ir.actions.act_window",
-            "name": "Edit Program Deatils",
-            "res_model": self._name,
-            "res_id": self.id,
-            "view_mode": "form",
-            "target": "new",
-            "flags": {"mode": "edit"},
-        }
-
-    def action_open_view(self):
-        return {
-            "type": "ir.actions.act_window",
-            "name": "View Program Details",
-            "res_model": self._name,
-            "res_id": self.id,
-            "view_mode": "form",
-            "target": "new",
-            "flags": {"mode": "readonly"},
+            'type': 'ir.actions.act_window',
+            'res_model': 'g2p.program.definition',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'views': [(edit_view_id, 'form')],
+            'target': 'current',
+            'context': {'form_view_initial_mode': 'edit'},
         }

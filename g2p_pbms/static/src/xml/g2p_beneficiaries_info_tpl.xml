@@ -3,7 +3,9 @@
     <t t-name="g2p_beneficiaries_info_tpl">
         <div class="g2p-beneficiaries" style="font-size: 18px;">
             <!-- Search input with search and arch buttons -->
-            
+            <button type="button" class="btn btn-secondary" t-on-click="searchRegistrants">
+                            <i class="fa fa-search"/>
+                        </button>
             <t t-if="state.searched">
                 <h3><t t-esc="state.title"/></h3>
             </t>

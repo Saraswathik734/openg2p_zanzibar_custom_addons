@@ -16,7 +16,8 @@
                     <group>
                         <field name="mnemonic"/>
                         <field name="description"/>
-                        <field name="target_registry_type" readonly="1"/>
+                        <field name="quantity"/>
+                        <field name="target_registry_type" invisible="1"/>
                         <!-- Domain widget for the 'farmer' type -->
                         <field name="pbms_domain" widget="domain"
                                options="{'model': 'g2p.farmer.registry'}"
@@ -43,7 +44,8 @@
             <tree string="Entitlement Rule">
                 <field name="mnemonic"/>
                 <field name="description"/>
-                <field name="target_registry_type"/>
+                <field name="quantity"/>
+                <field name="target_registry_type" invisible="1"/>
                 <field name="pbms_domain"/>
                 <button name="action_open_view" type="object" class="fa fa-eye"/>
             </tree>

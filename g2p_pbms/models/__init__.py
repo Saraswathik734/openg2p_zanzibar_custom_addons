@@ -22,3 +22,4 @@ from .program_eligibility_list import (
     G2PEligibilitySummaryWizard,
 )
 from .entitlement import G2PEntitlementRuleDefinition 
+from .config_settings import ResConfigSettings

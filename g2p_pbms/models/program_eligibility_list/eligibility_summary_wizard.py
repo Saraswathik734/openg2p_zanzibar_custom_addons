@@ -206,7 +206,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
 
         for wizard in self:
             wizard.summary_line_ids = [(5, 0, 0)]
-            api_url = self.env['ir.config_parameter'].sudo().get_param('API_URL')
+            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
             if not api_url:
                 _logger.error("API_URL not set in environment")
             endpoint = f"{api_url}/get_summary"

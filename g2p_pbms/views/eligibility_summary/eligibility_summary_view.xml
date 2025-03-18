@@ -38,18 +38,12 @@
                 <group name="beneficiary_search_farmer" invisible="target_registry_type != 'farmer'">
                   <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.farmer.registry'}"/>
                   <div class="input-group-append">
-            <button type="button" class="btn btn-secondary" name="search_beneficiaries">
-                <i class="fa fa-search"> Search</i>
-            </button>
-        </div>
+                  </div>
                 </group>
                 <group name="beneficiary_search_student" invisible="target_registry_type != 'student'">
                   <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.student.registry'}"/>
                         <div class="input-group-append">
-            <button type="button" class="btn btn-secondary" name="search_beneficiaries">
-                <i class="fa fa-search"> Search</i>
-            </button>
-        </div>
+                        </div>
                 </group>
               </group>
             <!-- Container for the QWeb-based beneficiary list -->

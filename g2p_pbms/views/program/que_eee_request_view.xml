@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_g2p_que_eee_request" model="ir.actions.act_window">
+        <field name="name">Que EEE Request</field>
+        <field name="res_model">g2p.que.eee.request</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="view_g2p_que_eee_request_tree" model="ir.ui.view">
+        <field name="name">view_g2p_que_eee_request_tree</field>
+        <field name="model">g2p.que.eee.request</field>
+        <field name="arch" type="xml">
+            <tree default_order="creation_date desc" delete="false">
+                <control>
+                <create string="Create New Beneficiary List"/>
+                </control>
+                <field name="brief" string="Brief"/>
+                <field name="eligibility_process_status" string="Eligibility Process Status" widget="badge"/>
+                <field name="entitlement_process_status" string=" Entitlement Process Status" widget="badge"/>
+                <field name="creation_date" string="Created On" readonly="1"/>
+                <field name="processed_date" string="Processed On" readonly="1"/>
+                <button name="action_open_summary_wizard" type="object" string="Open Summary" class="oe_link"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
