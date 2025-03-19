@@ -5,7 +5,6 @@
     <field name="name">Programs</field>
     <field name="res_model">g2p.program.definition</field>
     <field name="view_mode">tree,form</field>
-    <field name="context">{'form_view_initial_mode': 'readonly', 'create': False}</field>
   </record>
 
   <!-- Program Form View -->
@@ -17,21 +16,21 @@
         <sheet>
           <group>
             <group string="Program Information">
-              <field name="program_mnemonic" readonly="1"/>
-              <field name="description" readonly="1"/>
+              <field name="program_mnemonic" readonly="not context.get('program_form_edit')"/>
+              <field name="description" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Program Configuration">
-              <field name="delivery_id" readonly="1"/>
-              <field name="target_registry_type" readonly="1"/>
-              <field name="program_status" readonly="1"/>
+              <field name="delivery_id" readonly="not context.get('program_form_edit')"/>
+              <field name="target_registry_type" readonly="not context.get('program_form_edit')"/>
+              <field name="program_status" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Entitlement Configuration">
-              <field name="max_quantity" readonly="1"/>
+              <field name="max_quantity" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Cycle Configuration">
-                <field name="disbursement_frequency" readonly="1"/>
-                <field name="disbursement_type" readonly="1"/>
-                <field name="disbursement_cycle_list" readonly="1"/>
+                <field name="disbursement_frequency" readonly="not context.get('program_form_edit')"/>
+                <field name="disbursement_type" readonly="not context.get('program_form_edit')"/>
+                <field name="disbursement_cycle_list" readonly="not context.get('program_form_edit')"/>
             </group>
           </group>
           <notebook>
@@ -76,8 +75,8 @@
     <field name="name">g2p.programs.tree</field>
     <field name="model">g2p.program.definition</field>
     <field name="arch" type="xml">
-      <tree string="G2P Programs" create="false">
-        <field name="program_mnemonic"/>
+      <tree string="G2P Programs">
+        <field name="program_mnemonic" />
         <field name="description"/>
         <field name="delivery_id"/>
         <field name="target_registry_type"/>

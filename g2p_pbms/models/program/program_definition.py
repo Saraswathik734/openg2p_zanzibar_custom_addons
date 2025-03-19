@@ -77,13 +77,11 @@ class G2PProgramDefinition(models.Model):
 
     def action_open_edit(self):
         self.ensure_one()
-        edit_view_id = self.env.ref('g2p_pbms.view_g2p_pgm_edit').id
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'g2p.program.definition',
             'res_id': self.id,
             'view_mode': 'form',
-            'views': [(edit_view_id, 'form')],
             'target': 'current',
-            'context': {'form_view_initial_mode': 'edit'},
+            'context':{'create': False, 'program_form_edit':True},
         }

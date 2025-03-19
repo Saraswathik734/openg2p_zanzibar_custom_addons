@@ -9,7 +9,6 @@
         "security/ir.model.access.csv",
         "views/agency/agencies_view.xml",
         "views/program/program_view.xml",
-        "views/program/program_view_edit.xml",
         "views/program/que_eee_request_view.xml",
         "views/registries/student_registry_view.xml",
         "views/registries/farmer_registry_view.xml",
@@ -23,7 +22,9 @@
         "web.assets_backend": [
             "/g2p_pbms/static/src/css/custom_styles.scss",
             "/g2p_pbms/static/src/js/beneficiaries_widget.js",
+            "/g2p_pbms/static/src/js/create_program.js",
             "/g2p_pbms/static/src/xml/g2p_beneficiaries_info_tpl.xml",
+            "/g2p_pbms/static/src/xml/create_program_tpl.xml",
         ],
     },
     "installable": True,
