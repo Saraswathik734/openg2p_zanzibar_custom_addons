@@ -134,7 +134,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
         api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
         if not api_url:
             _logger.error("API URL not set in environment")
-        endpoint = f"{api_url}/search"
+        endpoint = f"{api_url}/search_beneficiaries"
         payload = {
             "message": {
                 "pbms_request_id": wizard.pbms_request_id,
@@ -170,7 +170,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
             if not api_url:
                 _logger.error("API_URL not set in environment")
-            endpoint = f"{api_url}/get_summary"
+            endpoint = f"{api_url}/eee_summary"
             payload = {
                 "signature": "string",
                 "header": {
