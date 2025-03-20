@@ -144,7 +144,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
                 "target_registry_type": target_registry_type,
                 "page": page,
                 "page_size": page_size,
-                "search_query": wizard.beneficiary_search or "",
+                "search_query": wizard.sql_query or "",
                 "order_by": wizard.order_by_condition or "id asc",
             }
         }
