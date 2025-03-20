@@ -37,6 +37,7 @@ class G2PQueEEERequest(models.Model):
             "target_registry_type": self.program_id.target_registry_type,
             "brief": self.brief,
             "program_id": self.program_id.id,
+            "pbms_request_id": self.pbms_request_id,
         }
 
         wizard = self.env["g2p.eligibility.summary.wizard"].create(wizard_vals)
