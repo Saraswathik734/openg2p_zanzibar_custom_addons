@@ -35,3 +35,8 @@
 .o_list_table td[name="processed_date"] {
     width: 16% !important;
 }
+
+/* Remove table lines */
+.summary_tree_view > div > table > tbody > tr {
+    border-style : hidden !important;
+}

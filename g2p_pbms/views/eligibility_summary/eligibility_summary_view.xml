@@ -14,19 +14,19 @@
           <notebook>
            <page string="Summary">
               <group col="2">
-                <group>
-                  <field name="summary_general_line_ids">
-                    <tree string="General Info">
-                      <field name="key"/>
-                      <field name="value"/>
+                <group string="General Info">
+                  <field name="summary_general_line_ids" nolabel="1" colspan="2">
+                    <tree class="summary_tree_view" create="false" edit="false">
+                      <field name="key" nolabel="1"/>
+                      <field name="value" nolabel="1"/>
                     </tree>
                   </field>
                 </group>
-                <group>
-                  <field name="summary_statistics_line_ids">
-                    <tree string="Statistics">
-                      <field name="key"/>
-                      <field name="value"/>
+                <group string="Statistics">
+                  <field name="summary_statistics_line_ids" nolabel="1" colspan="2">
+                    <tree class="summary_tree_view" create="false" edit="false">
+                      <field name="key" nolabel="1"/>
+                      <field name="value" nolabel="1"/>
                     </tree>
                   </field>
                 </group>

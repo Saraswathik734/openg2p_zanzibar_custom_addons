@@ -227,7 +227,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
             for key, value in message.get('eligibility_summary', {}).items():
                 lines.append((0, 0, {
                     'wizard_id': wizard.id,
-                    'key': key,
+                    'key': key.replace('_', ' ').title(),
                     'value': str(value),
                     'summary_type': 'general'
                 }))
@@ -236,7 +236,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
             for key, value in message.get('entitlement_summary', {}).items():
                 lines.append((0, 0, {
                     'wizard_id': wizard.id,
-                    'key': key,
+                    'key': key.replace('_', ' ').title(),
                     'value': str(value),
                     'summary_type': 'statistics'
                 }))
