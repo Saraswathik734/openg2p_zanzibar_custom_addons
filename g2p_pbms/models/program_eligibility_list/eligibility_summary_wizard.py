@@ -131,8 +131,8 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
                 rec.sql_query = "Error formatting query"
 
     @api.model
-    def get_beneficiaries(self, page, page_size):
-        wizard = self.env['g2p.eligibility.summary.wizard'].browse(self.env.context.get('active_id'))
+    def get_beneficiaries(self, wizard_id, page, page_size):
+        wizard = self.browse(wizard_id)
         target_registry_type = wizard.target_registry_type
         api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
         if not api_url:
