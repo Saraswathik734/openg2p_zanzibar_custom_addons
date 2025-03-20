@@ -28,7 +28,6 @@ export class G2PBeneficiariesComponent extends Component {
         this.state.page = 1;
         this.state.pageSize = 3;
         this.state.target_registry_type = this.props.record.data.target_registry_type;
-        console.log("HELLO:", this.state.target_registry_type);
         this._fetchRecords();
     }
 
