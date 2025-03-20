@@ -32,7 +32,6 @@ export class G2PBeneficiariesComponent extends Component {
     }
 
     async _fetchRecords() {
-        console.log("id:", this.props.record.data.id);
         const result = await this.orm.call(
             'g2p.eligibility.summary.wizard',
             'get_beneficiaries',
@@ -47,7 +46,7 @@ export class G2PBeneficiariesComponent extends Component {
             this.state.totalCount = result.total_count;
         }
         this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
-        this.state.target_registry_type = result.target_registry_type;
+        this.state.target_registry_type = this.props.record.data.target_registry_type;
     }
 
     async nextPage() {
