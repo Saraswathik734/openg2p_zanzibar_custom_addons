@@ -50,5 +50,6 @@ class G2PQueEEERequest(models.Model):
             'context': {
                 'default_target_registry_type': self.program_id.target_registry_type,
                 'default_program_id': self.program_id.id,
+                'default_pbms_request_id': self.pbms_request_id,
             },
         }

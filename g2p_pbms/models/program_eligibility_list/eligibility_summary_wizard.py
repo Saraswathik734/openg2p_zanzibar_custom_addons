@@ -20,6 +20,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
     )
     brief = fields.Text(string='Brief')
     program_id = fields.Many2one('g2p.program.definition', string='Program')
+    pbms_request_id = fields.Char(string='PBMS Request ID')
     beneficiary_search = fields.Char(string='Search Beneficiary')
 
     # Store all summary lines from the API response
@@ -135,120 +136,103 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
     def get_beneficiaries(self, page, page_size):
         wizard = self.env['g2p.eligibility.summary.wizard'].browse(self.env.context.get('active_id'))
         target_registry_type = wizard.target_registry_type
-        _logger.info("Target registry type: %s", target_registry_type)
-        all_beneficiaries = [
-            {
-                "id": 2,
-                "unique_id": "DEF456",
-                "registration_date": "2025-02-27T15:49:33.450868",
-                "name": "Shyam",
-                "land_area": 20,
-                "no_of_cattle_heads": 0,
-                "no_of_poultry_heads": 0
-            },
-            {
-                "id": 3,
-                "unique_id": "ABC456",
-                "registration_date": "2025-02-27T15:49:33.450868",
-                "name": "Govinda",
-                "land_area": 0,
-                "no_of_cattle_heads": 9,
-                "no_of_poultry_heads": 30
-            },
-            {
-                "id": 5,
-                "unique_id": "ABC789",
-                "registration_date": "2025-02-27T15:49:33.450868",
-                "name": "Aditya",
-                "land_area": 50,
-                "no_of_cattle_heads": 0,
-                "no_of_poultry_heads": 700
-            },
-            {
-                "id": 6,
-                "unique_id": "ABC739",
-                "registration_date": "2025-02-27T15:49:33.450868",
-                "name": "Madhu",
-                "land_area": 50,
-                "no_of_cattle_heads": 0,
-                "no_of_poultry_heads": 700
-            },
-            {
-                "id": 7,
-                "unique_id": "ABC799",
-                "registration_date": "2025-02-27T15:49:33.450868",
-                "name": "Sunny",
-                "land_area": 50,
-                "no_of_cattle_heads": 0,
-                "no_of_poultry_heads": 700
-            }
-        ]
-        total_count = len(all_beneficiaries)
-        start_index = (page - 1) * page_size
-        end_index = start_index + page_size
-        beneficiaries = all_beneficiaries[start_index:end_index]
-        _logger.info("Beneficiary type: %s", target_registry_type)
-        return {
+        api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
+        if not api_url:
+            _logger.error("API URL not set in environment")
+        endpoint = f"{api_url}/search"
+        payload = {
             "message": {
-                "total_beneficiary_count": total_count,
+                "pbms_request_id": wizard.pbms_request_id,
+                "target_registry_type": target_registry_type,
                 "page": page,
                 "page_size": page_size,
-                "beneficiaries": beneficiaries,
-            },
-            "target_registry_type": "farmer",
+                "search_query": wizard.beneficiary_search or "",
+                "order_by": wizard.order_by_condition or "id asc",
+            }
         }
+        try:
+            response = requests.post(endpoint, json=payload, timeout=10)
+            response.raise_for_status()
+            api_response = response.json()
+            _logger.info("API response: %s", api_response)
+        except Exception as e:
+            _logger.error("API call failed: %s", e)
+            return {
+                "message": {
+                    "total_beneficiary_count": 0,
+                    "page": page,
+                    "page_size": page_size,
+                    "beneficiaries": []
+                }
+            }
+        return api_response
+
 
     @api.depends('target_registry_type', 'beneficiary_search')
     def _compute_summary_lines(self):
-        general_keys = ['id', 'program_id', 'program_mnemonic', 'target_registry_type',
-                        'que_eee_request_id', 'number_of_registrants', 'date_created']
-        statistics_keys = ['age_mean', 'age_quartile_25', 'age_quartile_50', 'age_quartile_75']
-
         for wizard in self:
             wizard.summary_line_ids = [(5, 0, 0)]
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
             if not api_url:
                 _logger.error("API_URL not set in environment")
             endpoint = f"{api_url}/get_summary"
+            payload = {
+                "signature": "string",
+                "header": {
+                    "version": "1.0.0",
+                    "message_id": "string",
+                    "message_ts": "string",
+                    "action": "get_summary",
+                    "sender_id": "string",
+                    "sender_uri": "",
+                    "receiver_id": "",
+                    "total_count": 0,
+                    "is_msg_encrypted": False,
+                    "meta": "string"
+                },
+                "message": {
+                    "pbms_request_id": wizard.pbms_request_id,
+                    "target_registry_type": wizard.target_registry_type
+                }
+            }
             try:
-                response = requests.get(endpoint, params={'type': wizard.target_registry_type}, timeout=10)
+                response = requests.post(endpoint, json=payload, timeout=10)
                 response.raise_for_status()
                 api_response = response.json()
                 _logger.info("API response: %s", api_response)
             except Exception as e:
                 _logger.error("API call failed: %s", e)
-                api_response = {
+                _logger.info("API Endpoint: %s", endpoint)
+                return {
                     "message": {
-                        "id": 2,
-                        "program_id": 2,
-                        "program_mnemonic": "P2",
-                        "target_registry_type": "student",
-                        "que_eee_request_id": 2,
-                        "number_of_registrants": 3,
-                        "date_created": "2025-02-28T12:24:00.562302",
-                        "age_mean": 10.33,
-                        "age_quartile_25": 8,
-                        "age_quartile_50": 9,
-                        "age_quartile_75": 12
+                        "eligibility_summary": {},
+                        "entitlement_summary": {}
                     }
                 }
             lines = []
-            for key, value in api_response.get('message', {}).items():
-                if key in general_keys:
-                    lines.append((0, 0, {
-                        'wizard_id': wizard.id,
-                        'key': key,
-                        'value': str(value),
-                        'summary_type': 'general'
-                    }))
-                elif key in statistics_keys:
-                    lines.append((0, 0, {
-                        'wizard_id': wizard.id,
-                        'key': key,
-                        'value': str(value),
-                        'summary_type': 'statistics'
-                    }))
+            message = api_response.get('message', {})
+
+            # Process all keys from eligibility_summary
+            for key, value in message.get('eligibility_summary', {}).items():
+                lines.append((0, 0, {
+                    'wizard_id': wizard.id,
+                    'key': key,
+                    'value': str(value),
+                    'summary_type': 'general'
+                }))
+
+            # Process all keys from entitlement_summary
+            for key, value in message.get('entitlement_summary', {}).items():
+                lines.append((0, 0, {
+                    'wizard_id': wizard.id,
+                    'key': key,
+                    'value': str(value),
+                    'summary_type': 'statistics'
+                }))
+
             wizard.summary_line_ids = lines
+
+
 
     @api.depends('summary_line_ids')
     def _compute_general(self):
