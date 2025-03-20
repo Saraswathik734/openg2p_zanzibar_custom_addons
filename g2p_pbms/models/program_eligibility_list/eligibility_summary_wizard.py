@@ -119,7 +119,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
 
             try:
                 formatted_query = query_str % tuple(formatted_params)
-                formatted_query = formatted_query.replace('"', '\\"')
+                # formatted_query = formatted_query.replace('"', '\\"')
                 rec.sql_query = formatted_query
                 rec.order_by_condition = order_by_field
                 _logger.info("Query: %s", rec.sql_query)
@@ -139,6 +139,19 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
             _logger.error("API URL not set in environment")
         endpoint = f"{api_url}/search_beneficiaries"
         payload = {
+            "signature": "string",
+                "header": {
+                    "version": "1.0.0",
+                    "message_id": "string",
+                    "message_ts": "string",
+                    "action": "search_beneficiaries",
+                    "sender_id": "string",
+                    "sender_uri": "",
+                    "receiver_id": "",
+                    "total_count": 0,
+                    "is_msg_encrypted": False,
+                    "meta": "string"
+                },
             "message": {
                 "pbms_request_id": wizard.pbms_request_id,
                 "target_registry_type": target_registry_type,
@@ -180,7 +193,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
                     "version": "1.0.0",
                     "message_id": "string",
                     "message_ts": "string",
-                    "action": "get_summary",
+                    "action": "eee_summary",
                     "sender_id": "string",
                     "sender_uri": "",
                     "receiver_id": "",
