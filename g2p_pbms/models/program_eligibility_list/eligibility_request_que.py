@@ -14,6 +14,7 @@ class G2PQueEEERequest(models.Model):
         [
             ("not_applicable", "NOT APPLICABLE"),
             ("pending", "PENDING"),
+            ("processing", "PROCESSING"),
             ("complete", "COMPLETE"),
         ],
         string="Eligibility Process Status",
@@ -23,6 +24,7 @@ class G2PQueEEERequest(models.Model):
         [
             ("not_applicable", "NOT APPLICABLE"),
             ("pending", "PENDING"),
+            ("processing", "PROCESSING"),
             ("complete", "COMPLETE"),
         ],
         string="Entitlement Process Status",
