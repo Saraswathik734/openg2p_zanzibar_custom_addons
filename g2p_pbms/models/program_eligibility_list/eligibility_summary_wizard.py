@@ -118,7 +118,9 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
             )
 
             try:
-                rec.sql_query = query_str % tuple(formatted_params)
+                formatted_query = query_str % tuple(formatted_params)
+                formatted_query = formatted_query.replace('"', '\\"')
+                rec.sql_query = formatted_query
                 rec.order_by_condition = order_by_field
                 _logger.info("Query: %s", rec.sql_query)
             except Exception as e:
