@@ -41,6 +41,14 @@ class G2PProgramDefinition(models.Model):
     #Entitlement Configuration
     max_quantity = fields.Integer(string="Max Quantity")
 
+    # Add related field for measurement_unit from delivery_id
+    measurement_unit = fields.Char(
+        related='delivery_id.measurement_unit',
+        string="Measurement Unit",
+        readonly=True
+    )
+    display_quantity = fields.Char(string="Quantity", compute="_compute_display_quantity")
+
     # Cycle configuration
     disbursement_frequency = fields.Selection([
         ('weekly', 'Weekly'),
@@ -69,6 +77,11 @@ class G2PProgramDefinition(models.Model):
             "The program mnemonic must be unique!",
         )
     ]
+
+    @api.depends('max_quantity', 'measurement_unit')
+    def _compute_display_quantity(self):
+        for rec in self:
+            rec.display_quantity = f"{rec.max_quantity} {rec.measurement_unit or ''}"
 
     @api.depends('entitlement_id')
     def _compute_entitlement_inline_ids(self):

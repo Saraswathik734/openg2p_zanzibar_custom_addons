@@ -78,6 +78,7 @@ class G2PDeliveryCodes(models.Model):
         required=True,
     )
     delivery_description = fields.Text(string="Delivery Description")
+    measurement_unit = fields.Char(string="Measurement Unit")
 
     _sql_constraints = [
         (

@@ -22,10 +22,12 @@
             <group string="Program Configuration">
               <field name="delivery_id" readonly="not context.get('program_form_edit')"/>
               <field name="target_registry_type" readonly="not context.get('program_form_edit')"/>
+              <field name="measurement_unit" readonly="not context.get('program_form_edit')" invisible="not context.get('program_form_edit')"/>
               <field name="program_status" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Entitlement Configuration">
-              <field name="max_quantity" readonly="not context.get('program_form_edit')"/>
+              <field name="max_quantity" readonly="not context.get('program_form_edit')" invisible="not context.get('program_form_edit')"/>
+              <field name="display_quantity" readonly="not context.get('program_form_edit')" invisible="context.get('program_form_edit')"/>
             </group>
             <group string="Cycle Configuration">
                 <field name="disbursement_frequency" readonly="not context.get('program_form_edit')"/>

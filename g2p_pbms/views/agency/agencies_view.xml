@@ -54,6 +54,7 @@
                                     <field name="delivery_mnemonic"/>
                                     <field name="delivery_description"/>
                                     <field name="delivery_type"/>
+                                    <field name="measurement_unit"/>
                                     <field name="delivery_classification_id"/>
                                 </tree>
                             </field>
@@ -139,6 +140,7 @@
                         <field name="delivery_mnemonic"/>
                         <field name="delivery_type"/>
                         <field name="delivery_classification_id"/>
+                        <field name="measurement_unit"/>
                         <field name="delivery_description"/>
                     </group>
                 </sheet>
@@ -153,6 +155,7 @@
                 <field name="delivery_mnemonic"/>
                 <field name="delivery_type"/>
                 <field name="delivery_classification_id"/>
+                <field name="measurement_unit"/>
                 <field name="delivery_description"/>
             </tree>
         </field>
