@@ -42,11 +42,6 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
 
     sql_query = fields.Char(string="Query", compute="_get_query", store=True)
     order_by_condition = fields.Char(string="Order By", default="name")
-    
-    page = fields.Integer(string='Page', default=1)
-    page_size = fields.Integer(string='Page Size', default=3)
-    total_count = fields.Integer(string='Total Count', readonly=True)
-    page_info = fields.Char(string='Page Info', compute='_compute_page_info')
 
     def _compute_dummy(self):
         for wizard in self:
