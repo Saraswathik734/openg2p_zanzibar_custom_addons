@@ -109,9 +109,9 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
             where_str = ("%s" % where_clause) if where_clause else ""
             # Use the target model's table name in the SQL query.
             query_str = (
-                where_str + " order by %s asc" % order_by_field
+                where_str 
             )
-
+            
             # Format the parameters as strings.
             formatted_params = list(
                 map(lambda x: "'" + str(x) + "'", where_clause_params)
@@ -119,6 +119,7 @@ class G2PEligibilitySummaryWizard(models.TransientModel):
 
             try:
                 rec.sql_query = query_str % tuple(formatted_params)
+                rec.order_by_condition = order_by_field
                 _logger.info("Query: %s", rec.sql_query)
             except Exception as e:
                 _logger.error(
