@@ -16,4 +16,22 @@
         </xpath>
     </t>
 
+     <t t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath expr="//button[contains(@class, 'o_list_button_add')]" position="attributes">
+            <attribute name="t-if">model.root.resModel != 'g2p.program.definition'</attribute>
+        </xpath>
+    </t>
+
+    <t t-inherit="web.FormView" t-inherit-mode="extension">
+        <xpath expr="//button[contains(@class, 'o_form_button_create')]" position="attributes">
+            <attribute name="t-if">model.root.resModel != 'g2p.program.definition'</attribute>
+        </xpath>
+        <xpath
+            expr="//button[contains(@class, 'btn-outline-primary o_form_button_create')]"
+            position="attributes"
+        >
+            <attribute name="t-if">model.root.resModel != 'g2p.program.definition'</attribute>
+        </xpath>
+    </t>
+
 </template>
