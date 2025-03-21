@@ -30,8 +30,8 @@
             <form string="G2P Agencies">
                 <sheet>
                     <group>
-                        <field name="name" />
-                        <field name="mnemonic" />
+                        <field name="name" readonly="not context.get('agency_form_edit')"/>
+                        <field name="mnemonic" readonly="not context.get('agency_form_edit')"/>
                     </group>
                     <notebook>
                         <page string="Agency Regions">
@@ -72,7 +72,6 @@
                 <field name="name"/>
                 <field name="mnemonic"/>
                 <button name="action_open_edit" type="object" class="fa fa-pencil"/>
-                <button name="action_open_view" type="object" class="fa fa-eye"/>
             </tree>
         </field>
     </record>
@@ -85,8 +84,8 @@
             <form string="G2P Agency Regions">
                 <sheet>
                     <group>
-                        <field name="region_code"/>
-                        <field name="region_name"/>
+                        <field name="region_code" readonly="not context.get('region_form_edit')"/>
+                        <field name="region_name" readonly="not context.get('region_form_edit')"/>
                     </group>
                 </sheet>
             </form>
@@ -99,6 +98,7 @@
             <tree string="G2P Agency Regions" limit="10">
                 <field name="region_code"/>
                 <field name="region_name"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil"/>
             </tree>
         </field>
     </record>
@@ -111,8 +111,8 @@
             <form string="Delivery Classification Codes">
                 <sheet>
                     <group>
-                        <field name="delivery_classification_mnemonic"/>
-                        <field name="description"/>
+                        <field name="delivery_classification_mnemonic" readonly="not context.get('delivery_classification_code_form_edit')"/>
+                        <field name="description" readonly="not context.get('delivery_classification_code_form_edit')"/>
                     </group>
                 </sheet>
             </form>
@@ -125,6 +125,7 @@
             <tree string="Delivery Classification Codes">
                 <field name="delivery_classification_mnemonic"/>
                 <field name="description"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil"/>
             </tree>
         </field>
     </record>
@@ -137,11 +138,11 @@
             <form string="Delivery Codes">
                 <sheet>
                     <group>
-                        <field name="delivery_mnemonic"/>
-                        <field name="delivery_type"/>
-                        <field name="delivery_classification_id"/>
-                        <field name="measurement_unit"/>
-                        <field name="delivery_description"/>
+                        <field name="delivery_mnemonic" readonly="not context.get('delivery_code_form_edit')"/>
+                        <field name="delivery_type" readonly="not context.get('delivery_code_form_edit')"/>
+                        <field name="delivery_classification_id" readonly="not context.get('delivery_code_form_edit')"/>
+                        <field name="measurement_unit" readonly="not context.get('delivery_code_form_edit')"/>
+                        <field name="delivery_description" readonly="not context.get('delivery_code_form_edit')"/>
                     </group>
                 </sheet>
             </form>
@@ -157,6 +158,7 @@
                 <field name="delivery_classification_id"/>
                 <field name="measurement_unit"/>
                 <field name="delivery_description"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil"/>
             </tree>
         </field>
     </record>

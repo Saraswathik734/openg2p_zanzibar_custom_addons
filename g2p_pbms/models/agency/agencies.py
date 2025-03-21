@@ -14,25 +14,14 @@ class G2PAgencies(models.Model):
     regions = fields.Many2many("g2p.regions", string="Regions")
 
     def action_open_edit(self):
+        self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Edit Record',
-            'res_model': self._name,
+            'res_model': 'g2p.agencies',
             'res_id': self.id,
             'view_mode': 'form',
-            'target': 'new',
-            'flags': {'mode': 'edit'},
-        }
-
-    def action_open_view(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'View Record',
-            'res_model': self._name,
-            'res_id': self.id,
-            'view_mode': 'form',
-            'target': 'new',
-            'flags': {'mode': 'readonly'}
+            'target': 'current',
+            'context':{'create': False, 'agency_form_edit':True},
         }
 
 
@@ -54,6 +43,17 @@ class G2PDeliveryClassificationCodes(models.Model):
             "The delivery classification mnemonic must be unique!",
         )
     ]
+
+    def action_open_edit(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'g2p.delivery.classification.codes',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'context':{'create': False, 'delievry_classification_code_form_edit':True},
+        }
 
 
 class G2PDeliveryCodes(models.Model):
@@ -87,3 +87,15 @@ class G2PDeliveryCodes(models.Model):
             "The delivery mnemonic must be unique!",
         )
     ]
+
+    def action_open_edit(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'g2p.delivery.codes',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'context':{'create': False, 'delivery_code_form_edit':True},
+        }
+
