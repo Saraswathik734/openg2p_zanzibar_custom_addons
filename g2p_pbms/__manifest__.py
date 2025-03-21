@@ -22,17 +22,10 @@
         "web.assets_backend": [
             "/g2p_pbms/static/src/css/custom_styles.scss",
             "/g2p_pbms/static/src/js/beneficiaries_widget.js",
-            "/g2p_pbms/static/src/js/create_program.js",
-            "/g2p_pbms/static/src/js/create_agency.js",
-            "/g2p_pbms/static/src/js/create_region.js",
-            "/g2p_pbms/static/src/js/create_delivery_code.js",
-            "/g2p_pbms/static/src/js/create_delivery_classification_code.js",
+            "/g2p_pbms/static/src/js/create_button.js",
             "/g2p_pbms/static/src/xml/g2p_beneficiaries_info_tpl.xml",
-            "/g2p_pbms/static/src/xml/create_program_tpl.xml",
-            "/g2p_pbms/static/src/xml/create_agency_tpl.xml",
-            "/g2p_pbms/static/src/xml/create_region_tpl.xml",
-            "/g2p_pbms/static/src/xml/create_delivery_code_tpl.xml",
-            "/g2p_pbms/static/src/xml/create_delivery_classification_code_tpl.xml"
+            "/g2p_pbms/static/src/xml/create_button_tpl.xml",
+
         ],
     },
     "installable": True,
