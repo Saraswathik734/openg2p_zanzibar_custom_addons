@@ -8,9 +8,9 @@ from ..registries import G2PRegistryType
 
 _logger = logging.getLogger(__name__)
 
-class G2PEligibilitySummaryWizard(models.TransientModel):
-    _name = 'g2p.eligibility.summary.wizard'
-    _description = 'Eligibility Summary Wizard'
+class G2PEEESummaryWizard(models.TransientModel):
+    _name = 'g2p.eee.summary.wizard'
+    _description = 'EEE Summary Wizard'
     _rec_name = 'brief'
 
     target_registry_type = fields.Selection(
@@ -264,7 +264,7 @@ class G2PAPISummaryLine(models.TransientModel):
     _name = 'g2p.api.summary.line'
     _description = 'Dynamic API Summary Line'
 
-    wizard_id = fields.Many2one('g2p.eligibility.summary.wizard', string='Wizard')
+    wizard_id = fields.Many2one('g2p.eee.summary.wizard', string='Wizard')
     key = fields.Char(string='Field')
     value = fields.Text(string='Value')
     summary_type = fields.Selection(

@@ -15,11 +15,13 @@ from .registries import (
     G2PStudentRegistry,
     G2PRegistryType,
 )
-from .eligibility import G2PEligibilityRuleDefinition
-from .program_eligibility_list import (
-    G2PEligibilityList,
+from .eligibility import (
+    G2PEligibilityRuleDefinition,
+    G2PEligibilityList
+)
+from .eee import (
     G2PQueEEERequest,
-    G2PEligibilitySummaryWizard,
+    G2PEEESummaryWizard,
 )
 from .entitlement import G2PEntitlementRuleDefinition 
 from .config_settings import ResConfigSettings
