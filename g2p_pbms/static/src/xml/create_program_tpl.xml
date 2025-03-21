@@ -10,13 +10,13 @@
                     class="btn btn-primary o_list_button_add_program"
                     accesskey="p"
                     title="Create a New Program"
-                    t-on-click="load_wizard"
+                    t-on-click="load_program_wizard"
                 >Create Program</button>
             </t>
         </xpath>
     </t>
 
-     <t t-inherit="web.ListView" t-inherit-mode="extension">
+    <t t-inherit="web.ListView" t-inherit-mode="extension">
         <xpath expr="//button[contains(@class, 'o_list_button_add')]" position="attributes">
             <attribute name="t-if">model.root.resModel != 'g2p.program.definition'</attribute>
         </xpath>
