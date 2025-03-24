@@ -14,7 +14,7 @@
           <notebook>
            <page string="Summary">
               <group col="2">
-                <group string="General Info">
+                <group>
                   <field name="summary_general_line_ids" nolabel="1" colspan="2">
                     <tree class="summary_tree_view" create="false" edit="false">
                       <field name="key" nolabel="1"/>
@@ -22,8 +22,13 @@
                     </tree>
                   </field>
                 </group>
-                <group string="Statistics">
-                  <field name="summary_statistics_line_ids" nolabel="1" colspan="2">
+                <group>
+                <div style="white-space: nowrap; margin-bottom: 10px;">
+                    <strong>
+                      <field name="group_title" readonly="1" widget="handle_display"/>
+                    </strong>
+                  </div>
+                  <field name="summary_registry_line_ids" nolabel="1" colspan="2">
                     <tree class="summary_tree_view" create="false" edit="false">
                       <field name="key" nolabel="1"/>
                       <field name="value" nolabel="1"/>

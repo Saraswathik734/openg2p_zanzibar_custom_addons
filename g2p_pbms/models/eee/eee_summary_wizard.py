@@ -33,10 +33,11 @@ class G2PEEESummaryWizard(models.TransientModel):
         'g2p.api.summary.line', 'wizard_id', string='General Info',
         compute='_compute_general'
     )
-    summary_statistics_line_ids = fields.One2many(
-        'g2p.api.summary.line', 'wizard_id', string='Statistics',
-        compute='_compute_statistics'
+    summary_registry_line_ids = fields.One2many(
+        'g2p.api.summary.line', 'wizard_id', string='Registry Info',
+        compute='_compute_registry'
     )
+    group_title = fields.Char(compute='_compute_group_title', string="Group Title")
 
     dummy_beneficiaries_field = fields.Text(string="Beneficiaries", compute="_compute_dummy")
 
@@ -46,6 +47,11 @@ class G2PEEESummaryWizard(models.TransientModel):
     def _compute_dummy(self):
         for wizard in self:
             wizard.dummy_beneficiaries_field = ""
+
+    @api.depends('target_registry_type')
+    def _compute_group_title(self):
+        for rec in self:
+            rec.group_title = 'Eligibility & Entitlement Statistics for %s' % rec.target_registry_type.capitalize()
 
     @api.depends("beneficiary_search", "target_registry_type")
     def _get_query(self):
@@ -181,6 +187,7 @@ class G2PEEESummaryWizard(models.TransientModel):
 
     @api.depends('target_registry_type', 'beneficiary_search')
     def _compute_summary_lines(self):
+        excluded_keys = ['id', 'target_registry_type']
         for wizard in self:
             wizard.summary_line_ids = [(5, 0, 0)]
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
@@ -216,15 +223,17 @@ class G2PEEESummaryWizard(models.TransientModel):
                 _logger.info("API Endpoint: %s", endpoint)
                 return {
                     "message": {
-                        "eligibility_summary": {},
-                        "entitlement_summary": {}
+                        "general_summary": {},
+                        "registry_summary": {}
                     }
                 }
             lines = []
             message = api_response.get('message', {})
 
-            # Process all keys from eligibility_summary
-            for key, value in message.get('eligibility_summary', {}).items():
+            # Process all keys from general_summary
+            for key, value in message.get('general_summary', {}).items():
+                if key in excluded_keys:
+                    continue
                 lines.append((0, 0, {
                     'wizard_id': wizard.id,
                     'key': key.replace('_', ' ').title(),
@@ -232,13 +241,15 @@ class G2PEEESummaryWizard(models.TransientModel):
                     'summary_type': 'general'
                 }))
 
-            # Process all keys from entitlement_summary
-            for key, value in message.get('entitlement_summary', {}).items():
+            # Process all keys from registry_summary
+            for key, value in message.get('registry_summary', {}).items():
+                if key in excluded_keys:
+                    continue
                 lines.append((0, 0, {
                     'wizard_id': wizard.id,
                     'key': key.replace('_', ' ').title(),
                     'value': str(value),
-                    'summary_type': 'statistics'
+                    'summary_type': 'registry'
                 }))
 
             wizard.summary_line_ids = lines
@@ -253,10 +264,10 @@ class G2PEEESummaryWizard(models.TransientModel):
             )
 
     @api.depends('summary_line_ids')
-    def _compute_statistics(self):
+    def _compute_registry(self):
         for wizard in self:
-            wizard.summary_statistics_line_ids = wizard.summary_line_ids.filtered(
-                lambda r: r.summary_type == 'statistics'
+            wizard.summary_registry_line_ids = wizard.summary_line_ids.filtered(
+                lambda r: r.summary_type == 'registry'
             )
 
 
@@ -268,7 +279,7 @@ class G2PAPISummaryLine(models.TransientModel):
     key = fields.Char(string='Field')
     value = fields.Text(string='Value')
     summary_type = fields.Selection(
-        [('general', 'General'), ('statistics', 'Statistics')],
+        [('general', 'General'), ('registry', 'Registry')],
         string="Summary Type",
         default='general'
     )
