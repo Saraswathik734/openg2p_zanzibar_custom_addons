@@ -52,7 +52,7 @@ class G2PDeliveryClassificationCodes(models.Model):
             'res_id': self.id,
             'view_mode': 'form',
             'target': 'current',
-            'context':{'create': False, 'delievry_classification_code_form_edit':True},
+            'context':{'create': False, 'delivery_classification_code_form_edit':True},
         }
 
 
