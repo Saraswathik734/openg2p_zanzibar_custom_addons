@@ -57,7 +57,7 @@ patch(ListController.prototype, {
             view_mode: "form",
             views: [[false, "form"]],
             target: "current",
-            context: { create: false, program_form_edit: true },
+            context: { create: false, program_form_edit: true, program_form_create: true },
         });
         return window.location;
     },

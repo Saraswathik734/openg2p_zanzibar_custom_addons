@@ -37,6 +37,11 @@ class G2PProgramDefinition(models.Model):
         string="Eligibility Request Queue",
         states={'draft': [('readonly', False)], 'confirm': [('readonly', True)]},
     )
+    program_cycle_ids = fields.One2many(
+        "g2p.disbursement.cycle",
+        "program_id",
+        string="Program Cycle",
+    )
 
     #Entitlement Configuration
     max_quantity = fields.Integer(string="Max Quantity")
@@ -60,15 +65,48 @@ class G2PProgramDefinition(models.Model):
         ('on_demand', 'On-Demand'),
     ], string="Disbursement Frequency", required=True, default='on_demand')
 
-    disbursement_type = fields.Selection([
-        ('auto', 'Auto'),
-        ('manual', 'Manual')
-    ], string="Disbursement Type", required=True, default='manual')
+    disbursement_day_of_week = fields.Selection([
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+        ('friday', 'Friday'),
+        ('saturday', 'Saturday'),
+        ('sunday', 'Sunday'),
+    ], string="Day of Week")
 
-    disbursement_cycle_list = fields.Selection([
+    disbursement_day_of_month = fields.Integer(string="Day of Month")
+    disbursement_start_month = fields.Selection([
+        ('january', 'January'),
+        ('february', 'February'),
+        ('march', 'March'),
+        ('april', 'April'),
+        ('may', 'May'),
+        ('june', 'June'),
+        ('july', 'July'),
+        ('august', 'August'),
+        ('september', 'September'),
+        ('october', 'October'),
+        ('november', 'November'),
+        ('december', 'December'),
+    ], string="Start Month")
+
+    on_demand_cycle_allowed = fields.Boolean(string="On-Demand Cycle Allowed")
+
+    beneficiary_list = fields.Selection([
         ('latest_always', 'Latest Always'),
         ('labeled', 'Labeled')
-    ], string="Disbursement Cycle List", required=True, default='latest_always')
+    ], string="Beneficiary List", required=True, default='latest_always')
+
+    label_for_beneficiary_list_id = fields.Many2one(
+        'g2p.que.eee.request', 
+        string="Label for Beneficiary List"
+    )    
+    # Computed booleans for dynamic visibility – stored to allow use in views.
+    show_disbursement_day_of_week = fields.Boolean(compute='_compute_visibility_frequency', store=True)
+    show_disbursement_day_of_month = fields.Boolean(compute='_compute_visibility_frequency', store=True)
+    show_disbursement_start_month = fields.Boolean(compute='_compute_visibility_frequency', store=True)
+    show_label_for_beneficiary_list = fields.Boolean(compute='_compute_visibility_beneficiary', store=True)
 
     _sql_constraints = [
         (
@@ -77,6 +115,18 @@ class G2PProgramDefinition(models.Model):
             "The program mnemonic must be unique!",
         )
     ]
+
+    @api.depends('disbursement_frequency')
+    def _compute_visibility_frequency(self):
+        for rec in self:
+            rec.show_disbursement_day_of_week = rec.disbursement_frequency in ('weekly', 'bi_weekly')
+            rec.show_disbursement_day_of_month = rec.disbursement_frequency in ('bi_weekly', 'monthly', 'quarterly', 'semi_annually', 'annually')
+            rec.show_disbursement_start_month = rec.disbursement_frequency in ('quarterly', 'semi_annually', 'annually')
+    
+    @api.depends('beneficiary_list')
+    def _compute_visibility_beneficiary(self):
+        for rec in self:
+            rec.show_label_for_beneficiary_list = rec.beneficiary_list == 'labeled'
 
     @api.depends('max_quantity', 'measurement_unit')
     def _compute_display_quantity(self):
@@ -96,5 +146,5 @@ class G2PProgramDefinition(models.Model):
             'res_id': self.id,
             'view_mode': 'form',
             'target': 'current',
-            'context':{'create': False, 'program_form_edit':True},
+            'context':{'create': False, 'program_form_edit':True, 'program_form_create':False},
         }

@@ -23,9 +23,6 @@ g2p_farmer_registry_registrar,Registrar Access Farmer Registry,g2p_pbms.model_g2
 g2p_eligibility_rule_definition_admin,Admin Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
 g2p_eligibility_rule_definition_registrar,Registrar Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
 
-g2p_eligibility_list_admin,Admin Access Eligibility List,g2p_pbms.model_g2p_eligibility_list,,1,1,1,1
-g2p_eligibility_list_registrar,Registrar Access Eligibility List,g2p_pbms.model_g2p_eligibility_list,,1,1,1,1
-
 g2p_que_eee_request_admin,Admin Access EEE Request Queue,g2p_pbms.model_g2p_que_eee_request,,1,1,1,1
 g2p_que_eee_request_registrar,Registrar Access EEE Request Queue,g2p_pbms.model_g2p_que_eee_request,,1,1,1,1
 
@@ -37,3 +34,6 @@ g2p_api_summary_line_registrar,Registrar Access API Summary Line,g2p_pbms.model_
 
 g2p_entitlement_rule_definition_admin,Admin Access Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,,1,1,1,1
 g2p_entitlement_rule_definition_registrar,Registrar Access Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,,1,1,1,1
+
+g2p_disbursement_cycle_admin,Admin Access Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,,1,1,1,1
+g2p_disbursement_cycle_registrar,Registrar Access Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,,1,1,1,1

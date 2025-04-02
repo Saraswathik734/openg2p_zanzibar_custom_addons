@@ -8,6 +8,7 @@ from .geography import (
 )
 from .program import (
     G2PProgramDefinition,
+    G2PDisbursementCycle,
 )
 from .registries import (
     G2PRegistry,
@@ -16,8 +17,7 @@ from .registries import (
     G2PRegistryType,
 )
 from .eligibility import (
-    G2PEligibilityRuleDefinition,
-    G2PEligibilityList
+    G2PEligibilityRuleDefinition
 )
 from .eee import (
     G2PQueEEERequest,

@@ -18,21 +18,35 @@
             <group string="Program Information">
               <field name="program_mnemonic" readonly="not context.get('program_form_edit')"/>
               <field name="description" readonly="not context.get('program_form_edit')"/>
+              <field name="program_status" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Program Configuration">
-              <field name="delivery_id" readonly="not context.get('program_form_edit')" options="{'no_create_edit': True, 'no_create': True}"/>
-              <field name="target_registry_type" readonly="not context.get('program_form_edit')"/>
-              <field name="measurement_unit" readonly="not context.get('program_form_edit')" invisible="not context.get('program_form_edit')"/>
-              <field name="program_status" readonly="not context.get('program_form_edit')"/>
+              <field name="delivery_id" readonly="not context.get('program_form_create')" options="{'no_create_edit': True, 'no_create': True}"/>
+              <field name="target_registry_type" readonly="not context.get('program_form_create')"/>
+              <field name="measurement_unit" readonly="not context.get('program_form_create')" invisible="not context.get('program_form_edit')"/>
             </group>
             <group string="Entitlement Configuration">
               <field name="max_quantity" readonly="not context.get('program_form_edit')" invisible="not context.get('program_form_edit')"/>
               <field name="display_quantity" readonly="not context.get('program_form_edit')" invisible="context.get('program_form_edit')"/>
             </group>
-            <group string="Cycle Configuration">
-                <field name="disbursement_frequency" readonly="not context.get('program_form_edit')"/>
-                <field name="disbursement_type" readonly="not context.get('program_form_edit')"/>
-                <field name="disbursement_cycle_list" readonly="not context.get('program_form_edit')"/>
+              <group string="Cycle Configuration" >
+                <field name="show_disbursement_day_of_week" invisible="1"/>
+                <field name="show_disbursement_day_of_month" invisible="1"/>
+                <field name="show_disbursement_start_month" invisible="1"/>
+                <field name="show_label_for_beneficiary_list" invisible="1"/>
+               <field name="disbursement_frequency" readonly="not context.get('program_form_edit')"/>
+                <!-- <group col="3"> -->
+                  <field name="disbursement_day_of_week" readonly="not context.get('program_form_edit')"
+                        invisible="not show_disbursement_day_of_week"/>
+                  <field name="disbursement_day_of_month" readonly="not context.get('program_form_edit')"
+                        invisible="not show_disbursement_day_of_month"/>
+                  <field name="disbursement_start_month" readonly="not context.get('program_form_edit')"
+                        invisible="not show_disbursement_start_month"/>
+                <!-- </group> -->
+                <field name="on_demand_cycle_allowed" readonly="not context.get('program_form_edit')"/>
+                <field name="beneficiary_list" readonly="not context.get('program_form_edit')"/>
+                <field name="label_for_beneficiary_list_id" readonly="not context.get('program_form_edit')"
+                    invisible="not show_label_for_beneficiary_list" />
             </group>
           </group>
           <notebook>
@@ -65,6 +79,9 @@
             <!-- Beneficiary List Page -->
             <page string="Beneficiary Lists">
               <field name="que_eee_request_ids" nolabel="1"/>                
+            </page>
+            <page string="Cycle Lists">
+              <field name="program_cycle_ids" nolabel="1"/>                
             </page>
           </notebook>
         </sheet>

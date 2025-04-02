@@ -9,7 +9,7 @@
         "security/ir.model.access.csv",
         "views/agency/agencies_view.xml",
         "views/program/program_view.xml",
-        "views/program/que_eee_request_view.xml",
+        "views/program/disbursement_cycle_view.xml",
         "views/registries/student_registry_view.xml",
         "views/registries/farmer_registry_view.xml",
         "views/eligibility_rule/eligibility_rule_view.xml",

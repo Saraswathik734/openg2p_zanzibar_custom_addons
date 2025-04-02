@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form view for Program Cycle -->
+    <record id="view_g2p_program_cycle_form" model="ir.ui.view">
+        <field name="name">g2p.disbursement.cycle.form</field>
+        <field name="model">g2p.disbursement.cycle</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="program_id" readonly="1"/>
+                    <field name="cycle_mnemonic"/>
+                    <field name="pbms_request_id" readonly="1"/>
+                    <!-- Hide fields during creation -->
+                    <field name="envelope_status" invisible="1"/>
+                    <field name="disbursement_status" invisible="1"/>
+                    <field name="processed_date" invisible="1"/>
+                    <field name="creation_date" invisible="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Program Cycle -->
+    <record id="action_g2p_program_cycle" model="ir.actions.act_window">
+        <field name="name">Program Cycle</field>
+        <field name="res_model">g2p.disbursement.cycle</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Tree view for Program Cycle -->
+    <record id="view_g2p_program_cycle_tree" model="ir.ui.view">
+        <field name="name">view_g2p_program_cycle_tree</field>
+        <field name="model">g2p.disbursement.cycle</field>
+        <field name="arch" type="xml">
+            <tree default_order="creation_date desc" delete="false">
+                <control>
+                    <create string="Create New Program Cycle"/>
+                </control>
+                <field name="cycle_mnemonic" string="Cycle"/>
+                <field name="pbms_request_id" readonly="1"/>
+                <field name="envelope_status" string="Envelope Status" widget="badge"/>
+                <field name="disbursement_status" string="Disbursement Status" widget="badge"/>
+                <field name="creation_date" string="Created On" readonly="1"/>
+                <field name="processed_date" string="Processed On" readonly="1"/>
+                <button name="action_open_summary_wizard" type="object" string="Open Summary" class="oe_link"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
