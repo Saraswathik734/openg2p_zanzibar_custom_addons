@@ -20,10 +20,10 @@
                     </group>
                     <notebook>
                         <page string="Agency Regions">
-                            <field name="regions" options="{'add_text': 'Add new region'}">
+                            <field name="regions" options="{'create': False, 'create_edit': False, 'no_quick_create': True}">
                                 <tree default_order="id desc">
                                     <control>
-                                        <create string="Add regions"/>
+                                        <create string="Select regions"/>
                                     </control>
                                     <field name="region_code" string="Region Code" />
                                     <field name="region_name" string="Region Name" />
@@ -31,7 +31,7 @@
                             </field>
                         </page>
                         <page string="Agency Delivery Code">
-                            <field name="delivery_codes">
+                            <field name="delivery_codes" options="{'create': False, 'create_edit': False, 'no_quick_create': True}">
                                 <tree default_order="id desc">
                                     <control>
                                         <create string="Add delivery codes"/>
