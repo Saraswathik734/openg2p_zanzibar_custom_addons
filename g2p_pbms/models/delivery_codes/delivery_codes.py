@@ -12,7 +12,8 @@ class G2PDeliveryCodes(models.Model):
 
     delivery_mnemonic = fields.Char(string="Delivery Mnemonic", required=True)
     delivery_type = fields.Selection(
-        [
+        [   
+            ("CASH", "Cash"),
             ("COMMODITY", "Commodity"),
             ("SERVICE", "Service"),
             ("COMBINATION", "Combination"),

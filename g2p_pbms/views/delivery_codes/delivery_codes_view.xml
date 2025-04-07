@@ -18,7 +18,7 @@
                         <field name="delivery_mnemonic" readonly="not context.get('delivery_code_form_edit')"/>
                         <field name="delivery_type" readonly="not context.get('delivery_code_form_edit')"/>
                         <field name="delivery_classification_id" readonly="not context.get('delivery_code_form_edit')"/>
-                        <field name="measurement_unit" readonly="not context.get('delivery_code_form_edit')"/>
+                        <field name="measurement_unit" widget="g2p_pbms.delivery_unit_widget" readonly="not context.get('delivery_code_form_edit')"/>
                         <field name="delivery_description" readonly="not context.get('delivery_code_form_edit')"/>
                     </group>
                 </sheet>

@@ -26,8 +26,11 @@
             "/g2p_pbms/static/src/css/custom_styles.scss",
             "/g2p_pbms/static/src/js/beneficiaries_widget.js",
             "/g2p_pbms/static/src/js/create_button.js",
+            "/g2p_pbms/static/src/js/delivery_unit_widget.js",
             "/g2p_pbms/static/src/xml/g2p_beneficiaries_info_tpl.xml",
             "/g2p_pbms/static/src/xml/create_button_tpl.xml",
+            "/g2p_pbms/static/src/xml/delivery_unit_widget.xml",
+
 
         ],
     },
