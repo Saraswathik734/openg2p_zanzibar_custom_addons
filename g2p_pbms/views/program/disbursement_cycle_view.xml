@@ -11,10 +11,8 @@
                     <field name="cycle_mnemonic"/>
                     <field name="pbms_request_id" readonly="1"/>
                     <!-- Hide fields during creation -->
-                    <field name="envelope_status" invisible="1"/>
-                    <field name="disbursement_status" invisible="1"/>
-                    <field name="processed_date" invisible="1"/>
-                    <field name="creation_date" invisible="1"/>
+                    <field name="envelope_creation_status" invisible="1"/>
+                    <field name="batch_creation_status" invisible="1"/>
                 </group>
             </form>
         </field>
@@ -35,14 +33,13 @@
         <field name="arch" type="xml">
             <tree default_order="creation_date desc" delete="false">
                 <control>
-                    <create string="Create New Program Cycle"/>
+                    <create string="Create New Cycle"/>
                 </control>
                 <field name="cycle_mnemonic" string="Cycle"/>
                 <field name="pbms_request_id" readonly="1"/>
-                <field name="envelope_status" string="Envelope Status" widget="badge"/>
-                <field name="disbursement_status" string="Disbursement Status" widget="badge"/>
-                <field name="creation_date" string="Created On" readonly="1"/>
-                <field name="processed_date" string="Processed On" readonly="1"/>
+                <field name="bridge_envelope_id" readonly="1"/>
+                <field name="envelope_creation_status" string="Envelope Creation Status" widget="badge"/>
+                <field name="batch_creation_status" string="Disbursement Batch Creation Status" widget="badge"/>
                 <button name="action_open_summary_wizard" type="object" string="Open Summary" class="oe_link"/>
             </tree>
         </field>

@@ -8,8 +8,9 @@ class G2PDisbursementCycle(models.Model):
 
     cycle_mnemonic = fields.Char(string="Cycle Mnemonic", required=True)
     pbms_request_id = fields.Char(string='PBMS Request ID')
+    bridge_envelope_id = fields.Char(string='Bridge Envelope ID')
     program_id = fields.Many2one("g2p.program.definition", string="G2P Program")
-    envelope_status = fields.Selection(
+    envelope_creation_status = fields.Selection(
         [
             ("not_applicable", "NOT APPLICABLE"),
             ("pending", "PENDING"),
@@ -19,7 +20,7 @@ class G2PDisbursementCycle(models.Model):
         string="Envelope Status",
         default="pending",
     )
-    disbursement_status = fields.Selection(
+    batch_creation_status = fields.Selection(
         [
             ("not_applicable", "NOT APPLICABLE"),
             ("pending", "PENDING"),
@@ -29,8 +30,31 @@ class G2PDisbursementCycle(models.Model):
         string="Entitlement Process Status",
         default="not_applicable",
     )
-    creation_date = fields.Datetime(string="Creation Date", default=fields.Datetime.now , readonly=True)
-    processed_date = fields.Datetime(string="Processed Date", default=None, readonly=True)
+    creation_date = fields.Datetime(string="Creation Date", default=fields.Datetime.now, readonly=True)
+
+    envelope_creation_latest_error_code = fields.Char(
+        string="Envelope Creation Latest Error Code",
+        help="Latest error code for envelope creation",
+    )
+    envelope_creation_attempts = fields.Integer(
+        string="Envelope Creation Attempts", default=0
+    )
+    batch_creation_latest_error_code = fields.Char(
+        string="Batch Creation Latest Error Code",
+        help="Latest error code for batch creation",
+    )
+    batch_creation_attempts = fields.Integer(
+        string="Batch Creation Attempts", default=0
+    )
+    disbursement_schedule_date = fields.Datetime(
+        string="Disbursement Schedule Date", required=True
+    )
+    envelope_creation_latest_timestamp = fields.Datetime(
+        string="Envelope Creation Latest Timestamp"
+    )
+    batch_creation_latest_timestamp = fields.Datetime(
+        string="Batch Creation Latest Timestamp"
+    )
     
     def action_open_cycle_summary_wizard(self):
         self.ensure_one()

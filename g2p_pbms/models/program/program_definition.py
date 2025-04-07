@@ -56,39 +56,41 @@ class G2PProgramDefinition(models.Model):
 
     # Cycle configuration
     disbursement_frequency = fields.Selection([
-        ('weekly', 'Weekly'),
-        ('bi_weekly', 'Bi-Weekly'),
-        ('monthly', 'Monthly'),
-        ('quarterly', 'Quarterly'),
-        ('semi_annually', 'Semi-Annually'),
-        ('annually', 'Annually'),
-        ('on_demand', 'On-Demand'),
-    ], string="Disbursement Frequency", required=True, default='on_demand')
+        ('Daily', 'Daily'),
+        ('Weekly', 'Weekly'),
+        ('Fortnightly', 'Fortnightly'),
+        ('Monthly', 'Monthly'),
+        ('BiMonthly', 'BiMonthly'),
+        ('Quarterly', 'Quarterly'),
+        ('SemiAnnually', 'SemiAnnually'),
+        ('Annually', 'Annually'),
+        ('OnDemand', 'OnDemand'),
+    ], string="Disbursement Frequency", required=True, default='OnDemand')
 
     disbursement_day_of_week = fields.Selection([
-        ('monday', 'Monday'),
-        ('tuesday', 'Tuesday'),
-        ('wednesday', 'Wednesday'),
-        ('thursday', 'Thursday'),
-        ('friday', 'Friday'),
-        ('saturday', 'Saturday'),
-        ('sunday', 'Sunday'),
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
     ], string="Day of Week")
 
     disbursement_day_of_month = fields.Integer(string="Day of Month")
     disbursement_start_month = fields.Selection([
-        ('january', 'January'),
-        ('february', 'February'),
-        ('march', 'March'),
-        ('april', 'April'),
-        ('may', 'May'),
-        ('june', 'June'),
-        ('july', 'July'),
-        ('august', 'August'),
-        ('september', 'September'),
-        ('october', 'October'),
-        ('november', 'November'),
-        ('december', 'December'),
+        ('January', 'January'),
+        ('February', 'February'),
+        ('March', 'March'),
+        ('April', 'April'),
+        ('May', 'May'),
+        ('June', 'June'),
+        ('July', 'July'),
+        ('August', 'August'),
+        ('September', 'September'),
+        ('October', 'October'),
+        ('November', 'November'),
+        ('December', 'December'),
     ], string="Start Month")
 
     on_demand_cycle_allowed = fields.Boolean(string="On-Demand Cycle Allowed")
