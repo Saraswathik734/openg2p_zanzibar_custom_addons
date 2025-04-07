@@ -7,7 +7,10 @@
     "depends": ["base_setup", "web"],
     "data": [
         "security/ir.model.access.csv",
-        "views/agency/agencies_view.xml",
+        "views/agencies/agencies_view.xml",
+        "views/delivery_classification_codes/delivery_classification_codes_view.xml",
+        "views/delivery_codes/delivery_codes_view.xml",
+        "views/regions/regions_view.xml",
         "views/program/program_view.xml",
         "views/program/disbursement_cycle_view.xml",
         "views/registries/student_registry_view.xml",

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions for Delivery Classification Codes -->
+    <record id="action_g2p_delivery_classification_codes" model="ir.actions.act_window">
+        <field name="name">Delivery Classification Codes</field>
+        <field name="res_model">g2p.delivery.classification.codes</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Views for Delivery Classification Codes -->
+    <record id="view_g2p_delivery_classification_codes_form" model="ir.ui.view">
+        <field name="name">g2p.delivery.classification.codes.form</field>
+        <field name="model">g2p.delivery.classification.codes</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Classification Codes">
+                <sheet>
+                    <group>
+                        <field name="delivery_classification_mnemonic" readonly="not context.get('delivery_classification_code_form_edit')"/>
+                        <field name="description" readonly="not context.get('delivery_classification_code_form_edit')"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_g2p_delivery_classification_codes_tree" model="ir.ui.view">
+        <field name="name">g2p.delivery.classification.codes.tree</field>
+        <field name="model">g2p.delivery.classification.codes</field>
+        <field name="arch" type="xml">
+            <tree string="Delivery Classification Codes">
+                <field name="delivery_classification_mnemonic"/>
+                <field name="description"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Menu for Delivery Classification Codes -->
+    <menuitem id="menu_g2p_delivery_classification_codes_action" name="Delivery Classification Codes" parent="menu_g2p_agencies" action="action_g2p_delivery_classification_codes" sequence="3"/>
+</odoo>
