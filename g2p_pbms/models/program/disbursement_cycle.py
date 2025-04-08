@@ -1,5 +1,6 @@
-from odoo import models, fields
-
+from odoo import models, fields, api
+from dateutil.relativedelta import relativedelta
+import datetime
 
 class G2PDisbursementCycle(models.Model):
     _name = "g2p.disbursement.cycle"
@@ -55,51 +56,107 @@ class G2PDisbursementCycle(models.Model):
     batch_creation_latest_timestamp = fields.Datetime(
         string="Batch Creation Latest Timestamp"
     )
+
+    def _calculate_schedule_date(self, program):
+        current_str = fields.Datetime.now()
+        current = fields.Datetime.from_string(current_str)
+        freq = program.disbursement_frequency
+
+        if freq == 'Daily':
+            return current
+
+        elif freq == 'Weekly':
+            # Compute next occurrence based on configured day of week.
+            weekday_mapping = {
+                'Monday': 0, 'Tuesday': 1, 'Wednesday': 2,
+                'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6
+            }
+            target_weekday = weekday_mapping.get(program.disbursement_day_of_week)
+            if target_weekday is None:
+                return current
+            current_date = current.date()
+            current_weekday = current_date.weekday()
+            days_ahead = target_weekday - current_weekday
+            if days_ahead <= 0:
+                days_ahead += 7
+            next_date = current_date + datetime.timedelta(days=days_ahead)
+            return datetime.datetime.combine(next_date, current.time())
+
+        elif freq == 'Fortnightly':
+            return current + datetime.timedelta(days=14)
+
+        elif freq in ('Monthly', 'BiMonthly', 'Quarterly', 'SemiAnnually', 'Annually'):
+            increment = 1
+            if freq == 'BiMonthly':
+                increment = 2
+            elif freq == 'Quarterly':
+                increment = 3
+            elif freq == 'SemiAnnually':
+                increment = 6
+            elif freq == 'Annually':
+                increment = 12
+
+            # Use the disbursement_day_of_month from the program if set; otherwise, use current day.
+            day = program.disbursement_day_of_month if program.disbursement_day_of_month else current.day
+            try:
+                candidate = current.replace(day=day)
+                if candidate <= current:
+                    candidate = (current + relativedelta(months=increment)).replace(day=day)
+            except ValueError:
+                # If the day is invalid (like the 31st for a month with 30 days), set to the last day of the period.
+                candidate = (current + relativedelta(months=increment)).replace(day=1) + datetime.timedelta(days=-1)
+            return candidate
+
+        elif freq == 'OnDemand':
+            # For on-demand cycles, return the current date.
+            return current
+
+        else:
+            return current
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('disbursement_schedule_date') and vals.get('program_id'):
+            program = self.env['g2p.program.definition'].browse(vals['program_id'])
+            if self.program_id.beneficiary_list == 'labeled' and self.program_id.label_for_beneficiary_list_id:
+                vals['pbms_request_id'] = self.program_id.label_for_beneficiary_list_id.pbms_request_id
+            else:
+                # Get the latest PBMS request ID from the program
+                latest_request = self.env['g2p.que.eee.request'].search([
+                    ('program_id', '=', program.id),
+                    ('eligibility_process_status', '=', 'complete'),
+                    ('entitlement_process_status', '=', 'complete')
+                ], limit=1, order='creation_date desc')
+                if latest_request:
+                    vals['pbms_request_id'] = latest_request.pbms_request_id
+                else:
+                    # If no request found, raise an error or handle it as needed
+                    raise ValueError("No eligible request found for the program.")
+            calculated_date = self._calculate_schedule_date(program)
+            if calculated_date:
+                vals['disbursement_schedule_date'] = calculated_date
+        return super(G2PDisbursementCycle, self).create(vals)
+
     
-    def action_open_cycle_summary_wizard(self):
+    def action_open_disbursement_envelope_summary_wizard(self):
         self.ensure_one()
         wizard_vals = {
-            "target_registry_type": self.program_id.target_registry_type,
-            "brief": self.brief,
-            "program_id": self.program_id.id,
+            'disbursement_envelope_id': self.bridge_envelope_id,
             "pbms_request_id": self.pbms_request_id,
+            "program_mnemonic": self.program_id.program_mnemonic,
+            "cycle_mnemonic": self.cycle_mnemonic,
         }
 
-        wizard = self.env["g2p.eee.cycle.summary.wizard"].create(wizard_vals)
+        wizard = self.env["g2p.disbursement.envelope.summary.wizard"].create(wizard_vals)
         return {
-            "name": "Cycle Summary Details",
+            "name": "G2P Disbursement Envelope Status Summary",
             "view_mode": "form",
-            "res_model": "g2p.eee.cycle.summary.wizard",
+            "res_model": "g2p.disbursement.envelope.summary.wizard",
             "res_id": wizard.id,
             "type": "ir.actions.act_window",
             "target": "current",
             'context': {
-                'default_target_registry_type': self.program_id.target_registry_type,
-                'default_program_id': self.program_id.id,
-                'default_pbms_request_id': self.pbms_request_id,
-            },
-        }
-
-    def action_open_summary_wizard(self):
-        self.ensure_one()
-        wizard_vals = {
-            "target_registry_type": self.program_id.target_registry_type,
-            "brief": self.brief,
-            "program_id": self.program_id.id,
-            "pbms_request_id": self.pbms_request_id,
-        }
-
-        wizard = self.env["g2p.eee.summary.wizard"].create(wizard_vals)
-        return {
-            "name": "Eligibility Summary Details",
-            "view_mode": "form",
-            "res_model": "g2p.eee.summary.wizard",
-            "res_id": wizard.id,
-            "type": "ir.actions.act_window",
-            "target": "current",
-            'context': {
-                'default_target_registry_type': self.program_id.target_registry_type,
-                'default_program_id': self.program_id.id,
+                'default_disbursement_envelope_id': self.bridge_envelope_id,
                 'default_pbms_request_id': self.pbms_request_id,
             },
         }

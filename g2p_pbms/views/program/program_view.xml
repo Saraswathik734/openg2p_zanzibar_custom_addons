@@ -59,7 +59,7 @@
                   </control>
                   <field name="mnemonic" string="Rule Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
                   <field name="description" string="Description"/>
-                  <button name="action_open_view" type="object" class="fa fa-eye" title="View Eligibility Rule"/>
+                  <button name="action_open_view" type="object" string="View Eligibility Rule" class="oe_link" title="View Eligibility Rule"/>
                 </tree>
               </field>
             </page>
@@ -72,7 +72,7 @@
                   </control>
                   <field name="mnemonic" string="Rule Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
                   <field name="description" string="Description"/>
-                  <button name="action_open_view" type="object" class="fa fa-eye" title="View Entitlement Rule"/>
+                  <button name="action_open_view" type="object" string="View Entitlement Rule" class="oe_link" title="View Entitlement Rule"/>
                 </tree>
               </field>
             </page>

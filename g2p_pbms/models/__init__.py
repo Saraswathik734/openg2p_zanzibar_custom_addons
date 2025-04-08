@@ -20,3 +20,4 @@ from .eee import (
 )
 from .entitlement import G2PEntitlementRuleDefinition 
 from .config_settings import ResConfigSettings
+from .g2p_bridge import G2PDisbursementEnvelopeSummaryWizard

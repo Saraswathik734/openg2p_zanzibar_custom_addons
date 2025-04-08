@@ -20,6 +20,7 @@
         "views/program/eee_request_que_view.xml",
         "views/entitlement_rule/entitlement_rule_view.xml",
         "views/res_config/res_config_view.xml",
+        "views/g2p_bridge/envelope_summary_view.xml",
     ],
     "assets": {
         "web.assets_backend": [
@@ -30,8 +31,6 @@
             "/g2p_pbms/static/src/xml/g2p_beneficiaries_info_tpl.xml",
             "/g2p_pbms/static/src/xml/create_button_tpl.xml",
             "/g2p_pbms/static/src/xml/delivery_unit_widget.xml",
-
-
         ],
     },
     "installable": True,

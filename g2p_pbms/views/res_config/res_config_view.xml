@@ -16,6 +16,11 @@
                             <field name="g2p_pbms_eee_api_url" />
                         </setting>
                     </block>
+                    <block title="G2P Bridge Settings">
+                        <setting string="Bridge API URL" help="Bridge API URL Endpoint">
+                            <field name="g2p_bridge_api_url" />
+                        </setting>
+                    </block>
                 </app>
             </xpath>
         </field>

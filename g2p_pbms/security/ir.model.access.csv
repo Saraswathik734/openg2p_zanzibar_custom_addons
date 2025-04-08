@@ -37,3 +37,6 @@ g2p_entitlement_rule_definition_registrar,Registrar Access Entitlement Rule,g2p_
 
 g2p_disbursement_cycle_admin,Admin Access Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,,1,1,1,1
 g2p_disbursement_cycle_registrar,Registrar Access Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,,1,1,1,1
+
+g2p_disbursement_envelope_summary_wizard_admin,Admin Access G2P Disbursement Envelope Summary Wizard,g2p_pbms.model_g2p_disbursement_envelope_summary_wizard,,1,1,1,1
+g2p_disbursement_envelope_summary_wizard_registrar,Registrar Access G2P Disbursement Envelope Summary Wizard,g2p_pbms.model_g2p_disbursement_envelope_summary_wizard,,1,1,1,1
