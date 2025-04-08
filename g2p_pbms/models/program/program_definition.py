@@ -52,7 +52,7 @@ class G2PProgramDefinition(models.Model):
         string="Measurement Unit",
         readonly=True
     )
-    display_quantity = fields.Char(string="Quantity", compute="_compute_display_quantity")
+    display_quantity = fields.Char(string="Max Quantity", compute="_compute_display_quantity")
 
     # Cycle configuration
     disbursement_frequency = fields.Selection([
