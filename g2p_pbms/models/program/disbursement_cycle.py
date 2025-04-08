@@ -47,7 +47,7 @@ class G2PDisbursementCycle(models.Model):
     batch_creation_attempts = fields.Integer(
         string="Batch Creation Attempts", default=0
     )
-    disbursement_schedule_date = fields.Datetime(
+    disbursement_schedule_date = fields.Date(
         string="Disbursement Schedule Date", required=True
     )
     envelope_creation_latest_timestamp = fields.Datetime(
@@ -63,7 +63,7 @@ class G2PDisbursementCycle(models.Model):
         freq = program.disbursement_frequency
 
         if freq == 'Daily':
-            return current
+            return current.date()
 
         elif freq == 'Weekly':
             # Compute next occurrence based on configured day of week.
@@ -73,17 +73,17 @@ class G2PDisbursementCycle(models.Model):
             }
             target_weekday = weekday_mapping.get(program.disbursement_day_of_week)
             if target_weekday is None:
-                return current
+                return current.date()
             current_date = current.date()
             current_weekday = current_date.weekday()
             days_ahead = target_weekday - current_weekday
             if days_ahead <= 0:
                 days_ahead += 7
             next_date = current_date + datetime.timedelta(days=days_ahead)
-            return datetime.datetime.combine(next_date, current.time())
+            return next_date
 
         elif freq == 'Fortnightly':
-            return current + datetime.timedelta(days=14)
+            return (current + datetime.timedelta(days=14)).date()
 
         elif freq in ('Monthly', 'BiMonthly', 'Quarterly', 'SemiAnnually', 'Annually'):
             increment = 1
@@ -103,16 +103,17 @@ class G2PDisbursementCycle(models.Model):
                 if candidate <= current:
                     candidate = (current + relativedelta(months=increment)).replace(day=day)
             except ValueError:
-                # If the day is invalid (like the 31st for a month with 30 days), set to the last day of the period.
+                # If the day is invalid, set to the last day of the month.
                 candidate = (current + relativedelta(months=increment)).replace(day=1) + datetime.timedelta(days=-1)
-            return candidate
+            return candidate.date()
 
         elif freq == 'OnDemand':
-            # For on-demand cycles, return the current date.
-            return current
+            # For on-demand cycles, return current date.
+            return current.date()
 
         else:
-            return current
+            return current.date()
+
 
     @api.model
     def create(self, vals):
