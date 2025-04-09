@@ -77,7 +77,7 @@ class G2PEntitlementRuleDefinition(models.Model):
             where_str = (" WHERE %s" % where_clause) if where_clause else ""
             # Use the target model's table name in the SQL query.
             query_str = (
-                'SELECT "%s".unique FROM ' % target_model._table + from_clause + where_str
+                'SELECT "%s".unique_id FROM ' % target_model._table + from_clause + where_str
             )
 
             # Format the parameters as strings.
