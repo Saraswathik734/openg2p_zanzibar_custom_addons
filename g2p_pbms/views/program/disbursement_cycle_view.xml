@@ -39,7 +39,8 @@
                 <field name="bridge_envelope_id" readonly="1"/>
                 <field name="envelope_creation_status" string="Envelope Creation Status" widget="badge"/>
                 <field name="batch_creation_status" string="Disbursement Batch Creation Status" widget="badge"/>
-                <button name="action_open_disbursement_envelope_summary_wizard" type="object" string="View Envelope Summary" class="oe_link"/>
+                <field name="creation_date" string="Created On"/>
+                <button name="action_open_disbursement_envelope_summary_wizard" type="object" string="View Envelope Summary" class="oe_link" invisible="envelope_creation_status != 'complete'"/>
             </tree>
         </field>
     </record>
