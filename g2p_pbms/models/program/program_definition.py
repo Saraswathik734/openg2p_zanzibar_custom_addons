@@ -10,8 +10,8 @@ class G2PProgramDefinition(models.Model):
 
     program_mnemonic = fields.Char(string="Program Mnemonic", required=True)
     description = fields.Char(string="Description")
-    delivery_id = fields.Many2one(
-        "g2p.delivery.codes", string="Delivery Code", required=True
+    benefit_id = fields.Many2one(
+        "g2p.benefit.codes", string="Benefit Code", required=True
     )
     target_registry_type = fields.Selection(
         selection=G2PRegistryType.selection(), string="Registry Type", required=True
@@ -46,9 +46,9 @@ class G2PProgramDefinition(models.Model):
     #Entitlement Configuration
     max_quantity = fields.Integer(string="Max Quantity")
 
-    # Add related field for measurement_unit from delivery_id
+    # Add related field for measurement_unit from benefit_id
     measurement_unit = fields.Char(
-        related='delivery_id.measurement_unit',
+        related='benefit_id.measurement_unit',
         string="Measurement Unit",
         readonly=True
     )

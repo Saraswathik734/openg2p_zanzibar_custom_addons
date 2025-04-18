@@ -30,17 +30,17 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Agency Delivery Code">
-                            <field name="delivery_codes" options="{'create': False, 'create_edit': False, 'no_quick_create': True}">
+                        <page string="Agency Benefit Code">
+                            <field name="benefit_codes" options="{'create': False, 'create_edit': False, 'no_quick_create': True}">
                                 <tree default_order="id desc">
                                     <control>
-                                        <create string="Add delivery codes"/>
+                                        <create string="Add benefit codes"/>
                                     </control>
-                                    <field name="delivery_mnemonic"/>
-                                    <field name="delivery_description"/>
-                                    <field name="delivery_type"/>
+                                    <field name="benefit_mnemonic"/>
+                                    <field name="benefit_description"/>
+                                    <field name="benefit_type"/>
                                     <field name="measurement_unit"/>
-                                    <field name="delivery_classification_id"/>
+                                    <field name="benefit_classification_id"/>
                                 </tree>
                             </field>
                         </page>

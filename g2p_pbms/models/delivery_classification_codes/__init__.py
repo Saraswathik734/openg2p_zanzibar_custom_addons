@@ -1,1 +1,0 @@
-from .delivery_classification_codes import G2PDeliveryClassificationCodes

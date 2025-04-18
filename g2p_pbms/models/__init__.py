@@ -1,7 +1,7 @@
 from .agency import G2PAgencies
 from .regions import G2PRegions
-from .delivery_classification_codes import G2PDeliveryClassificationCodes
-from .delivery_codes import G2PDeliveryCodes
+from .benefit_classification_codes import G2PBenefitClassificationCodes
+from .benefit_codes import G2PBenefitCodes
 from .program import (
     G2PProgramDefinition,
     G2PDisbursementCycle,

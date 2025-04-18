@@ -23,28 +23,28 @@ patch(ListController.prototype, {
         return window.location;
     },
 
-    load_delivery_classification_code_wizard() {
+    load_benefit_classification_code_wizard() {
         this.action.doAction({
-            name: "Delivery Classification Codes",
+            name: "Benefit Classification Codes",
             type: "ir.actions.act_window",
-            res_model: "g2p.delivery.classification.codes",
+            res_model: "g2p.benefit.classification.codes",
             view_mode: "form",
             views: [[false, "form"]],
             target: "current",
-            context: { create: false, delivery_classification_code_form_edit: true },
+            context: { create: false, benefit_classification_code_form_edit: true },
         });
         return window.location;
     },
 
-    load_delivery_code_wizard() {
+    load_benefit_code_wizard() {
         this.action.doAction({
-            name: "Delivery Codes",
+            name: "Benefit Codes",
             type: "ir.actions.act_window",
-            res_model: "g2p.delivery.codes",
+            res_model: "g2p.benefit.codes",
             view_mode: "form",
             views: [[false, "form"]],
             target: "current",
-            context: { create: false, delivery_code_form_edit: true },
+            context: { create: false, benefit_code_form_edit: true },
         });
         return window.location;
     },
