@@ -10,7 +10,7 @@ class G2PProgramDefinition(models.Model):
 
     program_mnemonic = fields.Char(string="Program Mnemonic", required=True)
     description = fields.Char(string="Description")
-    benefit_id = fields.Many2one(
+    benefit_code_id = fields.Many2one(
         "g2p.benefit.codes", string="Benefit Code", required=True
     )
     target_registry_type = fields.Selection(
@@ -42,14 +42,30 @@ class G2PProgramDefinition(models.Model):
         "program_id",
         string="Program Cycle",
     )
+    distribution_through_agencies = fields.Boolean(
+        string="Distribution through Agencies",
+        default=True,
+        help="If checked, the program will require benefits to be collected from specified agencies. If unchecked, beneficiaries may collect benefits from any agency in the country. " \
+    )
+    only_direct_credit_allowed = fields.Boolean(
+        string="Only Direct Credit Allowed",
+        default=True,
+        help="Cash will be directly credited to beneficiary accounts. Beneficiaries who don't have accounts will not receive benefits. Relevant only for cash benefits. " \
+        "If Unchecked, benefits will be distributed as cash through agencies for beneficiaries without accounts."
+    )
 
     #Entitlement Configuration
     max_quantity = fields.Integer(string="Max Quantity")
 
     # Add related field for measurement_unit from benefit_id
     measurement_unit = fields.Char(
-        related='benefit_id.measurement_unit',
+        related='benefit_code_id.measurement_unit',
         string="Measurement Unit",
+        readonly=True
+    )
+    benefit_type = fields.Selection(
+        related='benefit_code_id.benefit_type',
+        string="Benefit Type",
         readonly=True
     )
     display_quantity = fields.Char(string="Max Quantity", compute="_compute_display_quantity")

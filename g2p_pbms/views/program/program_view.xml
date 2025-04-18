@@ -21,9 +21,11 @@
               <field name="program_status" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Program Configuration">
-              <field name="benefit_id" readonly="not context.get('program_form_create')" options="{'no_create_edit': True, 'no_create': True}"/>
+              <field name="benefit_code_id" readonly="not context.get('program_form_create')" options="{'no_create_edit': True, 'no_create': True}"/>
               <field name="target_registry_type" readonly="not context.get('program_form_create')"/>
               <field name="measurement_unit" readonly="not context.get('program_form_create')" invisible="not context.get('program_form_edit')"/>
+              <field name="distribution_through_agencies" readonly="not context.get('program_form_create')"/> <!-- TODO: Lock this field if benefit_type is cash  -->
+              <field name="only_direct_credit_allowed" readonly="not context.get('program_form_create')"/> <!-- TODO: Show this field only if benefit_type is cash  -->
             </group>
             <group string="Entitlement Configuration">
               <field name="max_quantity" readonly="not context.get('program_form_edit')" invisible="not context.get('program_form_edit')"/>
@@ -97,7 +99,7 @@
       <tree string="G2P Programs">
         <field name="program_mnemonic" />
         <field name="description"/>
-        <field name="benefit_id"/>
+        <field name="benefit_code_id"/>
         <field name="target_registry_type"/>
         <field name="program_status"/>
         <button name="action_open_edit" type="object" class="fa fa-pencil"/>
