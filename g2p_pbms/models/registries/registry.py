@@ -9,6 +9,9 @@ class G2PRegistry(models.AbstractModel):
     registration_date = fields.Date(
         string="Registration Date", required=True, default=fields.Date.today
     )
+    gender = fields.Selection(
+        selection=[("male", "Male"), ("female", "Female")], string="Gender"
+    )
 
     def action_open_view(self):
         return {

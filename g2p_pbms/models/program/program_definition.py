@@ -14,7 +14,7 @@ class G2PProgramDefinition(models.Model):
         "g2p.delivery.codes", string="Delivery Code", required=True
     )
     target_registry_type = fields.Selection(
-        selection=G2PRegistryType.selection(), string="Registry Type", required=True
+        selection=G2PRegistryType.selection(), string="Target Registry", required=True
     )
     program_status = fields.Selection(
         [

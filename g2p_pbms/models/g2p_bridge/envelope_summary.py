@@ -13,9 +13,10 @@ class G2PDisbursementEnvelopeSummaryWizard(models.TransientModel):
     cycle_mnemonic = fields.Char(string="Cycle Mnemonic")
     pbms_request_id = fields.Char(string="PBMS Request ID")
     disbursement_envelope_id = fields.Char(string="Disbursement Envelope ID")
+    measurement_unit = fields.Char(string="Measurement Unit")
     
     number_of_disbursements_received = fields.Integer(string="Disbursements Received", compute='_action_fetch_summary')
-    total_disbursement_amount_received = fields.Integer(string="Total Amount Received")
+    total_disbursement_amount_received = fields.Char(string="Total Amount Received")
     
     funds_available_with_bank = fields.Char(string="Funds Available With Bank")
     funds_available_latest_timestamp = fields.Datetime(string="Funds Available Latest Timestamp")
@@ -84,7 +85,7 @@ class G2PDisbursementEnvelopeSummaryWizard(models.TransientModel):
         message = api_response.get('message', {})
         self.disbursement_envelope_id = message.get('disbursement_envelope_id', self.disbursement_envelope_id)
         self.number_of_disbursements_received = message.get('number_of_disbursements_received', 0)
-        self.total_disbursement_amount_received = message.get('total_disbursement_amount_received', 0)
+        self.total_disbursement_amount_received = f"{self.measurement_unit} {format(float(message.get('total_disbursement_amount_received', 0)), ',')}"
         self.funds_available_with_bank = message.get('funds_available_with_bank', '')
         self.funds_available_latest_timestamp = self._parse_datetime(message.get('funds_available_latest_timestamp'))
         self.funds_available_latest_error_code = message.get('funds_available_latest_error_code') if message.get('funds_available_latest_error_code') else 'No errors'
@@ -103,4 +104,10 @@ class G2PDisbursementEnvelopeSummaryWizard(models.TransientModel):
             'view_mode': 'form',
             'res_id': self.id,
             'target': 'new',
+        }
+    
+    def reload_wizard(self):
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
         }

@@ -237,7 +237,8 @@ class G2PEEESummaryWizard(models.TransientModel):
                 lines.append((0, 0, {
                     'wizard_id': wizard.id,
                     'key': key.replace('_', ' ').title(),
-                    'value': str(value),
+                    'value': str(int(value) if isinstance(value, float) else value),
+                    # 'value': f"{value:.2f}" if isinstance(value, float) else str(value),
                     'summary_type': 'general'
                 }))
 
@@ -248,7 +249,8 @@ class G2PEEESummaryWizard(models.TransientModel):
                 lines.append((0, 0, {
                     'wizard_id': wizard.id,
                     'key': key.replace('_', ' ').title(),
-                    'value': str(value),
+                    'value': str(int(value) if isinstance(value, float) else value),
+                    # 'value': f"{value:.2f}" if isinstance(value, float) else str(value),
                     'summary_type': 'registry'
                 }))
 
