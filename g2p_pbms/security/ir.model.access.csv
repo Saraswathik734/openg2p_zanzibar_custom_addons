@@ -5,11 +5,11 @@ g2p_agencies_registrar,Registrar Access Agencies,g2p_pbms.model_g2p_agencies,,1,
 g2p_regions_admin,Admin Access Regions,g2p_pbms.model_g2p_regions,,1,1,1,1
 g2p_regions_registrar,Registrar Access Regions,g2p_pbms.model_g2p_regions,,1,1,1,1
 
-g2p_delivery_classification_codes_admin,Admin Access Delivery Classification Codes,g2p_pbms.model_g2p_delivery_classification_codes,,1,1,1,1
-g2p_delivery_classification_codes_registrar,Registrar Access Delivery Classification Codes,g2p_pbms.model_g2p_delivery_classification_codes,,1,1,1,1
+g2p_benefit_classification_codes_admin,Admin Access Benefit Classification Codes,g2p_pbms.model_g2p_benefit_classification_codes,,1,1,1,1
+g2p_benefit_classification_codes_registrar,Registrar Access Benefit Classification Codes,g2p_pbms.model_g2p_benefit_classification_codes,,1,1,1,1
 
-g2p_delivery_codes_admin,Admin Access Delivery Codes,g2p_pbms.model_g2p_delivery_codes,,1,1,1,1
-g2p_delivery_codes_registrar,Registrar Access Delivery Codes,g2p_pbms.model_g2p_delivery_codes,,1,1,1,1
+g2p_benefit_codes_admin,Admin Access Benefit Codes,g2p_pbms.model_g2p_benefit_codes,,1,1,1,1
+g2p_benefit_codes_registrar,Registrar Access Benefit Codes,g2p_pbms.model_g2p_benefit_codes,,1,1,1,1
 
 g2p_program_definition_admin,Admin Access Programs,g2p_pbms.model_g2p_program_definition,,1,1,1,1
 g2p_program_definition_registrar,Registrar Access Programs,g2p_pbms.model_g2p_program_definition,,1,1,1,1
@@ -23,14 +23,20 @@ g2p_farmer_registry_registrar,Registrar Access Farmer Registry,g2p_pbms.model_g2
 g2p_eligibility_rule_definition_admin,Admin Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
 g2p_eligibility_rule_definition_registrar,Registrar Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
 
-g2p_eligibility_summary_farmer_admin,Admin Access Eligibility Summary Farmer,g2p_pbms.model_g2p_eligibility_summary_farmer,,1,1,1,1
-g2p_eligibility_summary_farmer_registrar,Registrar Access Eligibility Summary Farmer,g2p_pbms.model_g2p_eligibility_summary_farmer,,1,1,1,1
+g2p_que_eee_request_admin,Admin Access EEE Request Queue,g2p_pbms.model_g2p_que_eee_request,,1,1,1,1
+g2p_que_eee_request_registrar,Registrar Access EEE Request Queue,g2p_pbms.model_g2p_que_eee_request,,1,1,1,1
 
-g2p_eligibility_summary_student_admin,Admin Access Eligibility Summary Student,g2p_pbms.model_g2p_eligibility_summary_student,,1,1,1,1
-g2p_eligibility_summary_student_registrar,Registrar Access Eligibility Summary Student,g2p_pbms.model_g2p_eligibility_summary_student,,1,1,1,1
+g2p_eee_summary_wizard_admin,Admin Access EEE Summary wizard,g2p_pbms.model_g2p_eee_summary_wizard,,1,1,1,1
+g2p_eee_summary_wizard_registrar,Registrar Access EEE Summary wizard,g2p_pbms.model_g2p_eee_summary_wizard,,1,1,1,1
 
-g2p_que_eligibility_request_admin,Admin Access Eligibility Request Queue,g2p_pbms.model_g2p_que_eligibility_request,,1,1,1,1
-g2p_que_eligibility_request_registrar,Registrar Access Eligibility Request Queue,g2p_pbms.model_g2p_que_eligibility_request,,1,1,1,1
+g2p_api_summary_line_admin,Admin Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
+g2p_api_summary_line_registrar,Registrar Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
 
-g2p_eligibility_summary_admin,Admin Access Eligibility Summary,g2p_pbms.model_g2p_eligibility_summary,,1,1,1,1
-g2p_eligibility_summary_registrar,Registrar Access Eligibility Summary,g2p_pbms.model_g2p_eligibility_summary,,1,1,1,1
+g2p_entitlement_rule_definition_admin,Admin Access Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,,1,1,1,1
+g2p_entitlement_rule_definition_registrar,Registrar Access Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,,1,1,1,1
+
+g2p_disbursement_cycle_admin,Admin Access Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,,1,1,1,1
+g2p_disbursement_cycle_registrar,Registrar Access Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,,1,1,1,1
+
+g2p_disbursement_envelope_summary_wizard_admin,Admin Access G2P Disbursement Envelope Summary Wizard,g2p_pbms.model_g2p_disbursement_envelope_summary_wizard,,1,1,1,1
+g2p_disbursement_envelope_summary_wizard_registrar,Registrar Access G2P Disbursement Envelope Summary Wizard,g2p_pbms.model_g2p_disbursement_envelope_summary_wizard,,1,1,1,1

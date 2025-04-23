@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="g2p_beneficiaries_info_tpl">
+        <div class="g2p-beneficiaries" style="font-size: 18px;">
+            <!-- Search input with search and arch buttons -->
+            <button type="button" class="btn btn-secondary" t-on-click="searchRegistrants">
+                            <i class="fa fa-search"/>
+                        </button>
+            <t t-if="state.searched">
+                <h3><t t-esc="state.title"/></h3>
+            </t>
+            <!-- Conditional rendering based on target_registry_type -->
+            <t t-if="state.target_registry_type === 'farmer'">
+                <table class="table table-bordered" style="width: 100%; font-size: 16px;">
+                    <thead>
+                        <tr>
+                            <th><t t-esc="('Unique ID')"/></th>
+                            <th><t t-esc="('Registration Date')"/></th>
+                            <th><t t-esc="('Name')"/></th>
+                            <th><t t-esc="('Land Area')"/></th>
+                            <th><t t-esc="('Cattle Heads')"/></th>
+                            <th><t t-esc="('Poultry Heads')"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="state.records" t-as="record" t-key="record.id">
+                            <tr>
+                                <td><t t-esc="record.unique_id"/></td>
+                                <td><t t-esc="record.registration_date"/></td>
+                                <td><t t-esc="record.name"/></td>
+                                <td><t t-esc="record.land_area"/></td>
+                                <td><t t-esc="record.no_of_cattle_heads"/></td>
+                                <td><t t-esc="record.no_of_poultry_heads"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+            <t t-else="">
+                <!-- Handle other registry types if needed -->
+            </t>
+            <t t-if="state.searched">
+                <div class="o_beneficiary_pager">
+                    <button type="button" class="btn btn-secondary" t-on-click="prevPage" t-att-disabled="state.page &lt;= 1">
+                        <i class="fa fa-chevron-left"/>
+                    </button>
+                    <span>
+                        <t t-esc="state.page"/> / <t t-esc="state.totalPages"/>
+                    </span>
+                    <button type="button" class="btn btn-secondary" t-on-click="nextPage" t-att-disabled="state.page &gt;= state.totalPages">
+                        <i class="fa fa-chevron-right"/>
+                    </button>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

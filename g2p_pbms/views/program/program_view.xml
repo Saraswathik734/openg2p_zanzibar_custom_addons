@@ -1,169 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Actions -->
-    <record id="action_g2p_programs" model="ir.actions.act_window">
-        <field name="name">Programs</field>
-        <field name="res_model">g2p.program.definition</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    
-    <!-- Views for G2P Programs-->
-    <record id="view_g2p_programs_form" model="ir.ui.view">
-        <field name="name">g2p.programs.form</field>
-        <field name="model">g2p.program.definition</field>
-        <field name="arch" type="xml">
-            <form string="G2P Programs">
-                <sheet>
-                  <group>
-                    <group>
-                        <field name="program_mnemonic"/>
-                        <field name="description"/>
-                    </group>
-                    <group>
-                        <field name="delivery_id"/>
-                        <field name="target_registry_type"/>
-                        <field name="program_status" />
-                    </group>
-                  </group>
-                  <notebook>
-                      <!-- Show Eligibility Rules -->
-                      <page string="Eligibility Rule">
-                          <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}">
-                              <tree default_order="id desc">
-                                  <control>
-                                    <create string="Add eligibility rules"/>
-                                  </control>
-                                  <field name="mnemonic" string="Rule Mnemonic" options="{'no_create':True, 'no_edit':True}" />
-                                  <field name="description" string="Description" />
-                                  <button title="View Eligibility Rule" name="action_open_view" type="object" class="fa fa-eye"/>
-                              </tree>
-                          </field>
-                      </page>
-                      <!-- Show Eligibility Requests Lists -->
-                      <page string="Eligibility List">
-                        <field name="eligibilty_request_ids" nolabel="1" >
-                          <tree default_order="creation_date desc">
-                            <control>
-                              <create string="Create new eligibility list"/>
-                            </control>
-                            <field name="brief" string="Brief" />
-                            <field name="enumeration_status" string="Status" widget='badge'/>
-                            <field name="creation_date" string="Created On" readonly='1' />
-                            <field name="processed_date" string="Processed On" readonly='1' />
-                          </tree>
-                        </field>
-                      </page>
-                  </notebook>
-                </sheet>
-            </form>
-        </field>
-    </record>
-    <record id="view_g2p_programs_tree" model="ir.ui.view">
-        <field name="name">g2p.programs.tree</field>
-        <field name="model">g2p.program.definition</field>
-        <field name="arch" type="xml">
-            <tree string="G2P Programs">
-                <field name="program_mnemonic"/>
-                <field name="description"/>
-                <field name="delivery_id"/>
-                <field name="target_registry_type"/>
-                <field name="program_status"/>
-                <button name="action_open_edit" type="object" class="fa fa-pencil"/>
-                <button name="action_open_view" type="object" class="fa fa-eye"/>
-            </tree>
-        </field>
-    </record>
-    
-      <!-- Farmer Eligibility Summary Form View (Detail) -->
-  <record id="view_g2p_eligibility_summary_farmer_form" model="ir.ui.view">
-    <field name="name">g2p.eligibility.summary.farmer.form</field>
-    <field name="model">g2p.eligibility.summary.farmer</field>
-    <field name="arch" type="xml">
-      <form string="Farmer Eligibility Summary">
-        <sheet>
-          <notebook>
-            <page string="Details">
-              <group>
-                <field name="program_id"/>
-                <field name="program_mnemonic"/>
-                <field name="target_registry_type"/>
-                <field name="eligibility_request_id"/>
-                <field name="number_of_registrants"/>
-                <field name="date_created"/>
-              </group>
-              <group string="Farmer Specific">
-                <field name="land_quartile_25"/>
-                <field name="land_quartile_50"/>
-                <field name="land_quartile_75"/>
-              </group>
-            </page>
-            <page string="Registrants">
-              <field name="eligibility_list_ids" mode="tree,form">
-                <tree string="Eligibility List">
-                  <field name="beneficiary_id"/>
-                </tree>
-                <form string="Eligibility List">
-                  <group>
-                    <field name="beneficiary_id"/>
-                  </group>
-                </form>
-              </field>
-            </page>
-          </notebook>
-        </sheet>
-        <footer>
-          <button string="Close" class="btn-secondary" special="cancel"/>
-        </footer>
-      </form>
-    </field>
+  <!-- Action for Programs -->
+  <record id="action_g2p_programs" model="ir.actions.act_window">
+    <field name="name">Programs</field>
+    <field name="res_model">g2p.program.definition</field>
+    <field name="view_mode">tree,form</field>
   </record>
-  
-  <!-- Student Eligibility Summary Form View (Detail) -->
-  <record id="view_g2p_eligibility_summary_student_form" model="ir.ui.view">
-    <field name="name">g2p.eligibility.summary.student.form</field>
-    <field name="model">g2p.eligibility.summary.student</field>
-    <field name="arch" type="xml">
-      <form string="Student Eligibility Summary">
-        <sheet>
-          <notebook>
-            <page string="Details">
-              <group>
-                <field name="program_id"/>
-                <field name="program_mnemonic"/>
-                <field name="target_registry_type"/>
-                <field name="eligibility_request_id"/>
-                <field name="number_of_registrants"/>
-                <field name="date_created"/>
-              </group>
-              <group string="Student Specific">
-                <field name="age_quartile_25"/>
-                <field name="age_quartile_50"/>
-                <field name="age_quartile_75"/>
-              </group>
-            </page>
-            <page string="Registrants">
-              <field name="eligibility_list_ids" mode="tree,form">
-                <tree string="Eligibility List">
-                  <field name="beneficiary_id"/>
-                </tree>
-                <form string="Eligibility List">
-                  <group>
-                    <field name="beneficiary_id"/>
-                  </group>
-                </form>
-              </field>
-            </page>
-          </notebook>
-        </sheet>
-        <footer>
-          <button string="Close" class="btn-secondary" special="cancel"/>
-        </footer>
-      </form>
-    </field>
-  </record>
-  
-<!-- Menus -->
-<menuitem id="menu_g2p_root" name="PBMS" sequence="1"/>
 
-<menuitem id="menu_g2p_programs" name="Programs" parent="menu_g2p_root" action="action_g2p_programs" sequence="2"/>
+  <!-- Program Form View -->
+  <record id="view_g2p_programs_form" model="ir.ui.view">
+    <field name="name">g2p.programs.form</field>
+    <field name="model">g2p.program.definition</field>
+    <field name="arch" type="xml">
+      <form string="G2P Programs">
+        <sheet>
+          <group>
+            <group string="Program Information">
+              <field name="program_mnemonic" readonly="not context.get('program_form_edit')"/>
+              <field name="description" readonly="not context.get('program_form_edit')"/>
+              <field name="program_status" readonly="not context.get('program_form_edit')"/>
+            </group>
+            <group string="Program Configuration">
+              <field name="benefit_code_id" readonly="not context.get('program_form_create')" options="{'no_create_edit': True, 'no_create': True}"/>
+              <field name="target_registry_type" readonly="not context.get('program_form_create')"/>
+              <field name="measurement_unit" readonly="not context.get('program_form_create')" invisible="not context.get('program_form_edit')"/>
+              <field name="distribution_through_agencies" readonly="not context.get('program_form_create')"/> <!-- TODO: Lock this field if benefit_type is cash  -->
+              <field name="only_direct_credit_allowed" readonly="not context.get('program_form_create')"/> <!-- TODO: Show this field only if benefit_type is cash  -->
+            </group>
+            <group string="Entitlement Configuration">
+              <field name="max_quantity" readonly="not context.get('program_form_edit')" invisible="not context.get('program_form_edit')"/>
+              <field name="display_quantity" readonly="not context.get('program_form_edit')" invisible="context.get('program_form_edit')"/>
+            </group>
+              <group string="Cycle Configuration" >
+                <field name="show_disbursement_day_of_week" invisible="1"/>
+                <field name="show_disbursement_day_of_month" invisible="1"/>
+                <field name="show_disbursement_start_month" invisible="1"/>
+                <field name="show_label_for_beneficiary_list" invisible="1"/>
+               <field name="disbursement_frequency" readonly="not context.get('program_form_edit')"/>
+                <!-- <group col="3"> -->
+                  <field name="disbursement_day_of_week" readonly="not context.get('program_form_edit')"
+                        invisible="not show_disbursement_day_of_week"/>
+                  <field name="disbursement_day_of_month" readonly="not context.get('program_form_edit')"
+                        invisible="not show_disbursement_day_of_month"/>
+                  <field name="disbursement_start_month" readonly="not context.get('program_form_edit')"
+                        invisible="not show_disbursement_start_month"/>
+                <!-- </group> -->
+                <field name="on_demand_cycle_allowed" readonly="not context.get('program_form_edit')"/>
+                <field name="beneficiary_list" readonly="not context.get('program_form_edit')"/>
+                <field name="label_for_beneficiary_list_id" readonly="not context.get('program_form_edit')"
+                    invisible="not show_label_for_beneficiary_list" />
+            </group>
+          </group>
+          <notebook>
+            <!-- Eligibility Rule Page -->
+            <page string="Eligibility Rules">
+              <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry_type': target_registry_type}">
+                <tree default_order="id desc">
+                  <control>
+                    <create string="Add Eligibility Rule"/>
+                  </control>
+                  <field name="mnemonic" string="Rule Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
+                  <field name="description" string="Description"/>
+                  <button name="action_open_view" type="object" string="View Eligibility Rule" class="oe_link" title="View Eligibility Rule"/>
+                </tree>
+              </field>
+            </page>
+            <!-- Entitlement Rule Page -->
+            <page string="Entitlement Rules">
+              <field name="entitlement_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry_type': target_registry_type}">
+                <tree default_order="id desc">
+                  <control>
+                    <create string="Add Entitlement Rule"/>
+                  </control>
+                  <field name="mnemonic" string="Rule Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
+                  <field name="description" string="Description"/>
+                  <button name="action_open_view" type="object" string="View Entitlement Rule" class="oe_link" title="View Entitlement Rule"/>
+                </tree>
+              </field>
+            </page>
+            <!-- Beneficiary List Page -->
+            <page string="Beneficiary Lists">
+              <field name="que_eee_request_ids" nolabel="1"/>                
+            </page>
+            <page string="Disbursement Cycles">
+              <field name="program_cycle_ids" nolabel="1"/>                
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Program Tree View -->
+  <record id="view_g2p_programs_tree" model="ir.ui.view">
+    <field name="name">g2p.programs.tree</field>
+    <field name="model">g2p.program.definition</field>
+    <field name="arch" type="xml">
+      <tree string="G2P Programs">
+        <field name="program_mnemonic" />
+        <field name="description"/>
+        <field name="benefit_code_id"/>
+        <field name="target_registry_type"/>
+        <field name="program_status"/>
+        <button name="action_open_edit" type="object" class="fa fa-pencil"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- Menus -->
+  <menuitem id="menu_g2p_root" name="PBMS" sequence="1"/>
+  <menuitem id="menu_g2p_programs" name="Programs" parent="menu_g2p_root" action="action_g2p_programs" sequence="2"/>
 </odoo>

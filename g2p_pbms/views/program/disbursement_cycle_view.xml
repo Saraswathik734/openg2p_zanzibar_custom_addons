@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form view for Program Cycle -->
+    <record id="view_g2p_program_cycle_form" model="ir.ui.view">
+        <field name="name">g2p.disbursement.cycle.form</field>
+        <field name="model">g2p.disbursement.cycle</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="program_id" readonly="1"/>
+                    <field name="cycle_mnemonic"/>
+                    <!-- Hide fields during creation -->
+                    <field name="envelope_creation_status" invisible="1"/>
+                    <field name="batch_creation_status" invisible="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Program Cycle -->
+    <record id="action_g2p_program_cycle" model="ir.actions.act_window">
+        <field name="name">Program Cycle</field>
+        <field name="res_model">g2p.disbursement.cycle</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Tree view for Program Cycle -->
+    <record id="view_g2p_program_cycle_tree" model="ir.ui.view">
+        <field name="name">view_g2p_program_cycle_tree</field>
+        <field name="model">g2p.disbursement.cycle</field>
+        <field name="arch" type="xml">
+            <tree default_order="creation_date desc" delete="false">
+                <control>
+                    <create string="Create New Cycle"/>
+                </control>
+                <field name="cycle_mnemonic" string="Cycle"/>
+                <field name="pbms_request_id" string="Beneficiary List ID" readonly="1"/>
+                <field name="bridge_envelope_id" readonly="1"/>
+                <field name="envelope_creation_status" string="Envelope Creation Status" widget="badge"/>
+                <field name="batch_creation_status" string="Disbursement Batch Creation Status" widget="badge"/>
+                <field name="creation_date" string="Created On"/>
+                <button name="action_open_disbursement_envelope_summary_wizard" type="object" string="View Envelope Summary" class="oe_link" invisible="envelope_creation_status != 'complete'"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

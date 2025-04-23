@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_g2p_eligibility_summary_wizard_form" model="ir.ui.view">
+    <field name="name">g2p.eee.summary.wizard.form</field>
+    <field name="model">g2p.eee.summary.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Eligibility Summary">
+        <sheet>
+          <group>
+            <field name="id" invisible="1"/>
+            <field name="brief" invisible="1"/>
+            <field name="program_id" invisible="1"/>
+          </group>
+          <notebook>
+           <page string="Summary">
+              <group col="2">
+                <group>
+                  <field name="summary_general_line_ids" nolabel="1" colspan="2">
+                    <tree class="summary_tree_view" create="false" edit="false">
+                      <field name="key" nolabel="1"/>
+                      <field name="value" nolabel="1"/>
+                    </tree>
+                  </field>
+                </group>
+                <group>
+                <div style="white-space: nowrap; margin-bottom: 10px;">
+                    <strong>
+                      <field name="group_title" readonly="1" widget="handle_display"/>
+                    </strong>
+                  </div>
+                  <field name="summary_registry_line_ids" nolabel="1" colspan="2">
+                    <tree class="summary_tree_view" create="false" edit="false">
+                      <field name="key" nolabel="1"/>
+                      <field name="value" nolabel="1"/>
+                    </tree>
+                  </field>
+                </group>
+              </group>
+            </page>
+            <page string="Beneficiaries">
+            <group>
+                <field name="target_registry_type" invisible="1"/>
+                <!-- Only one beneficiary_search field is shown based on registry type -->
+                <group name="beneficiary_search_farmer" invisible="target_registry_type != 'farmer'">
+                  <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.farmer.registry'}"/>
+                  <div class="input-group-append">
+                  </div>
+                </group>
+                <group name="beneficiary_search_student" invisible="target_registry_type != 'student'">
+                  <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.student.registry'}"/>
+                        <div class="input-group-append">
+                        </div>
+                </group>
+              </group>
+            <!-- Container for the QWeb-based beneficiary list -->
+            <field name="dummy_beneficiaries_field" widget="g2p_beneficiaries_widget"/>
+          </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>
