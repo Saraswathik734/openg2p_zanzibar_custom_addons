@@ -146,6 +146,7 @@ class G2PDisbursementCycle(models.Model):
             "pbms_request_id": self.pbms_request_id,
             "program_mnemonic": self.program_id.program_mnemonic,
             "cycle_mnemonic": self.cycle_mnemonic,
+            "measurement_unit": self.program_id.measurement_unit,
         }
 
         wizard = self.env["g2p.disbursement.envelope.summary.wizard"].create(wizard_vals)

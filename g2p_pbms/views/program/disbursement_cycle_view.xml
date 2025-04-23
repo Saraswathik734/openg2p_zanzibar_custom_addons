@@ -35,7 +35,7 @@
                     <create string="Create New Cycle"/>
                 </control>
                 <field name="cycle_mnemonic" string="Cycle"/>
-                <field name="pbms_request_id" readonly="1"/>
+                <field name="pbms_request_id" string="Beneficiary List ID" readonly="1"/>
                 <field name="bridge_envelope_id" readonly="1"/>
                 <field name="envelope_creation_status" string="Envelope Creation Status" widget="badge"/>
                 <field name="batch_creation_status" string="Disbursement Batch Creation Status" widget="badge"/>

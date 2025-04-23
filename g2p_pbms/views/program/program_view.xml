@@ -82,7 +82,7 @@
             <page string="Beneficiary Lists">
               <field name="que_eee_request_ids" nolabel="1"/>                
             </page>
-            <page string="Cycle Lists">
+            <page string="Disbursement Cycles">
               <field name="program_cycle_ids" nolabel="1"/>                
             </page>
           </notebook>

@@ -34,7 +34,7 @@
                     <create string="Create New Beneficiary List"/>
                 </control>
                 <field name="brief" string="Brief"/>
-                <field name="pbms_request_id" readonly="1"/>
+                <field name="pbms_request_id" string="Beneficiary List ID" readonly="1"/>
                 <field name="eligibility_process_status" string="Eligibility Process Status" widget="badge"/>
                 <field name="entitlement_process_status" string=" Entitlement Process Status" widget="badge"/>
                 <field name="creation_date" string="Created On" readonly="1"/>

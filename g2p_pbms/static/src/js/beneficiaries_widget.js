@@ -26,7 +26,7 @@ export class G2PBeneficiariesComponent extends Component {
     searchRegistrants() {
         this.state.searched = true;  // show title and pagination when search is clicked
         this.state.page = 1;
-        this.state.pageSize = 3;
+        this.state.pageSize = 20;
         this.state.target_registry_type = this.props.record.data.target_registry_type;
         this._fetchRecords();
     }

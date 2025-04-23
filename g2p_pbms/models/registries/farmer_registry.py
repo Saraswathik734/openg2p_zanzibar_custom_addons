@@ -12,3 +12,4 @@ class G2PFarmerRegistry(models.Model):
     land_area = fields.Float(string="Land Area")
     no_of_cattle_heads = fields.Integer(string="No of Cattle Heads")
     no_of_poultry_heads = fields.Integer(string="No of Poultry Heads")
+    annual_income = fields.Float(string="Annual Income")
