@@ -35,7 +35,6 @@ class G2PProgramDefinition(models.Model):
         "g2p.que.eee.request",
         "program_id",
         string="Eligibility Request Queue",
-        states={'draft': [('readonly', False)], 'confirm': [('readonly', True)]},
     )
     program_cycle_ids = fields.One2many(
         "g2p.disbursement.cycle",
@@ -55,7 +54,7 @@ class G2PProgramDefinition(models.Model):
     )
 
     #Entitlement Configuration
-    max_quantity = fields.Integer(string="Max Quantity")
+    max_quantity = fields.Integer(string="Maximum Quantity")
 
     # Add related field for measurement_unit from benefit_id
     measurement_unit = fields.Char(
