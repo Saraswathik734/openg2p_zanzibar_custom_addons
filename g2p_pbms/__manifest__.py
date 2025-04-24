@@ -4,6 +4,7 @@
     "summary": "OpenG2P PBMS",
     "description": "OpenG2P PBMS module",
     "category": "OpenG2P",
+    "license": "LGPL-3",
     "depends": ["base_setup", "web"],
     "data": [
         "security/ir.model.access.csv",

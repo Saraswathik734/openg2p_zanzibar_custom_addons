@@ -119,8 +119,8 @@ class G2PDisbursementCycle(models.Model):
     def create(self, vals):
         if not vals.get('disbursement_schedule_date') and vals.get('program_id'):
             program = self.env['g2p.program.definition'].browse(vals['program_id'])
-            if self.program_id.beneficiary_list == 'labeled' and self.program_id.label_for_beneficiary_list_id:
-                vals['pbms_request_id'] = self.program_id.label_for_beneficiary_list_id.pbms_request_id
+            if program.beneficiary_list == 'labeled' and program.label_for_beneficiary_list_id:
+                vals['pbms_request_id'] = program.label_for_beneficiary_list_id.pbms_request_id
             else:
                 # Get the latest PBMS request ID from the program
                 latest_request = self.env['g2p.que.eee.request'].search([
