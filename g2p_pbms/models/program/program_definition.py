@@ -136,9 +136,9 @@ class G2PProgramDefinition(models.Model):
     @api.depends('disbursement_frequency')
     def _compute_visibility_frequency(self):
         for rec in self:
-            rec.show_disbursement_day_of_week = rec.disbursement_frequency in ('weekly', 'bi_weekly')
-            rec.show_disbursement_day_of_month = rec.disbursement_frequency in ('bi_weekly', 'monthly', 'quarterly', 'semi_annually', 'annually')
-            rec.show_disbursement_start_month = rec.disbursement_frequency in ('quarterly', 'semi_annually', 'annually')
+            rec.show_disbursement_day_of_week = rec.disbursement_frequency in ('Weekly')
+            rec.show_disbursement_day_of_month = rec.disbursement_frequency in ('Fortnightly', 'BiMonthly', 'Monthly', 'Quarterly', 'SemiAnnually', 'Annually')
+            rec.show_disbursement_start_month = rec.disbursement_frequency in ('Quarterly', 'SemiAnnually', 'Annually')
     
     @api.depends('beneficiary_list')
     def _compute_visibility_beneficiary(self):
