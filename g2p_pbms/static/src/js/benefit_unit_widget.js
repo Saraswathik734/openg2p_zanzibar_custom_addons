@@ -4,8 +4,8 @@ import { registry } from "@web/core/registry";
 import { onWillUpdateProps, useState } from "@odoo/owl";
 
 
-export class DeliveryUnitWidget extends CharField {
-    static template = "g2p_pbms.DeliveryUnitWidget";
+export class BenefitUnitWidget extends CharField {
+    static template = "g2p_pbms.BenefitUnitWidget";
 
     setup() {
         super.setup();
@@ -13,11 +13,6 @@ export class DeliveryUnitWidget extends CharField {
         this.state = useState({
             record_data: this.props.record.data,
         });
-        // onWillUpdateProps((nextProps) => {
-        //     this.delivery_type = nextProps.record.data.delivery_type;
-        // });
-        // console.log("THIS2:", this)
-        // this.delivery_type = this.props.record.data.delivery_type;
 
         this.currencyOptions = [
             { value: "USD", label: "USD" },
@@ -62,11 +57,8 @@ export class DeliveryUnitWidget extends CharField {
         ];
     }
 
-
-
-
 }
 
-registry.category("fields").add("g2p_pbms.delivery_unit_widget", {
-    component: DeliveryUnitWidget,
+registry.category("fields").add("g2p_pbms.benefit_unit_widget", {
+    component: BenefitUnitWidget,
 });

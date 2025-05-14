@@ -47,7 +47,7 @@
                 <field name="quantity"/>
                 <field name="target_registry_type" invisible="1"/>
                 <field name="pbms_domain"/>
-                <button name="action_open_view" type="object" class="fa fa-eye"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
             </tree>
         </field>
     </record>

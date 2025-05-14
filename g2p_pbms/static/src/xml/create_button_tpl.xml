@@ -14,21 +14,21 @@
                     Create Agency
                 </button>
                 <button
-                    t-if="model.root.resModel == 'g2p.delivery.classification.codes'"
+                    t-if="model.root.resModel == 'g2p.benefit.classification.codes'"
                     type="button"
                     class="btn btn-primary o_list_button_add_codes"
                     accesskey="p"
-                    title="Create a New Delivery Classification Code"
-                    t-on-click="load_delivery_classification_code_wizard">
+                    title="Create a New Benefit Classification Code"
+                    t-on-click="load_benefit_classification_code_wizard">
                     Create Code
                 </button>
                 <button
-                    t-if="model.root.resModel == 'g2p.delivery.codes'"
+                    t-if="model.root.resModel == 'g2p.benefit.codes'"
                     type="button"
                     class="btn btn-primary o_list_button_add_codes"
                     accesskey="p"
-                    title="Create a New Delivery Code"
-                    t-on-click="load_delivery_code_wizard">
+                    title="Create a New Benefit Code"
+                    t-on-click="load_benefit_code_wizard">
                     Create Code
                 </button>
                 <button
@@ -58,8 +58,8 @@
         <xpath expr="//button[contains(@class, 'o_list_button_add')]" position="attributes">
             <attribute name="t-if">
                 model.root.resModel != 'g2p.agencies' and
-                model.root.resModel != 'g2p.delivery.classification.codes' and
-                model.root.resModel != 'g2p.delivery.codes' and
+                model.root.resModel != 'g2p.benefit.classification.codes' and
+                model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and
                 model.root.resModel != 'g2p.regions'
             </attribute>
@@ -69,8 +69,8 @@
         <xpath expr="//button[contains(@class, 'o_form_button_create')]" position="attributes">
             <attribute name="t-if">
                 model.root.resModel != 'g2p.agencies' and
-                model.root.resModel != 'g2p.delivery.classification.codes' and
-                model.root.resModel != 'g2p.delivery.codes' and
+                model.root.resModel != 'g2p.benefit.classification.codes' and
+                model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and
                 model.root.resModel != 'g2p.regions'
             </attribute>
@@ -78,8 +78,8 @@
         <xpath expr="//button[contains(@class, 'btn-outline-primary o_form_button_create')]" position="attributes">
             <attribute name="t-if">
                 model.root.resModel != 'g2p.agencies' and
-                model.root.resModel != 'g2p.delivery.classification.codes' and
-                model.root.resModel != 'g2p.delivery.codes' and
+                model.root.resModel != 'g2p.benefit.classification.codes' and
+                model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and
                 model.root.resModel != 'g2p.regions'
             </attribute>

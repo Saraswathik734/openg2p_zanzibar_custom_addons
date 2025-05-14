@@ -10,7 +10,7 @@ class G2PAgencies(models.Model):
 
     name = fields.Char(string="Name", required=True)
     mnemonic = fields.Char(string="Agency Mnemonic")
-    delivery_codes = fields.Many2many("g2p.delivery.codes", string="Delivery Codes")
+    benefit_codes = fields.Many2many("g2p.benefit.codes", string="Benefit Codes")
     regions = fields.Many2many("g2p.regions", string="Regions")
 
     def action_open_edit(self):
