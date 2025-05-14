@@ -35,7 +35,6 @@ class G2PProgramDefinition(models.Model):
         "g2p.que.eee.request",
         "program_id",
         string="Eligibility Request Queue",
-        states={'draft': [('readonly', False)], 'confirm': [('readonly', True)]},
     )
     program_cycle_ids = fields.One2many(
         "g2p.disbursement.cycle",
@@ -55,7 +54,7 @@ class G2PProgramDefinition(models.Model):
     )
 
     #Entitlement Configuration
-    max_quantity = fields.Integer(string="Max Quantity")
+    max_quantity = fields.Integer(string="Maximum Quantity")
 
     # Add related field for measurement_unit from benefit_id
     measurement_unit = fields.Char(
@@ -137,9 +136,9 @@ class G2PProgramDefinition(models.Model):
     @api.depends('disbursement_frequency')
     def _compute_visibility_frequency(self):
         for rec in self:
-            rec.show_disbursement_day_of_week = rec.disbursement_frequency in ('weekly', 'bi_weekly')
-            rec.show_disbursement_day_of_month = rec.disbursement_frequency in ('bi_weekly', 'monthly', 'quarterly', 'semi_annually', 'annually')
-            rec.show_disbursement_start_month = rec.disbursement_frequency in ('quarterly', 'semi_annually', 'annually')
+            rec.show_disbursement_day_of_week = rec.disbursement_frequency in ('Weekly')
+            rec.show_disbursement_day_of_month = rec.disbursement_frequency in ('Fortnightly', 'BiMonthly', 'Monthly', 'Quarterly', 'SemiAnnually', 'Annually')
+            rec.show_disbursement_start_month = rec.disbursement_frequency in ('Quarterly', 'SemiAnnually', 'Annually')
     
     @api.depends('beneficiary_list')
     def _compute_visibility_beneficiary(self):
