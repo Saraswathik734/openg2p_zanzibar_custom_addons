@@ -6,29 +6,30 @@ from ..registries import G2PRegistryType
 
 _logger = logging.getLogger(__name__)
 
-
-class G2PEligibilityRuleDefinition(models.Model):
-    _name = "g2p.eligibility.rule.definition"
-    _description = "G2P Program Eligibility Rule Definition"
+class G2PEntitlementRuleDefinition(models.Model):
+    _name = "g2p.entitlement.rule.definition"
+    _description = "G2P Program Entitlement Rule Definition"
     _rec_name = "mnemonic"
 
     mnemonic = fields.Char(string="Rule Mnemonic", required=True)
     description = fields.Char(string="Description")
+    program_id = fields.Many2one("g2p.program.definition", string="G2P Program")
+    quantity = fields.Integer(string="Quantity", required=True)
     target_registry_type = fields.Selection(
         selection=G2PRegistryType.selection(), string="Registry Type", required=True
     )
-    domain = fields.Char(string="Domain", required=True)
+    pbms_domain = fields.Char(string="Domain", required=True)
     sql_query = fields.Char(string="SQL Query", compute="_get_query", store=True)
 
-    @api.depends("domain", "target_registry_type")
+    @api.depends("pbms_domain", "target_registry_type")
     def _get_query(self):
         for rec in self:
             try:
                 # Convert the domain string into a valid Python list of tuples.
-                domain_value = safe_eval(rec.domain or "[]")
+                domain_value = safe_eval(rec.pbms_domain or "[]")
             except Exception as e:
                 _logger.error(
-                    "Error evaluating domain for eligibility rule %s: %s",
+                    "Error evaluating domain for entitlement rule %s: %s",
                     rec.mnemonic,
                     e,
                 )
@@ -76,7 +77,7 @@ class G2PEligibilityRuleDefinition(models.Model):
             where_str = (" WHERE %s" % where_clause) if where_clause else ""
             # Use the target model's table name in the SQL query.
             query_str = (
-                'SELECT "%s".id FROM ' % target_model._table + from_clause + where_str
+                'SELECT "%s".unique_id FROM ' % target_model._table + from_clause + where_str
             )
 
             # Format the parameters as strings.
@@ -89,7 +90,7 @@ class G2PEligibilityRuleDefinition(models.Model):
                 _logger.info("Query for rule %s: %s", rec.mnemonic, rec.sql_query)
             except Exception as e:
                 _logger.error(
-                    "Error formatting query for eligibility rule %s: %s",
+                    "Error formatting query for entitlement rule %s: %s",
                     rec.mnemonic,
                     e,
                 )
@@ -98,10 +99,11 @@ class G2PEligibilityRuleDefinition(models.Model):
     def action_open_view(self):
         return {
             "type": "ir.actions.act_window",
-            "name": "View Eligibility Rule Details",
+            "name": "View Entitlement Rule Details",
             "res_model": self._name,
             "res_id": self.id,
             "view_mode": "form",
             "target": "new",
             "flags": {"mode": "readonly"},
         }
+

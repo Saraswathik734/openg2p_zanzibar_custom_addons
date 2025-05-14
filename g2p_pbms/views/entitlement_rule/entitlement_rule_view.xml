@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions -->
+    <record id="action_g2p_entitlement_rule_definition" model="ir.actions.act_window">
+        <field name="name">Entitlement Rule</field>
+        <field name="res_model">g2p.entitlement.rule.definition</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_g2p_entitlement_rule_definition_form" model="ir.ui.view">
+        <field name="name">g2p.entitlement.rule.definition.form</field>
+        <field name="model">g2p.entitlement.rule.definition</field>
+        <field name="arch" type="xml">
+            <form string="Entitlement Rule">
+                <sheet>
+                    <group>
+                        <field name="mnemonic"/>
+                        <field name="description"/>
+                        <field name="quantity"/>
+                        <field name="target_registry_type" invisible="1"/>
+                        <!-- Domain widget for the 'farmer' type -->
+                        <field name="pbms_domain" widget="domain"
+                               options="{'model': 'g2p.farmer.registry'}"
+                               invisible="target_registry_type != 'farmer'"/>
+                        <!-- Domain widget for the 'student' type -->
+                        <field name="pbms_domain" widget="domain"
+                               options="{'model': 'g2p.student.registry'}"
+                               invisible="target_registry_type != 'student'"/>
+                    </group>
+                </sheet>
+                <sheet>
+                    <group>
+                        <field name="sql_query"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_g2p_entitlement_rule_definition_tree" model="ir.ui.view">
+        <field name="name">g2p.entitlement.rule.definition.tree</field>
+        <field name="model">g2p.entitlement.rule.definition</field>
+        <field name="arch" type="xml">
+            <tree string="Entitlement Rule">
+                <field name="mnemonic"/>
+                <field name="description"/>
+                <field name="quantity"/>
+                <field name="target_registry_type" invisible="1"/>
+                <field name="pbms_domain"/>
+                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+            </tree>
+        </field>
+    </record>
+
+  </odoo>

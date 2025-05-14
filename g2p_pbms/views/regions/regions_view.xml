@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Actions for Regions -->
+    <record id="action_g2p_regions" model="ir.actions.act_window">
+        <field name="name">Agency Regions</field>
+        <field name="res_model">g2p.regions</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Views for G2P Regions -->
+    <record id="view_g2p_regions_form" model="ir.ui.view">
+        <field name="name">g2p.regions.form</field>
+        <field name="model">g2p.regions</field>
+        <field name="arch" type="xml">
+            <form string="G2P Agency Regions">
+                <sheet>
+                    <group>
+                        <field name="region_code" readonly="not context.get('region_form_edit')"/>
+                        <field name="region_name" readonly="not context.get('region_form_edit')"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_g2p_regions_tree" model="ir.ui.view">
+        <field name="name">g2p.regions.tree</field>
+        <field name="model">g2p.regions</field>
+        <field name="arch" type="xml">
+            <tree string="G2P Agency Regions" limit="10">
+                <field name="region_code"/>
+                <field name="region_name"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil" title="Edit"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Menu for Regions -->
+    <menuitem id="menu_g2p_regions_action" name="Regions" parent="menu_g2p_agencies" action="action_g2p_regions" sequence="2" />
+</odoo>
