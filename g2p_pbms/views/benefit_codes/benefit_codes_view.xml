@@ -17,7 +17,6 @@
                     <group>
                         <field name="benefit_mnemonic" readonly="not context.get('benefit_code_form_edit')"/>
                         <field name="benefit_type" readonly="not context.get('benefit_code_form_edit')"/>
-                        <field name="benefit_classification_id" readonly="not context.get('benefit_code_form_edit')"/>
                         <field name="measurement_unit" widget="g2p_pbms.benefit_unit_widget" readonly="not context.get('benefit_code_form_edit')"/>
                         <field name="benefit_description" readonly="not context.get('benefit_code_form_edit')"/>
                     </group>
@@ -32,7 +31,6 @@
             <tree string="Benefit Codes">
                 <field name="benefit_mnemonic"/>
                 <field name="benefit_type"/>
-                <field name="benefit_classification_id"/>
                 <field name="measurement_unit"/>
                 <field name="benefit_description"/>
                 <button name="action_open_edit" type="object" class="fa fa-pencil"/>

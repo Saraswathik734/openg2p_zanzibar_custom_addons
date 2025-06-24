@@ -5,14 +5,68 @@
     <field name="model">g2p.eee.summary.wizard</field>
     <field name="arch" type="xml">
       <form string="Eligibility Summary">
+        <header>
+          <!-- Enrollment Buttons -->
+          <button 
+            type="object"
+            class="btn-primary"
+            icon="fa-files-o"
+            title="Publish to Communities"
+            string="Publish to Communities"
+            name="action_publish_to_communities"
+            invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
+          />
+          <button 
+            type="object" 
+            class="btn-primary" 
+            icon="fa-files-o"
+            string="Record Community Feedback" 
+            name="action_record_community_feedbacks" 
+            invisible="not(list_stage == 'enrollment' and list_workflow_status == 'published_to_communities')"
+          /> 
+          <!-- TODO: add new entry visible in tree view -->
+          <button 
+            type="object" 
+            class="btn-success" 
+            icon="fa-thumbs-o-up"
+            name="action_approve_final_enrollment" 
+            invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
+            string="Approve Final Enrollment" 
+          />
+          <!-- Disbursement Buttons -->
+          <button 
+            type="object" 
+            class="btn-success" 
+            icon="fa-thumbs-o-up"
+            name="action_approve_for_disbursement" 
+            invisible="approved_for_disbursement or not(list_stage == 'disbursement' and list_workflow_status != 'approved_for_disbursement')"
+            string="Approve for Disbursement" 
+          />
+        </header>
         <sheet>
-          <group>
-            <field name="id" invisible="1"/>
-            <field name="brief" invisible="1"/>
-            <field name="program_id" invisible="1"/>
+          <group colspan="2">
+            <group string="Beneficiary List Info">
+              <field name="program_id" readonly="1"/>
+              <field name="enrollment_cycle_id" string="Enrollment Cycle" readonly="1"/>
+              <field name="mnemonic" string="List Mnemonic" readonly="1"/>
+              <field name="brief" string="Brief" readonly="1"/>
+              <field name="beneficiary_list_id" invisible="1"/>
+              <field name="list_stage" invisible="1"/>
+              <field name="list_workflow_status" widget="badge" invisible="1"/>
+            </group>
+            <group string="Enrollment Cycle Info" invisible="list_stage != 'enrollment'">
+              <field name="enrollment_cycle_id" readonly="1"/>
+              <field name="enrollment_start_date" readonly="1"/>
+              <field name="enrollment_end_date" readonly="1"/>
+            </group>
+            <group string="Disbursement Cycle Info" invisible="list_stage != 'disbursement'">
+              <field name="disbursement_cycle_mnemonic" readonly="1"/>
+              <field name="approved_for_disbursement" invisible="1"/>
+            </group>
           </group>
           <notebook>
-           <page string="Summary">
+            <!-- Enrollment Summary Page -->
+            <page string="Summary">
               <group col="2">
                 <group>
                   <field name="summary_general_line_ids" nolabel="1" colspan="2">
@@ -54,6 +108,47 @@
               </group>
             <!-- Container for the QWeb-based beneficiary list -->
             <field name="dummy_beneficiaries_field" widget="g2p_beneficiaries_widget"/>
+          </page>
+          <page string="Feedbacks" invisible="list_stage != 'enrollment'">
+            <field name="feedback_ids" readonly="1" nolabel="1">
+              <tree>
+                <field name="comment" string="Comment"/>
+                <field name="file" class="fa fa-file-text"/>
+              </tree>
+            </field>
+          </page>
+          <page string="Verifications" invisible="list_stage != 'disbursement'">
+            <field name="verification_ids" readonly="list_workflow_status == 'approved_for_disbursement'" nolabel="1" context="{'default_beneficiary_list_id': beneficiary_list_id}">
+              <tree>
+                <field name="name" string="Name"/>
+                <field name="comment" string="Comment"/>
+                <field name="verification_status" string="Verification Status" widget="badge"/>
+                <field name="verification_timestamp" string="Verification Timestamp"/>
+                <button name="action_verify" type="object" class="fa fa-check" title="Verify"/>
+              </tree>
+            </field>
+          </page>
+          <page string="Disbursement Envelopes" invisible="list_stage != 'disbursement'">
+            <!-- <field name="verification_ids" readonly="list_workflow_status == 'approved_for_disbursement'" nolabel="1" context="{'default_beneficiary_list_id': beneficiary_list_id}">
+              <tree>
+                <field name="name" string="Name"/>
+                <field name="comment" string="Comment"/>
+                <field name="verification_status" string="Verification Status" widget="badge"/>
+                <field name="verification_timestamp" string="Verification Timestamp"/>
+                <button name="action_verify" type="object" class="fa fa-check" title="Verify"/>
+              </tree>
+            </field> -->
+          </page>
+          <page string="Disbursement Batches" invisible="list_stage != 'disbursement'">
+            <!-- <field name="verification_ids" readonly="list_workflow_status == 'approved_for_disbursement'" nolabel="1" context="{'default_beneficiary_list_id': beneficiary_list_id}">
+              <tree>
+                <field name="name" string="Name"/>
+                <field name="comment" string="Comment"/>
+                <field name="verification_status" string="Verification Status" widget="badge"/>
+                <field name="verification_timestamp" string="Verification Timestamp"/>
+                <button name="action_verify" type="object" class="fa fa-check" title="Verify"/>
+              </tree>
+            </field> -->
           </page>
           </notebook>
         </sheet>

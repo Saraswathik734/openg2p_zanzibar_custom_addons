@@ -11,17 +11,43 @@ _logger = logging.getLogger(__name__)
 class G2PEEESummaryWizard(models.TransientModel):
     _name = 'g2p.eee.summary.wizard'
     _description = 'EEE Summary Wizard'
-    _rec_name = 'brief'
+    _rec_name = 'mnemonic'
 
     target_registry_type = fields.Selection(
         selection=lambda self: G2PRegistryType.selection(),
         string="Registry Type",
         required=True,
     )
+    mnemonic= fields.Char(string='Mnemonic')
     brief = fields.Text(string='Brief')
     program_id = fields.Many2one('g2p.program.definition', string='Program')
-    pbms_request_id = fields.Char(string='PBMS Request ID')
+    beneficiary_list_id = fields.Integer(string='Beneficiary List ID')
+    enrollment_cycle_id = fields.Integer(string='Enrollment Cycle')
+    disbursement_cycle_id = fields.Integer(string='Disbursement Cycle')
     beneficiary_search = fields.Char(string='Search Beneficiary')
+    list_stage = fields.Char(string='List Stage', default="enrollment")
+    list_workflow_status = fields.Char(string='List Workflow Status', default="initiated")
+
+    feedback_ids = fields.One2many(
+        "g2p.beneficiary.list.feedback",
+        string="Feedback",
+        compute="_compute_feedback_ids",
+        default=False
+    )
+    verification_ids = fields.One2many(
+        "g2p.beneficiary.list.verification",
+        string="Verification",
+        compute="_compute_verification_ids",
+        default=False
+    )
+
+    # Enrollment Cycle Info
+    enrollment_start_date = fields.Date(string='Enrollment Start Date')
+    enrollment_end_date = fields.Date(string='Enrollment End Date')
+
+    # Disbursement Cycle Info
+    disbursement_cycle_mnemonic = fields.Char(string='Disbursement Cycle')
+    approved_for_disbursement = fields.Boolean(string='Approved for Disbursement', default=False)
 
     # Store all summary lines from the API response
     summary_line_ids = fields.One2many(
@@ -159,7 +185,7 @@ class G2PEEESummaryWizard(models.TransientModel):
                     "meta": "string"
                 },
             "message": {
-                "pbms_request_id": wizard.pbms_request_id,
+                "beneficiary_list_id": wizard.beneficiary_list_id,
                 "target_registry_type": target_registry_type,
                 "page": page,
                 "page_size": page_size,
@@ -209,7 +235,7 @@ class G2PEEESummaryWizard(models.TransientModel):
                     "meta": "string"
                 },
                 "message": {
-                    "pbms_request_id": wizard.pbms_request_id,
+                    "beneficiary_list_id": wizard.beneficiary_list_id,
                     "target_registry_type": wizard.target_registry_type
                 }
             }
@@ -271,7 +297,71 @@ class G2PEEESummaryWizard(models.TransientModel):
             wizard.summary_registry_line_ids = wizard.summary_line_ids.filtered(
                 lambda r: r.summary_type == 'registry'
             )
+    
+    @api.depends('beneficiary_list_id')
+    def _compute_feedback_ids(self):
+        for wizard in self:
+            if wizard.beneficiary_list_id:
+                wizard.feedback_ids = self.env['g2p.beneficiary.list.feedback'].search([
+                    ('beneficiary_list_id.id', '=', wizard.beneficiary_list_id)
+                ])
+            else:
+                wizard.feedback_ids = False
 
+    @api.depends('beneficiary_list_id')
+    def _compute_verification_ids(self):
+        for wizard in self:
+            if wizard.beneficiary_list_id:
+                wizard.verification_ids = self.env['g2p.beneficiary.list.verification'].search([
+                    ('beneficiary_list_id.id', '=', wizard.beneficiary_list_id)
+                ])
+            else:
+                wizard.verification_ids = False
+
+    def action_publish_to_communities(self):
+        self.ensure_one()
+        if not self.list_workflow_status == 'published_to_communities':
+            self.list_workflow_status = 'published_to_communities'
+            self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).write({
+                'list_workflow_status': 'published_to_communities'
+            })
+    
+    def action_approve_final_enrollment(self):
+        self.ensure_one()
+        if not self.list_workflow_status == 'approved_final_enrolment':
+            self.list_workflow_status = 'approved_final_enrolment'
+            self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).write({
+                'list_workflow_status': 'approved_final_enrolment'
+            })
+    
+    def action_record_community_feedbacks(self):
+        self.ensure_one()
+        # Implement the logic to record community feedbacks under
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Record Community Feedback',
+            'res_model': 'g2p.beneficiary.list.feedback',
+            'view_mode': 'form',
+            'view_id': self.env.ref('g2p_pbms.view_g2p_beneficiary_list_feedback_form').id,
+            'target': 'new',
+            'context': {
+                'default_beneficiary_list_id': self.beneficiary_list_id,
+                'beneficiary_list_feedback_form_edit': True,
+            },
+        }
+    
+    def action_approve_for_disbursement(self):
+        self.ensure_one()
+        if not self.list_workflow_status == 'approved_for_disbursement':
+            self.list_workflow_status = 'approved_for_disbursement'
+            self.approved_for_disbursement = True
+            self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).write({
+                'list_workflow_status': 'approved_for_disbursement',
+                'disbursement_envelope_status': 'pending'
+            })
+            self.env['g2p.disbursement.cycle'].browse(self.disbursement_cycle_id).write({
+                'approved_for_disbursement': True,
+            })
 
 class G2PAPISummaryLine(models.TransientModel):
     _name = 'g2p.api.summary.line'

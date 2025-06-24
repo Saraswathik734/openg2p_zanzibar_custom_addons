@@ -21,11 +21,6 @@ class G2PBenefitCodes(models.Model):
         string="Benefit Type",
         required=True,
     )
-    benefit_classification_id = fields.Many2one(
-        "g2p.benefit.classification.codes",
-        string="Benefit Classification",
-        required=True,
-    )
     benefit_description = fields.Text(string="Benefit Description")
     measurement_unit = fields.Char(string="Measurement Unit")
 
@@ -36,6 +31,18 @@ class G2PBenefitCodes(models.Model):
             "The benefit mnemonic must be unique!",
         )
     ]
+
+    def action_open_view(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "View Benefit Code Details",
+            "res_model": self._name,
+            "res_id": self.id,
+            "view_mode": "form",
+            "target": "new",
+            "flags": {"mode": "readonly"},
+        }
 
     def action_open_edit(self):
         self.ensure_one()

@@ -40,7 +40,6 @@
                                     <field name="benefit_description"/>
                                     <field name="benefit_type"/>
                                     <field name="measurement_unit"/>
-                                    <field name="benefit_classification_id"/>
                                 </tree>
                             </field>
                         </page>

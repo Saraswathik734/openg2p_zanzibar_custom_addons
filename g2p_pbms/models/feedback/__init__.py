@@ -1,0 +1,1 @@
+from .beneficiary_list_feedback import G2PBeneficiaryListFeedback

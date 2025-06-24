@@ -11,7 +11,7 @@ class G2PDisbursementEnvelopeSummaryWizard(models.TransientModel):
     
     program_mnemonic = fields.Char(string="Program Mnemonic")
     cycle_mnemonic = fields.Char(string="Cycle Mnemonic")
-    pbms_request_id = fields.Char(string="PBMS Request ID")
+    beneficiary_list_id = fields.Char(string="Beneficiary List ID")
     disbursement_envelope_id = fields.Char(string="Disbursement Envelope ID")
     measurement_unit = fields.Char(string="Measurement Unit")
     
