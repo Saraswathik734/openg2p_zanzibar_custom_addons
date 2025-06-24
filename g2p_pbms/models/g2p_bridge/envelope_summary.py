@@ -83,7 +83,9 @@ class G2PDisbursementEnvelopeSummaryWizard(models.TransientModel):
             return
 
         message = api_response.get('message', {})
-        # TODO: check if message is None
+        if not message:
+            _logger.error("No 'message' found in API response: %s", api_response)
+            return
         self.disbursement_envelope_id = message.get('disbursement_envelope_id', self.disbursement_envelope_id)
         self.number_of_disbursements_received = message.get('number_of_disbursements_received', 0)
         self.total_disbursement_amount_received = f"{self.measurement_unit} {format(float(message.get('total_disbursement_amount_received', 0)), ',')}"
