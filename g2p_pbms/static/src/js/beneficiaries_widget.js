@@ -28,7 +28,12 @@ export class G2PBeneficiariesComponent extends Component {
         this.state.page = 1;
         this.state.pageSize = 20;
         this.state.target_registry_type = this.props.record.data.target_registry_type;
+        this.state.list_workflow_status = this.props.record.data.list_workflow_status;
         this._fetchRecords();
+    }
+
+    fetchDisbursementDetails(bridge_disbursement_id) {
+        
     }
 
     async _fetchRecords() {

@@ -23,19 +23,6 @@ patch(ListController.prototype, {
         return window.location;
     },
 
-    load_benefit_classification_code_wizard() {
-        this.action.doAction({
-            name: "Benefit Classification Codes",
-            type: "ir.actions.act_window",
-            res_model: "g2p.benefit.classification.codes",
-            view_mode: "form",
-            views: [[false, "form"]],
-            target: "current",
-            context: { create: false, benefit_classification_code_form_edit: true },
-        });
-        return window.location;
-    },
-
     load_benefit_code_wizard() {
         this.action.doAction({
             name: "Benefit Codes",

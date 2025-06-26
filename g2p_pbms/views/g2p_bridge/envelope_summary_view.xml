@@ -15,7 +15,7 @@
           <group string="Program and Cycle Details">
             <field name="program_mnemonic" readonly="1"/>
             <field name="cycle_mnemonic" readonly="1"/>
-            <field name="pbms_request_id" readonly="1"/>
+            <field name="beneficiary_list_id" readonly="1"/>
           </group>
           <group string="G2P Bridge Envelope">
             <field name="disbursement_envelope_id" readonly="1"/>

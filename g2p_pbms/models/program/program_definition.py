@@ -10,8 +10,11 @@ class G2PProgramDefinition(models.Model):
 
     program_mnemonic = fields.Char(string="Program Mnemonic", required=True)
     description = fields.Char(string="Description")
-    benefit_code_id = fields.Many2one(
-        "g2p.benefit.codes", string="Benefit Code", required=True
+    benefit_code_ids = fields.Many2many(
+        'g2p.benefit.codes',
+        string="Benefit Codes",
+        required=True,
+        help="Select benefit codes that are applicable for this program."
     )
     target_registry_type = fields.Selection(
         selection=G2PRegistryType.selection(), string="Target Registry", required=True
@@ -31,15 +34,20 @@ class G2PProgramDefinition(models.Model):
     entitlement_rule_ids = fields.One2many(
         'g2p.entitlement.rule.definition', 'program_id', string="Entitlement Rules"
     )
-    que_eee_request_ids = fields.One2many(
-        "g2p.que.eee.request",
+    beneficiary_list_ids = fields.One2many(
+        "g2p.beneficiary.list",
         "program_id",
         string="Eligibility Request Queue",
     )
-    program_cycle_ids = fields.One2many(
+    enrollment_cycle_ids = fields.One2many(
+        "g2p.enrollment.cycle",
+        "program_id",
+        string="Enrollment Cycle",
+    )
+    disbursement_cycle_ids = fields.One2many(
         "g2p.disbursement.cycle",
         "program_id",
-        string="Program Cycle",
+        string="Disbursement Cycle",
     )
     distribution_through_agencies = fields.Boolean(
         string="Distribution through Agencies",
@@ -54,20 +62,20 @@ class G2PProgramDefinition(models.Model):
     )
 
     #Entitlement Configuration
-    max_quantity = fields.Integer(string="Maximum Quantity")
+    # max_quantity = fields.Integer(string="Maximum Quantity")
 
     # Add related field for measurement_unit from benefit_id
-    measurement_unit = fields.Char(
-        related='benefit_code_id.measurement_unit',
-        string="Measurement Unit",
-        readonly=True
-    )
-    benefit_type = fields.Selection(
-        related='benefit_code_id.benefit_type',
-        string="Benefit Type",
-        readonly=True
-    )
-    display_quantity = fields.Char(string="Max Quantity", compute="_compute_display_quantity")
+    # measurement_unit = fields.Char(
+    #     related='benefit_code_id.measurement_unit',
+    #     string="Measurement Unit",
+    #     readonly=True
+    # )
+    # benefit_type = fields.Selection(
+    #     related='benefit_code_id.benefit_type',
+    #     string="Benefit Type",
+    #     readonly=True
+    # )
+    # display_quantity = fields.Char(string="Max Quantity", compute="_compute_display_quantity")
 
     # Cycle configuration
     disbursement_frequency = fields.Selection([
@@ -116,7 +124,7 @@ class G2PProgramDefinition(models.Model):
     ], string="Beneficiary List", required=True, default='latest_always')
 
     label_for_beneficiary_list_id = fields.Many2one(
-        'g2p.que.eee.request', 
+        'g2p.beneficiary.list', 
         string="Label for Beneficiary List"
     )    
     # Computed booleans for dynamic visibility – stored to allow use in views.
@@ -145,10 +153,10 @@ class G2PProgramDefinition(models.Model):
         for rec in self:
             rec.show_label_for_beneficiary_list = rec.beneficiary_list == 'labeled'
 
-    @api.depends('max_quantity', 'measurement_unit')
-    def _compute_display_quantity(self):
-        for rec in self:
-            rec.display_quantity = f"{rec.max_quantity} {rec.measurement_unit or ''}"
+    # @api.depends('max_quantity', 'measurement_unit')
+    # def _compute_display_quantity(self):
+    #     for rec in self:
+    #         rec.display_quantity = f"{rec.max_quantity} {rec.measurement_unit or ''}"
 
     @api.depends('entitlement_id')
     def _compute_entitlement_inline_ids(self):

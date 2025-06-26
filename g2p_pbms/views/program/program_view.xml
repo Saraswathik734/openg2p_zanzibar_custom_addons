@@ -21,16 +21,14 @@
               <field name="program_status" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Program Configuration">
-              <field name="benefit_code_id" readonly="not context.get('program_form_create')" options="{'no_create_edit': True, 'no_create': True}"/>
               <field name="target_registry_type" readonly="not context.get('program_form_create')"/>
-              <field name="measurement_unit" readonly="not context.get('program_form_create')" invisible="not context.get('program_form_edit')"/>
               <field name="distribution_through_agencies" readonly="not context.get('program_form_create')"/> <!-- TODO: Lock this field if benefit_type is cash  -->
               <field name="only_direct_credit_allowed" readonly="not context.get('program_form_create')"/> <!-- TODO: Show this field only if benefit_type is cash  -->
             </group>
-            <group string="Entitlement Configuration">
+            <!-- <group string="Entitlement Configuration">
               <field name="max_quantity" readonly="not context.get('program_form_edit')" invisible="not context.get('program_form_edit')"/>
               <field name="display_quantity" readonly="not context.get('program_form_edit')" invisible="context.get('program_form_edit')"/>
-            </group>
+            </group> -->
               <group string="Cycle Configuration" >
                 <field name="show_disbursement_day_of_week" invisible="1"/>
                 <field name="show_disbursement_day_of_month" invisible="1"/>
@@ -45,14 +43,29 @@
                   <field name="disbursement_start_month" readonly="not context.get('program_form_edit')"
                         invisible="not show_disbursement_start_month"/>
                 <!-- </group> -->
-                <field name="on_demand_cycle_allowed" readonly="not context.get('program_form_edit')"/>
+                <!-- <field name="on_demand_cycle_allowed" readonly="not context.get('program_form_edit')"/>
                 <field name="beneficiary_list" readonly="not context.get('program_form_edit')"/>
                 <field name="label_for_beneficiary_list_id" readonly="not context.get('program_form_edit')"
-                    invisible="not show_label_for_beneficiary_list" />
+                    invisible="not show_label_for_beneficiary_list" /> -->
             </group>
           </group>
           <notebook>
-            <!-- Eligibility Rule Page -->
+            <!-- Benefit Codes Page -->
+            <page string="Benefit Codes">
+              <field name="benefit_code_ids" nolabel="1" options="{'no_quick_create': True}">
+                <tree default_order="id desc">
+                  <control>
+                    <create string="Add Benefit Code"/>
+                  </control>
+                  <field name="benefit_mnemonic" string="Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
+                  <field name="benefit_type" string="Benefit Type"/>
+                  <field name="benefit_description" string="Description"/>
+                  <field name="measurement_unit" string="Measurement Unit"/>
+                  <button name="action_open_view" type="object" string="View Benefit Code" class="oe_link" title="View Benefit Code"/>
+                </tree>
+              </field>
+            </page>
+            <!-- Eligibility Rules Page -->
             <page string="Eligibility Rules">
               <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry_type': target_registry_type}">
                 <tree default_order="id desc">
@@ -65,9 +78,9 @@
                 </tree>
               </field>
             </page>
-            <!-- Entitlement Rule Page -->
+            <!-- Entitlement Rules Page -->
             <page string="Entitlement Rules">
-              <field name="entitlement_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry_type': target_registry_type}">
+              <field name="entitlement_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry_type': target_registry_type, 'default_allowed_benefit_code_ids': benefit_code_ids}">
                 <tree default_order="id desc">
                   <control>
                     <create string="Add Entitlement Rule"/>
@@ -79,11 +92,17 @@
               </field>
             </page>
             <!-- Beneficiary List Page -->
-            <page string="Beneficiary Lists">
-              <field name="que_eee_request_ids" nolabel="1"/>                
+            <!-- <page string="Beneficiary Lists">
+              <field name="beneficiary_list_ids" nolabel="1"/>                
+            </page> -->
+            <!-- Enrollment Cycles Page -->
+            <page string="Enrollment Cycles">
+              <field name="enrollment_cycle_ids">
+            </field>
             </page>
+            <!-- Disbursement Cycles Page -->
             <page string="Disbursement Cycles">
-              <field name="program_cycle_ids" nolabel="1"/>                
+              <field name="disbursement_cycle_ids" nolabel="1"/>                
             </page>
           </notebook>
         </sheet>
@@ -99,7 +118,7 @@
       <tree string="G2P Programs">
         <field name="program_mnemonic" />
         <field name="description"/>
-        <field name="benefit_code_id"/>
+        <!-- <field name="benefit_code_id"/> -->
         <field name="target_registry_type"/>
         <field name="program_status"/>
         <button name="action_open_edit" type="object" class="fa fa-pencil" title="Edit"/>

@@ -9,6 +9,9 @@ class G2PFarmerRegistry(models.Model):
     _inherit = "g2p.registry"
 
     name = fields.Char(string="Name", required=True)
+    gender = fields.Selection(
+        selection=[("male", "Male"), ("female", "Female")], string="Gender"
+    )
     land_area = fields.Float(string="Land Area")
     no_of_cattle_heads = fields.Integer(string="No of Cattle Heads")
     no_of_poultry_heads = fields.Integer(string="No of Poultry Heads")

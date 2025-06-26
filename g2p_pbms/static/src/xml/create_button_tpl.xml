@@ -14,15 +14,6 @@
                     Create Agency
                 </button>
                 <button
-                    t-if="model.root.resModel == 'g2p.benefit.classification.codes'"
-                    type="button"
-                    class="btn btn-primary o_list_button_add_codes"
-                    accesskey="p"
-                    title="Create a New Benefit Classification Code"
-                    t-on-click="load_benefit_classification_code_wizard">
-                    Create Code
-                </button>
-                <button
                     t-if="model.root.resModel == 'g2p.benefit.codes'"
                     type="button"
                     class="btn btn-primary o_list_button_add_codes"
