@@ -16,7 +16,7 @@ export class G2PBeneficiariesComponent extends Component {
             pageSize: 3,
             totalCount: 0,
             totalPages: 1,
-            target_registry_type: null,
+            target_registry: null,
             searched: false,  // initially hidden title and pagination
             searchQuery: "",  // bound to the search input
         });
@@ -27,7 +27,7 @@ export class G2PBeneficiariesComponent extends Component {
         this.state.searched = true;  // show title and pagination when search is clicked
         this.state.page = 1;
         this.state.pageSize = 20;
-        this.state.target_registry_type = this.props.record.data.target_registry_type;
+        this.state.target_registry = this.props.record.data.target_registry;
         this.state.list_workflow_status = this.props.record.data.list_workflow_status;
         this._fetchRecords();
     }
@@ -51,7 +51,7 @@ export class G2PBeneficiariesComponent extends Component {
             this.state.totalCount = result.total_count;
         }
         this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
-        this.state.target_registry_type = this.props.record.data.target_registry_type;
+        this.state.target_registry = this.props.record.data.target_registry;
     }
 
     async nextPage() {

@@ -35,8 +35,8 @@ class G2PEntitlementRuleDefinition(models.Model):
         help="Set to 0 for no limit.",
         required=True,
     )
-    target_registry_type = fields.Selection(
-        related='program_id.target_registry_type', string="Registry Type", required=True
+    target_registry = fields.Selection(
+        related='program_id.target_registry', string="Registry Type", required=True
     )
     pbms_domain = fields.Char(string="Domain", required=True)
     sql_query = fields.Char(string="SQL Query", compute="_get_query", store=True)
@@ -54,10 +54,10 @@ class G2PEntitlementRuleDefinition(models.Model):
         # Add custom logic here
         return super().create(vals)
 
-    @api.depends('program_id.target_registry_type')
+    @api.depends('program_id.target_registry')
     def _compute_multiplier_options(self):
         for rec in self:
-            registry_type = rec.program_id.target_registry_type
+            registry_type = rec.program_id.target_registry
             registry_map = {
                 "student": "g2p.student.registry",
                 "farmer": "g2p.farmer.registry",
@@ -77,7 +77,7 @@ class G2PEntitlementRuleDefinition(models.Model):
             rec.allowed_multipliers = json.dumps(int_fields)
 
     # def _get_registry_integer_fields(self):
-    #     registry_type = self.env['g2p.entitlement.rule.definition'].default_get(['target_registry_type'])
+    #     registry_type = self.env['g2p.entitlement.rule.definition'].default_get(['target_registry'])
     #     print("Registry Type:", registry_type)
 
     #     target_model_mapping = {
@@ -100,7 +100,7 @@ class G2PEntitlementRuleDefinition(models.Model):
 
     #     return sorted(integer_fields, key=lambda x: x[1])
 
-    @api.depends("pbms_domain", "target_registry_type")
+    @api.depends("pbms_domain", "target_registry")
     def _get_query(self):
         for rec in self:
             try:
@@ -121,11 +121,11 @@ class G2PEntitlementRuleDefinition(models.Model):
                 "farmer": "g2p.farmer.registry",
                 # add additional mappings if needed
             }
-            target_model_name = target_model_mapping.get(rec.target_registry_type)
+            target_model_name = target_model_mapping.get(rec.target_registry)
             if not target_model_name:
                 _logger.error(
-                    "Unknown target_registry_type '%s' for rule %s",
-                    rec.target_registry_type,
+                    "Unknown target_registry '%s' for rule %s",
+                    rec.target_registry,
                     rec.mnemonic,
                 )
                 rec.sql_query = "Unknown target registry type"

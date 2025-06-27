@@ -97,7 +97,7 @@ class G2PBeneficiaryList(models.Model):
     def action_open_summary_wizard(self):
         self.ensure_one()
         wizard_vals = {
-            "target_registry_type": self.program_id.target_registry_type,
+            "target_registry": self.program_id.target_registry,
             "mnemonic": self.mnemonic,
             "brief": self.brief,
             "program_id": self.program_id.id,
@@ -121,7 +121,7 @@ class G2PBeneficiaryList(models.Model):
             "type": "ir.actions.act_window",
             "target": "current",
             'context': {
-                'default_target_registry_type': self.program_id.target_registry_type,
+                'default_target_registry': self.program_id.target_registry,
                 'default_program_id': self.program_id.id,
                 'default_beneficiary_list_id': self.beneficiary_list_id,
             },

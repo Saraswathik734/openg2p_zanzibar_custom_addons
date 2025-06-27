@@ -10,7 +10,7 @@ class G2PDisbursementCycle(models.Model):
     cycle_mnemonic = fields.Char(string="Cycle Mnemonic", required=True)
     bridge_envelope_id = fields.Char(string='Bridge Envelope ID')
     program_id = fields.Many2one("g2p.program.definition", string="G2P Program")
-    target_registry_type = fields.Selection(related="program_id.target_registry_type", string="Target Registry Type")
+    target_registry = fields.Selection(related="program_id.target_registry", string="Target Registry Type")
     priority_rule_ids = fields.One2many(
         "g2p.priority.rule.definition", 
         "disbursement_cycle_id", 

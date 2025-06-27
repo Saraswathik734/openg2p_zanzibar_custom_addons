@@ -16,7 +16,7 @@
                         <th><t t-esc="('Registration Date')"/></th>
 
                         <!-- Conditional columns -->
-                        <t t-if="state.target_registry_type === 'farmer'">
+                        <t t-if="state.target_registry === 'farmer'">
                             <th><t t-esc="('Name')"/></th>
                             <th><t t-esc="('Land Area')"/></th>
                             <th><t t-esc="('Cattle Heads')"/></th>
@@ -36,7 +36,7 @@
                             <td><t t-esc="record.registration_date"/></td>
 
                             <!-- Conditional cells -->
-                            <t t-if="state.target_registry_type === 'farmer'">
+                            <t t-if="state.target_registry === 'farmer'">
                                 <td><t t-esc="record.name"/></td>
                                 <td><t t-esc="record.land_area"/></td>
                                 <td><t t-esc="record.no_of_cattle_heads"/></td>

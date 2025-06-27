@@ -13,7 +13,7 @@ class G2PEEESummaryWizard(models.TransientModel):
     _description = 'EEE Summary Wizard'
     _rec_name = 'mnemonic'
 
-    target_registry_type = fields.Selection(
+    target_registry = fields.Selection(
         selection=lambda self: G2PRegistryType.selection(),
         string="Registry Type",
         required=True,
@@ -74,12 +74,12 @@ class G2PEEESummaryWizard(models.TransientModel):
         for wizard in self:
             wizard.dummy_beneficiaries_field = ""
 
-    @api.depends('target_registry_type')
+    @api.depends('target_registry')
     def _compute_group_title(self):
         for rec in self:
-            rec.group_title = 'Eligibility & Entitlement Statistics for %s' % rec.target_registry_type.capitalize()
+            rec.group_title = 'Eligibility & Entitlement Statistics for %s' % rec.target_registry.capitalize()
 
-    @api.depends("beneficiary_search", "target_registry_type")
+    @api.depends("beneficiary_search", "target_registry")
     def _get_query(self):
         for rec in self:
             try:
@@ -99,20 +99,20 @@ class G2PEEESummaryWizard(models.TransientModel):
                 "farmer": "g2p.farmer.registry",
                 # add additional mappings if needed
             }
-            target_model_name = target_model_mapping.get(rec.target_registry_type)
+            target_model_name = target_model_mapping.get(rec.target_registry)
             if not target_model_name:
                 _logger.error(
-                    "Unknown target_registry_type '%s'",
-                    rec.target_registry_type,
+                    "Unknown target_registry '%s'",
+                    rec.target_registry,
                 )
                 rec.sql_query = "Unknown target registry type"
                 continue
             
             order_by_field = "id"
-            if rec.target_registry_type == "student":
+            if rec.target_registry == "student":
                 # Add a default order by field for the student registry.
                 order_by_field = "name"
-            elif rec.target_registry_type == "farmer":
+            elif rec.target_registry == "farmer":
                 order_by_field = "name"
             
 
@@ -165,7 +165,7 @@ class G2PEEESummaryWizard(models.TransientModel):
     @api.model
     def get_beneficiaries(self, wizard_id, page, page_size):
         wizard = self.browse(wizard_id)
-        target_registry_type = wizard.target_registry_type
+        target_registry = wizard.target_registry
         api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
         if not api_url:
             _logger.error("API URL not set in environment")
@@ -186,7 +186,7 @@ class G2PEEESummaryWizard(models.TransientModel):
                 },
             "message": {
                 "beneficiary_list_id": wizard.beneficiary_list_id,
-                "target_registry_type": target_registry_type,
+                "target_registry": target_registry,
                 "page": page,
                 "page_size": page_size,
                 "search_query": wizard.sql_query or "",
@@ -211,9 +211,9 @@ class G2PEEESummaryWizard(models.TransientModel):
         return api_response
 
 
-    @api.depends('target_registry_type', 'beneficiary_search')
+    @api.depends('target_registry', 'beneficiary_search')
     def _compute_summary_lines(self):
-        excluded_keys = ['id', 'target_registry_type']
+        excluded_keys = ['id', 'target_registry']
         for wizard in self:
             wizard.summary_line_ids = [(5, 0, 0)]
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
@@ -236,7 +236,7 @@ class G2PEEESummaryWizard(models.TransientModel):
                 },
                 "message": {
                     "beneficiary_list_id": wizard.beneficiary_list_id,
-                    "target_registry_type": wizard.target_registry_type
+                    "target_registry": wizard.target_registry
                 }
             }
             try:

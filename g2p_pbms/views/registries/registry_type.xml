@@ -17,7 +17,7 @@
                         <field name="program_mnemonic"/>
                         <field name="description"/>
                         <field name="benefit_id"/>
-                        <field name="target_registry_type"/>
+                        <field name="target_registry"/>
                         <field name="program_status"/>
                     </group>
                 </sheet>
@@ -32,7 +32,7 @@
                 <field name="program_mnemonic"/>
                 <field name="description"/>
                 <field name="benefit_id"/>
-                <field name="target_registry_type"/>
+                <field name="target_registry"/>
                 <field name="program_status"/>
             </tree>
         </field>

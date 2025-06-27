@@ -15,13 +15,13 @@ class G2PPriorityRuleDefinition(models.Model):
     description = fields.Char(string="Description")
     disbursement_cycle_id = fields.Many2one("g2p.disbursement.cycle", string="Disbursement Cycle")
     program_id = fields.Integer(related="disbursement_cycle_id.program_id.id", string="Program ID", readonly=True)
-    target_registry_type = fields.Selection(
+    target_registry = fields.Selection(
         selection=G2PRegistryType.selection(), string="Registry Type", required=True
     )
     pbms_domain = fields.Char(string="Domain", required=True)
     sql_query = fields.Char(string="SQL Query", compute="_get_query", store=True)
 
-    @api.depends("pbms_domain", "target_registry_type")
+    @api.depends("pbms_domain", "target_registry")
     def _get_query(self):
         for rec in self:
             try:
@@ -42,11 +42,11 @@ class G2PPriorityRuleDefinition(models.Model):
                 "farmer": "g2p.farmer.registry",
                 # add additional mappings if needed
             }
-            target_model_name = target_model_mapping.get(rec.target_registry_type)
+            target_model_name = target_model_mapping.get(rec.target_registry)
             if not target_model_name:
                 _logger.error(
-                    "Unknown target_registry_type '%s' for rule %s",
-                    rec.target_registry_type,
+                    "Unknown target_registry '%s' for rule %s",
+                    rec.target_registry,
                     rec.mnemonic,
                 )
                 rec.sql_query = "Unknown target registry type"

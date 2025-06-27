@@ -16,7 +16,7 @@ class G2PProgramDefinition(models.Model):
         required=True,
         help="Select benefit codes that are applicable for this program."
     )
-    target_registry_type = fields.Selection(
+    target_registry = fields.Selection(
         selection=G2PRegistryType.selection(), string="Target Registry", required=True
     )
     program_status = fields.Selection(

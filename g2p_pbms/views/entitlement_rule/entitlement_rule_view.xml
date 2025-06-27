@@ -23,15 +23,15 @@
                         <field name="multiplier" widget="g2p_pbms.multiplier_widget"/>
                         <field name="max_quantity"/>
                         <field name="measurement_unit" readonly="1" no_label="1"/>
-                        <field name="target_registry_type" invisible="1"/>
+                        <field name="target_registry" invisible="1"/>
                         <!-- Domain widget for the 'farmer' type -->
                         <field name="pbms_domain" widget="domain"
                                options="{'model': 'g2p.farmer.registry'}"
-                               invisible="target_registry_type != 'farmer'"/>
+                               invisible="target_registry != 'farmer'"/>
                         <!-- Domain widget for the 'student' type -->
                         <field name="pbms_domain" widget="domain"
                                options="{'model': 'g2p.student.registry'}"
-                               invisible="target_registry_type != 'student'"/>
+                               invisible="target_registry != 'student'"/>
                     </group>
                 </sheet>
                 <sheet>
@@ -51,7 +51,7 @@
                 <field name="mnemonic"/>
                 <field name="description"/>
                 <field name="quantity"/>
-                <field name="target_registry_type" invisible="1"/>
+                <field name="target_registry" invisible="1"/>
                 <field name="pbms_domain"/>
                 <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
             </tree>

@@ -10,7 +10,7 @@
                     <group>
                         <field name="program_id" readonly="1"/>
                         <field name="cycle_mnemonic" readonly="is_readonly"/>
-                        <field name="target_registry_type" invisible="1"/>
+                        <field name="target_registry" invisible="1"/>
                         <field name="approved_for_disbursement" invisible="1"/>
                         <field name="is_readonly" invisible="1"/>
                     </group>
@@ -18,7 +18,7 @@
                     <!-- Hide fields during creation -->
                     <notebook>
                         <page string="Priority Rules" invisible="id == False">
-                            <field name="priority_rule_ids" readonly="approved_for_disbursement" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry_type': target_registry_type}">
+                            <field name="priority_rule_ids" readonly="approved_for_disbursement" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry': target_registry}">
                                 <tree default_order="id desc">
                                     <control>
                                         <create string="Add Priority Rule"/>

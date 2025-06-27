@@ -93,14 +93,14 @@
             </page>
             <page string="Beneficiaries">
             <group>
-                <field name="target_registry_type" invisible="1"/>
+                <field name="target_registry" invisible="1"/>
                 <!-- Only one beneficiary_search field is shown based on registry type -->
-                <group name="beneficiary_search_farmer" invisible="target_registry_type != 'farmer'">
+                <group name="beneficiary_search_farmer" invisible="target_registry != 'farmer'">
                   <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.farmer.registry'}"/>
                   <div class="input-group-append">
                   </div>
                 </group>
-                <group name="beneficiary_search_student" invisible="target_registry_type != 'student'">
+                <group name="beneficiary_search_student" invisible="target_registry != 'student'">
                   <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.student.registry'}"/>
                         <div class="input-group-append">
                         </div>
