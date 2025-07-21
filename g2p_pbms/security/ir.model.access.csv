@@ -1,6 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-g2p_agencies_admin,Admin Access Agencies,g2p_pbms.model_g2p_agencies,,1,1,1,1
-g2p_agencies_registrar,Registrar Access Agencies,g2p_pbms.model_g2p_agencies,,1,1,1,1
+g2p_agency_admin,Admin Access Agency,g2p_pbms.model_g2p_agency,,1,1,1,1
+g2p_agency_registrar,Registrar Access Agency,g2p_pbms.model_g2p_agency,,1,1,1,1
+
+g2p_warehouse_admin,Admin Access Warehouse,g2p_pbms.model_g2p_warehouse,,1,1,1,1
+g2p_warehouse_registrar,Registrar Access Warehouse,g2p_pbms.model_g2p_warehouse,,1,1,1,1
 
 g2p_regions_admin,Admin Access Regions,g2p_pbms.model_g2p_regions,,1,1,1,1
 g2p_regions_registrar,Registrar Access Regions,g2p_pbms.model_g2p_regions,,1,1,1,1
@@ -8,14 +11,29 @@ g2p_regions_registrar,Registrar Access Regions,g2p_pbms.model_g2p_regions,,1,1,1
 g2p_benefit_codes_admin,Admin Access Benefit Codes,g2p_pbms.model_g2p_benefit_codes,,1,1,1,1
 g2p_benefit_codes_registrar,Registrar Access Benefit Codes,g2p_pbms.model_g2p_benefit_codes,,1,1,1,1
 
+g2p_agency_program_benefit_codes_admin,Admin Access Agency Program Benefit Codes,g2p_pbms.model_g2p_agency_program_benefit_codes,,1,1,1,1
+g2p_agency_program_benefit_codes_registrar,Registrar Access Agency Program Benefit Codes,g2p_pbms.model_g2p_agency_program_benefit_codes,,1,1,1,1
+
+g2p_warehouse_program_benefit_codes_admin,Admin Access Warehouse Program Benefit Codes,g2p_pbms.model_g2p_warehouse_program_benefit_codes,,1,1,1,1
+g2p_warehouse_program_benefit_codes_registrar,Registrar Access Warehouse Program Benefit Codes,g2p_pbms.model_g2p_warehouse_program_benefit_codes,,1,1,1,1
+
 g2p_program_definition_admin,Admin Access Programs,g2p_pbms.model_g2p_program_definition,,1,1,1,1
 g2p_program_definition_registrar,Registrar Access Programs,g2p_pbms.model_g2p_program_definition,,1,1,1,1
+
+g2p_program_benefit_codes_admin,Admin Access Program Benefit Codes,g2p_pbms.model_g2p_program_benefit_codes,,1,1,1,1
+g2p_program_benefit_codes_registrar,Registrar Access Program Benefit Codes,g2p_pbms.model_g2p_program_benefit_codes,,1,1,1,1
 
 g2p_student_registry_admin,Admin Access Student Registry,g2p_pbms.model_g2p_student_registry,,1,1,1,1
 g2p_student_registry_registrar,Registrar Access Student Registry,g2p_pbms.model_g2p_student_registry,,1,1,1,1
 
 g2p_farmer_registry_admin,Admin Access Farmer Registry,g2p_pbms.model_g2p_farmer_registry,,1,1,1,1
 g2p_farmer_registry_registrar,Registrar Access Farmer Registry,g2p_pbms.model_g2p_farmer_registry,,1,1,1,1
+
+g2p_administrative_area_small_admin,Admin Access Administrative Area Small,g2p_pbms.model_g2p_administrative_area_small,,1,1,1,1
+g2p_administrative_area_small_registrar,Registrar Access Administrative Area Small,g2p_pbms.model_g2p_administrative_area_small,,1,1,1,1
+
+g2p_administrative_area_large_admin,Admin Access Administrative Area Large,g2p_pbms.model_g2p_administrative_area_large,,1,1,1,1
+g2p_administrative_area_large_registrar,Registrar Access Administrative Area Large,g2p_pbms.model_g2p_administrative_area_large,,1,1,1,1
 
 g2p_eligibility_rule_definition_admin,Admin Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
 g2p_eligibility_rule_definition_registrar,Registrar Access Eligibility Rule,g2p_pbms.model_g2p_eligibility_rule_definition,,1,1,1,1
@@ -38,6 +56,15 @@ g2p_eee_summary_wizard_registrar,Registrar Access EEE Summary wizard,g2p_pbms.mo
 g2p_api_summary_line_admin,Admin Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
 g2p_api_summary_line_registrar,Registrar Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
 
+g2p_api_summary_line_admin,Admin Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
+g2p_api_summary_line_registrar,Registrar Access API Summary Line,g2p_pbms.model_g2p_api_summary_line,,1,1,1,1
+
+g2p_api_disbursement_envelope_line_admin,Admin Access API Disbursement Envelope Line,g2p_pbms.model_g2p_api_disbursement_envelope_line,,1,1,1,1
+g2p_api_disbursement_envelope_line_registrar,Registrar Access API Disbursement Envelope Line,g2p_pbms.model_g2p_api_disbursement_envelope_line,,1,1,1,1
+
+g2p_api_disbursement_batch_line_admin,Admin Access API Disbursement Batch Line,g2p_pbms.model_g2p_api_disbursement_batch_line,,1,1,1,1
+g2p_api_disbursement_batch_line_registrar,Registrar Access API Disbursement Batch Line,g2p_pbms.model_g2p_api_disbursement_batch_line,,1,1,1,1
+
 g2p_entitlement_rule_definition_admin,Admin Access Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,,1,1,1,1
 g2p_entitlement_rule_definition_registrar,Registrar Access Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,,1,1,1,1
 
@@ -49,3 +76,12 @@ g2p_priority_rule_definition_registrar,Registrar Access Priority Rule,g2p_pbms.m
 
 g2p_disbursement_envelope_summary_wizard_admin,Admin Access G2P Disbursement Envelope Summary Wizard,g2p_pbms.model_g2p_disbursement_envelope_summary_wizard,,1,1,1,1
 g2p_disbursement_envelope_summary_wizard_registrar,Registrar Access G2P Disbursement Envelope Summary Wizard,g2p_pbms.model_g2p_disbursement_envelope_summary_wizard,,1,1,1,1
+
+g2p_disbursement_envelope_summary_geo_admin,Admin Access G2P Disbursement Envelope Summary Geo,g2p_pbms.model_g2p_disbursement_envelope_summary_geo,,1,1,1,1
+g2p_disbursement_envelope_summary_geo_registrar,Registrar Access G2P Disbursement Envelope Summary Geo,g2p_pbms.model_g2p_disbursement_envelope_summary_geo,,1,1,1,1
+
+g2p_disbursement_batch_summary_wizard_admin,Admin Access G2P Disbursement Batch Summary Wizard,g2p_pbms.model_g2p_disbursement_batch_summary_wizard,,1,1,1,1
+g2p_disbursement_batch_summary_wizard_registrar,Registrar Access G2P Disbursement Batch Summary Wizard,g2p_pbms.model_g2p_disbursement_batch_summary_wizard,,1,1,1,1
+
+g2p_disbursement_batch_summary_geo_admin,Admin Access G2P Disbursement Batch Summary Geo,g2p_pbms.model_g2p_disbursement_batch_summary_geo,,1,1,1,1
+g2p_disbursement_batch_summary_geo_registrar,Registrar Access G2P Disbursement Batch Summary Geo,g2p_pbms.model_g2p_disbursement_batch_summary_geo,,1,1,1,1
