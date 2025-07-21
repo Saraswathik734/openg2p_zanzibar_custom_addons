@@ -13,7 +13,8 @@ class G2PBenefitCodes(models.Model):
     benefit_mnemonic = fields.Char(string="Benefit Mnemonic", required=True)
     benefit_type = fields.Selection(
         [   
-            ("CASH", "Cash"),
+            ("CASH_DIGITAL", "Cash (Digital)"),
+            ("CASH_PHYSICAL", "Cash (Physical)"),
             ("COMMODITY", "Commodity"),
             ("SERVICE", "Service"),
             ("COMBINATION", "Combination"),
@@ -22,6 +23,12 @@ class G2PBenefitCodes(models.Model):
         required=True,
     )
     benefit_description = fields.Text(string="Benefit Description")
+    decimal_places = fields.Integer(
+        string="Decimal Places",
+        help="Number of decimal places to use for this benefit code's value.",
+        default=0,
+        store=True
+    )
     measurement_unit = fields.Char(string="Measurement Unit")
 
     _sql_constraints = [

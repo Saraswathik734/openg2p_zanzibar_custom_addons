@@ -23,20 +23,20 @@ class G2PDisbursementCycle(models.Model):
     )
     envelope_creation_status = fields.Selection(
         [
-            ("not_applicable", "NOT APPLICABLE"),
-            ("pending", "PENDING"),
-            ("processing", "PROCESSING"),
-            ("complete", "COMPLETE"),
+            ("not_applicable", "not applicable"),
+            ("pending", "pending"),
+            ("processing", "processing"),
+            ("complete", "complete"),
         ],
         string="Envelope Creation Status",
         default="pending",
     )
     batch_creation_status = fields.Selection(
         [
-            ("not_applicable", "NOT APPLICABLE"),
-            ("pending", "PENDING"),
-            ("processing", "PROCESSING"),
-            ("complete", "COMPLETE"),
+            ("not_applicable", "not applicable"),
+            ("pending", "pending"),
+            ("processing", "processing"),
+            ("complete", "complete"),
         ],
         string="Batch Creation Status",
         default="not_applicable",
@@ -80,52 +80,52 @@ class G2PDisbursementCycle(models.Model):
         current = fields.Datetime.from_string(current_str)
         freq = program.disbursement_frequency
 
-        if freq == 'Daily':
-            return current.date()
+        # if freq == 'Daily':
+        #     return current.date()
 
-        elif freq == 'Weekly':
-            # Compute next occurrence based on configured day of week.
-            weekday_mapping = {
-                'Monday': 0, 'Tuesday': 1, 'Wednesday': 2,
-                'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6
-            }
-            target_weekday = weekday_mapping.get(program.disbursement_day_of_week)
-            if target_weekday is None:
-                return current.date()
-            current_date = current.date()
-            current_weekday = current_date.weekday()
-            days_ahead = target_weekday - current_weekday
-            if days_ahead <= 0:
-                days_ahead += 7
-            next_date = current_date + datetime.timedelta(days=days_ahead)
-            return next_date
+        # elif freq == 'Weekly':
+        #     # Compute next occurrence based on configured day of week.
+        #     weekday_mapping = {
+        #         'Monday': 0, 'Tuesday': 1, 'Wednesday': 2,
+        #         'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6
+        #     }
+        #     target_weekday = weekday_mapping.get(program.disbursement_day_of_week)
+        #     if target_weekday is None:
+        #         return current.date()
+        #     current_date = current.date()
+        #     current_weekday = current_date.weekday()
+        #     days_ahead = target_weekday - current_weekday
+        #     if days_ahead <= 0:
+        #         days_ahead += 7
+        #     next_date = current_date + datetime.timedelta(days=days_ahead)
+        #     return next_date
 
-        elif freq == 'Fortnightly':
-            return (current + datetime.timedelta(days=14)).date()
+        # elif freq == 'Fortnightly':
+        #     return (current + datetime.timedelta(days=14)).date()
 
-        elif freq in ('Monthly', 'BiMonthly', 'Quarterly', 'SemiAnnually', 'Annually'):
-            increment = 1
-            if freq == 'BiMonthly':
-                increment = 2
-            elif freq == 'Quarterly':
-                increment = 3
-            elif freq == 'SemiAnnually':
-                increment = 6
-            elif freq == 'Annually':
-                increment = 12
+        # elif freq in ('Monthly', 'BiMonthly', 'Quarterly', 'SemiAnnually', 'Annually'):
+        #     increment = 1
+        #     if freq == 'BiMonthly':
+        #         increment = 2
+        #     elif freq == 'Quarterly':
+        #         increment = 3
+        #     elif freq == 'SemiAnnually':
+        #         increment = 6
+        #     elif freq == 'Annually':
+        #         increment = 12
 
-            # Use the disbursement_day_of_month from the program if set; otherwise, use current day.
-            day = program.disbursement_day_of_month if program.disbursement_day_of_month else current.day
-            try:
-                candidate = current.replace(day=day)
-                if candidate <= current:
-                    candidate = (current + relativedelta(months=increment)).replace(day=day)
-            except ValueError:
-                # If the day is invalid, set to the last day of the month.
-                candidate = (current + relativedelta(months=increment)).replace(day=1) + datetime.timedelta(days=-1)
-            return candidate.date()
+        #     # Use the disbursement_day_of_month from the program if set; otherwise, use current day.
+        #     day = program.disbursement_day_of_month if program.disbursement_day_of_month else current.day
+        #     try:
+        #         candidate = current.replace(day=day)
+        #         if candidate <= current:
+        #             candidate = (current + relativedelta(months=increment)).replace(day=day)
+        #     except ValueError:
+        #         # If the day is invalid, set to the last day of the month.
+        #         candidate = (current + relativedelta(months=increment)).replace(day=1) + datetime.timedelta(days=-1)
+        #     return candidate.date()
 
-        elif freq == 'OnDemand':
+        if freq == 'OnDemand':
             # For on-demand cycles, return current date.
             return current.date()
 
@@ -137,20 +137,6 @@ class G2PDisbursementCycle(models.Model):
     def create(self, vals):
         if not vals.get('disbursement_schedule_date') and vals.get('program_id'):
             program = self.env['g2p.program.definition'].browse(vals['program_id'])
-            # if program.beneficiary_list == 'labeled' and program.label_for_beneficiary_list_id:
-            #     vals['beneficiary_list_id'] = program.label_for_beneficiary_list_id.beneficiary_list_id
-            # else:
-            #     # Get the latest Beneficiary List ID from the program
-            #     latest_request = self.env['g2p.beneficiary.list'].search([
-            #         ('program_id', '=', program.id),
-            #         # ('eligibility_process_status', '=', 'complete'),
-            #         # ('entitlement_process_status', '=', 'complete')
-            #     ], limit=1, order='creation_date desc')
-            #     if latest_request:
-            #         vals['beneficiary_list_id'] = latest_request.beneficiary_list_id
-            #     else:
-            #         # If no request found, raise an error or handle it as needed
-            #         raise ValueError("No eligible request found for the program.")
             calculated_date = self._calculate_schedule_date(program)
             if calculated_date:
                 vals['disbursement_schedule_date'] = calculated_date

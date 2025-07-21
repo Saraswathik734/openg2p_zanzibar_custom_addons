@@ -24,6 +24,7 @@ class G2PEnrollmentCycle(models.Model):
     disbursement_end_date = fields.Date(
         string="Disbursement End Date", required=True
     )
+    approved_for_enrollment = fields.Boolean(string="Approved for Enrollment", default=False)
     is_readonly = fields.Boolean(compute='_compute_is_readonly', store=False)
 
     @api.depends_context('enrollment_cycle_form_view')

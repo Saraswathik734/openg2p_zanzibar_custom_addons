@@ -16,3 +16,7 @@ class G2PFarmerRegistry(models.Model):
     no_of_cattle_heads = fields.Integer(string="No of Cattle Heads")
     no_of_poultry_heads = fields.Integer(string="No of Poultry Heads")
     annual_income = fields.Float(string="Annual Income")
+    large_area_id = fields.Integer(string="Large Area ID")
+    large_area_code = fields.Char(string="Large Area Code")
+    small_area_id = fields.Integer(string="Small Area ID")
+    small_area_code = fields.Char(string="Small Area Code")

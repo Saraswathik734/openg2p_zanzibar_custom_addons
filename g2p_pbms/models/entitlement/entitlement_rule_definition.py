@@ -20,20 +20,21 @@ class G2PEntitlementRuleDefinition(models.Model):
         string="Benefit Code",
         help="Select a benefit code defined in the selected program."
     )
+    decimal_places = fields.Integer(
+        string="Decimal Places",
+        related="benefit_code_id.decimal_places",
+        readonly=True,
+        store=True,
+    )
     measurement_unit = fields.Char(
         string="Measurement Unit",
         related="benefit_code_id.measurement_unit",
         readonly=True,
     )
-    quantity = fields.Integer(string="Quantity", required=True)
+    quantity = fields.Float(string="Quantity", required=True)
     multiplier = fields.Char(
         string="Multiplier",
         help="Select an integer field from the registry to use as a multiplier."
-    )
-    max_quantity = fields.Integer(
-        string="Maximum Quantity",
-        help="Set to 0 for no limit.",
-        required=True,
     )
     target_registry = fields.Selection(
         related='program_id.target_registry', string="Registry Type", required=True
@@ -56,6 +57,7 @@ class G2PEntitlementRuleDefinition(models.Model):
 
     @api.depends('program_id.target_registry')
     def _compute_multiplier_options(self):
+        NUMERIC_FIELD_TYPES = {'integer', 'float', 'double', 'monetary', 'numeric', 'biginteger', 'smallinteger', 'decimal'}
         for rec in self:
             registry_type = rec.program_id.target_registry
             registry_map = {
@@ -68,37 +70,12 @@ class G2PEntitlementRuleDefinition(models.Model):
                 continue
 
             model = self.env[model_name]
-            int_fields = [
+            numeric_fields = [
                 (name, field.string or name)
                 for name, field in model._fields.items()
-                if field.type == 'integer'
+                if field.type in NUMERIC_FIELD_TYPES and name != "id"
             ]
-            # rec.allowed_multipliers = str(int_fields)
-            rec.allowed_multipliers = json.dumps(int_fields)
-
-    # def _get_registry_integer_fields(self):
-    #     registry_type = self.env['g2p.entitlement.rule.definition'].default_get(['target_registry'])
-    #     print("Registry Type:", registry_type)
-
-    #     target_model_mapping = {
-    #         "student": "g2p.student.registry",
-    #         "farmer": "g2p.farmer.registry",
-    #         # Add more registry types here as needed
-    #     }
-    #     target_model = target_model_mapping.get(registry_type)
-    #     print("Target Model:", target_model)
-    #     if not target_model:
-    #         return []
-
-    #     model = self.env[target_model]
-    #     integer_fields = [
-    #         (name, field.string or name)
-    #         for name, field in model._fields.items()
-    #         if field.type == "integer"
-    #     ]
-    #     print("Integer Fields:", integer_fields)
-
-    #     return sorted(integer_fields, key=lambda x: x[1])
+            rec.allowed_multipliers = json.dumps(numeric_fields)
 
     @api.depends("pbms_domain", "target_registry")
     def _get_query(self):

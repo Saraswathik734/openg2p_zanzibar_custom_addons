@@ -5,55 +5,74 @@ from odoo import models, fields, api
 class G2PBeneficiaryList(models.Model):
     _name = "g2p.beneficiary.list"
     _description = "G2P Beneficiary List"
-    _rec_name = "brief"
+    _rec_name = "mnemonic"
 
     beneficiary_list_id = fields.Char(string='Beneficiary List ID', readonly=True, required=True, default=lambda self: str(uuid.uuid4()))
     mnemonic = fields.Char(string="Mnemonic", required=True)
     program_id = fields.Many2one("g2p.program.definition", string="G2P Program", compute="_compute_program_id", store=True, readonly=True)
-    enrollment_cycle_id = fields.Many2one("g2p.enrollment.cycle", string="Enrollment Cycle", nullable=True)
-    disbursement_cycle_id = fields.Many2one("g2p.disbursement.cycle", string="Disbursement Cycle", nullable=True)
+    enrollment_cycle_id = fields.Many2one("g2p.enrollment.cycle", string="Enrollment Cycle", required=False)
+    disbursement_cycle_id = fields.Many2one("g2p.disbursement.cycle", string="Disbursement Cycle", required=False)
 
     brief = fields.Text(string="Brief")
     eligibility_process_status = fields.Selection(
         [
-            ("not_applicable", "NOT APPLICABLE"),
-            ("pending", "PENDING"),
-            ("processing", "PROCESSING"),
-            ("complete", "COMPLETE"),
+            ("not_applicable", "not applicable"),
+            ("pending", "pending"),
+            ("processing", "processing"),
+            ("complete", "complete"),
         ],
         string="Eligibility Process Status",
         default="pending",
     )
+    eligibility_number_of_attempts = fields.Integer(string="Eligibility Number of Attempts", default=0)
+    eligibility_latest_error_code = fields.Char(string="Eligibility Latest Error Code", default=None)
+    eligibility_processed_date = fields.Datetime(string="Eligibility Processed Date", default=None)
+
     entitlement_process_status = fields.Selection(
         [
-            ("not_applicable", "NOT APPLICABLE"),
-            ("pending", "PENDING"),
-            ("processing", "PROCESSING"),
-            ("complete", "COMPLETE"),
+            ("not_applicable", "not applicable"),
+            ("pending", "pending"),
+            ("processing", "processing"),
+            ("complete", "complete"),
         ],
         string="Entitlement Process Status",
         default="not_applicable",
     )
-    disbursement_envelope_status = fields.Selection(
+    entitlement_number_of_attempts = fields.Integer(string="Entitlement Number of Attempts", default=0)
+    entitlement_latest_error_code = fields.Char(string="Entitlement Latest Error Code", default=None)
+    entitlement_processed_date = fields.Datetime(string="Entitlement Processed Date", default=None)
+
+    envelope_creation_status = fields.Selection(
         [
-            ("not_applicable", "NOT APPLICABLE"),
-            ("pending", "PENDING"),
-            ("processing", "PROCESSING"),
-            ("complete", "COMPLETE"),
+            ("not_applicable", "not applicable"),
+            ("pending", "pending"),
+            ("processing", "processing"),
+            ("complete", "complete"),
         ],
         string="Disbursement Envelope Status",
         default="not_applicable",
     )
+    envelope_creation_number_of_attempts = fields.Integer(string="Envelope Creation Number of Attempts", default=0)
+    envelope_creation_latest_error_code = fields.Char(string="Envelope Creation Latest Error Code", default=None)
+    envelope_creation_processed_date = fields.Datetime(string="Envelope Creation Processed Date", default=None)
+ 
     disbursement_batch_creation_status = fields.Selection(
         [
-            ("not_applicable", "NOT APPLICABLE"),
-            ("pending", "PENDING"),
-            ("processing", "PROCESSING"),
-            ("complete", "COMPLETE"),
+            ("not_applicable", "not applicable"),
+            ("pending", "pending"),
+            ("processing", "processing"),
+            ("complete", "complete"),
         ],
         string="Disbursement Envelope Status",
         default="not_applicable",
     )
+    dbc_number_of_attempts = fields.Integer(string="Disbursement Batch Creation Number of Attempts", default=0)
+    dbc_latest_error_code = fields.Char(string="Disbursement Batch Creation Latest Error Code", default=None)
+    dbc_processed_date = fields.Datetime(string="Disbursement Batch Creation Processed Date", default=None)
+ 
+    number_of_registrants = fields.Integer(string="Number of Registrants", default=0)
+    number_of_entitlements_processed = fields.Integer(string="Number of Entitlements Processed", default=0)
+
     list_stage = fields.Selection(
         [
             ("enrollment", "ENROLLMENT"),
@@ -61,11 +80,12 @@ class G2PBeneficiaryList(models.Model):
         ],
         string="List Stage",
     )
+    approval_date = fields.Date(string="Approval Date", default=None, readonly=True)
     list_workflow_status = fields.Selection(
         [
-            ("initiated", "INITIATED"),
+            ("initiated", ""),
             ("published_to_communities", "PUBLISHED TO COMMUNITIES"),
-            ("approved_final_enrolment", "APPROVED FINAL ENROLMENT"), # TODO: approved_for_final_enrollment
+            ("approved_final_enrolment", "APPROVED FINAL ENROLMENT"),
             ("approved_for_disbursement", "APPROVED FOR DISBURSEMENT"),
         ],
         string="List Workflow Status",
@@ -74,7 +94,7 @@ class G2PBeneficiaryList(models.Model):
     feedback_ids = fields.One2many(
         "g2p.beneficiary.list.feedback",
         "beneficiary_list_id",
-        string="Feedback",
+        string="Community Feedback",
     )
     verification_ids = fields.One2many(
         "g2p.beneficiary.list.verification",
@@ -102,6 +122,7 @@ class G2PBeneficiaryList(models.Model):
             "brief": self.brief,
             "program_id": self.program_id.id,
             "beneficiary_list_id": self.id,
+            "beneficiary_list_uuid": self.beneficiary_list_id,
             "enrollment_cycle_id": self.enrollment_cycle_id,
             "disbursement_cycle_id": self.disbursement_cycle_id,
             "list_stage": self.list_stage,
