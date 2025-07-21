@@ -5,13 +5,22 @@
         <xpath expr="//div[contains(@class, 'o_list_buttons')]" position="inside">
             <t t-set-slot="control-panel-create-button">
                 <button
-                    t-if="model.root.resModel == 'g2p.agencies'"
+                    t-if="model.root.resModel == 'g2p.agency'"
                     type="button"
                     class="btn btn-primary o_list_button_add_agency"
                     accesskey="p"
                     title="Create a New Agency"
                     t-on-click="load_agency_wizard">
                     Create Agency
+                </button>
+                <button
+                    t-if="model.root.resModel == 'g2p.warehouse'"
+                    type="button"
+                    class="btn btn-primary o_list_button_add_warehouse"
+                    accesskey="p"
+                    title="Create a New Warehouse"
+                    t-on-click="load_warehouse_wizard">
+                    Create Warehouse
                 </button>
                 <button
                     t-if="model.root.resModel == 'g2p.benefit.codes'"
@@ -48,7 +57,8 @@
     <t t-inherit="web.ListView" t-inherit-mode="extension">
         <xpath expr="//button[contains(@class, 'o_list_button_add')]" position="attributes">
             <attribute name="t-if">
-                model.root.resModel != 'g2p.agencies' and
+                model.root.resModel != 'g2p.agency' and
+                model.root.resModel != 'g2p.warehouse' and
                 model.root.resModel != 'g2p.benefit.classification.codes' and
                 model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and
@@ -59,7 +69,8 @@
     <t t-inherit="web.FormView" t-inherit-mode="extension">
         <xpath expr="//button[contains(@class, 'o_form_button_create')]" position="attributes">
             <attribute name="t-if">
-                model.root.resModel != 'g2p.agencies' and
+                model.root.resModel != 'g2p.agency' and
+                model.root.resModel != 'g2p.warehouse' and
                 model.root.resModel != 'g2p.benefit.classification.codes' and
                 model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and
@@ -68,7 +79,8 @@
         </xpath>
         <xpath expr="//button[contains(@class, 'btn-outline-primary o_form_button_create')]" position="attributes">
             <attribute name="t-if">
-                model.root.resModel != 'g2p.agencies' and
+                model.root.resModel != 'g2p.agency' and
+                model.root.resModel != 'g2p.warehouse' and
                 model.root.resModel != 'g2p.benefit.classification.codes' and
                 model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and

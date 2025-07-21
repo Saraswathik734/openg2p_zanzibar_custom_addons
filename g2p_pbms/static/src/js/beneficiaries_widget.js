@@ -40,7 +40,7 @@ export class G2PBeneficiariesComponent extends Component {
         const result = await this.orm.call(
             'g2p.eee.summary.wizard',
             'get_beneficiaries',
-            [this.props.record.data.id, this.state.page, this.state.pageSize],
+            [this.props.record.resId , this.state.page, this.state.pageSize],
             {},
         );
         if (result.message) {

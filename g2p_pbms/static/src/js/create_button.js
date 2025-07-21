@@ -14,11 +14,24 @@ patch(ListController.prototype, {
         this.action.doAction({
             name: "Agency",
             type: "ir.actions.act_window",
-            res_model: "g2p.agencies",
+            res_model: "g2p.agency",
             view_mode: "form",
             views: [[false, "form"]],
             target: "current",
             context: { create: false, agency_form_edit: true },
+        });
+        return window.location;
+    },
+
+    load_warehouse_wizard() {
+        this.action.doAction({
+            name: "Warehouse",
+            type: "ir.actions.act_window",
+            res_model: "g2p.warehouse",
+            view_mode: "form",
+            views: [[false, "form"]],
+            target: "current",
+            context: { create: false, warehouse_form_edit: true },
         });
         return window.location;
     },
