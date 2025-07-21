@@ -12,13 +12,27 @@
                     name="g2p_config_settings"
                     logo="/g2p_registry_base/static/description/icon.png">
                     <block title="G2P PBMS Settings">
-                        <setting string="EEE API URL" help="EEE REST API URL Endpoint">
+                        <setting string="EEE API URL" help="EEE REST API URL Endpoint (e.g., https://localhost:8000 - no path allowed)">
                             <field name="g2p_pbms_eee_api_url" />
                         </setting>
                     </block>
                     <block title="G2P Bridge Settings">
-                        <setting string="Bridge API URL" help="Bridge API URL Endpoint">
+                        <setting string="Bridge API URL" help="Bridge API URL Endpoint (e.g., https://localhost:8000 - no path allowed)">
                             <field name="g2p_bridge_api_url" />
+                        </setting>
+                    </block>
+                    <block title="G2P Minio Settings">
+                        <setting string="MinIO Endpoint" help="MinIO API URL Endpoint (e.g., localhost:9000 - no path allowed)">
+                            <field name="minio_endpoint" />
+                        </setting>
+                        <setting string="MinIO Access Key">
+                            <field name="minio_access_key" />
+                        </setting>
+                        <setting string="MinIO Secret Key">
+                            <field name="minio_secret_key" />
+                        </setting>
+                        <setting string="MinIO Bucket" help="MinIO Bucket Name">
+                            <field name="minio_bucket" />
                         </setting>
                     </block>
                 </app>

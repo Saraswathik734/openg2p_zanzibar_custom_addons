@@ -23,8 +23,7 @@
             string="Record Community Feedback" 
             name="action_record_community_feedbacks" 
             invisible="not(list_stage == 'enrollment' and list_workflow_status == 'published_to_communities')"
-          /> 
-          <!-- TODO: add new entry visible in tree view -->
+          />
           <button 
             type="object" 
             class="btn-success" 
@@ -44,10 +43,9 @@
           />
         </header>
         <sheet>
-          <group colspan="2">
+          <group>
             <group string="Beneficiary List Info">
               <field name="program_id" readonly="1"/>
-              <field name="enrollment_cycle_id" string="Enrollment Cycle" readonly="1"/>
               <field name="mnemonic" string="List Mnemonic" readonly="1"/>
               <field name="brief" string="Brief" readonly="1"/>
               <field name="beneficiary_list_id" invisible="1"/>
@@ -67,29 +65,50 @@
           <notebook>
             <!-- Enrollment Summary Page -->
             <page string="Summary">
-              <group col="2">
                 <group>
-                  <field name="summary_general_line_ids" nolabel="1" colspan="2">
-                    <tree class="summary_tree_view" create="false" edit="false">
-                      <field name="key" nolabel="1"/>
-                      <field name="value" nolabel="1"/>
-                    </tree>
-                  </field>
-                </group>
-                <group>
-                <div style="white-space: nowrap; margin-bottom: 10px;">
+                  <div style="white-space: nowrap; margin-bottom: 10px;">
                     <strong>
-                      <field name="group_title" readonly="1" widget="handle_display"/>
+                      <field name="general_title" readonly="1" widget="handle_display"/>
                     </strong>
                   </div>
-                  <field name="summary_registry_line_ids" nolabel="1" colspan="2">
+                  <field name="summary_general_line_ids" nolabel="1" colspan="2">
                     <tree class="summary_tree_view" create="false" edit="false">
+                      <field name="summary_type" nolabel="1" invisible="1"/>
                       <field name="key" nolabel="1"/>
                       <field name="value" nolabel="1"/>
                     </tree>
                   </field>
                 </group>
-              </group>
+                <group colspan='2'>
+                  <group>
+                    <div style="white-space: nowrap; margin-bottom: 10px;">
+                      <strong>
+                        <field name="eligibility_group_title" readonly="1" widget="handle_display"/>
+                      </strong>
+                    </div>
+                    <field name="summary_eligibility_line_ids" nolabel="1" colspan="2">
+                      <tree class="summary_tree_view" create="false" edit="false">
+                        <field name="summary_type" nolabel="1" invisible="1"/>
+                        <field name="key" nolabel="1"/>
+                        <field name="value" nolabel="1"/>
+                      </tree>
+                    </field>
+                  </group>
+                  <group>
+                    <div style="white-space: nowrap; margin-bottom: 10px;">
+                      <strong>
+                        <field name="entitlement_group_title" readonly="1" widget="handle_display"/>
+                      </strong>
+                    </div>
+                    <field name="summary_entitlement_line_ids" nolabel="1" colspan="2">
+                      <tree class="summary_tree_view" create="false" edit="false">
+                        <field name="summary_type" nolabel="1" invisible="1"/>
+                        <field name="key" nolabel="1"/>
+                        <field name="value" nolabel="1"/>
+                      </tree>
+                    </field>
+                  </group>
+                </group>
             </page>
             <page string="Beneficiaries">
             <group>
@@ -109,46 +128,53 @@
             <!-- Container for the QWeb-based beneficiary list -->
             <field name="dummy_beneficiaries_field" widget="g2p_beneficiaries_widget"/>
           </page>
-          <page string="Feedbacks" invisible="list_stage != 'enrollment'">
-            <field name="feedback_ids" readonly="1" nolabel="1">
-              <tree>
-                <field name="comment" string="Comment"/>
-                <field name="file" class="fa fa-file-text"/>
-              </tree>
-            </field>
+          <page string="Community Feedbacks" invisible="list_stage != 'enrollment'">
+            <field name="feedback_ids" readonly="1" nolabel="1"/>
           </page>
           <page string="Verifications" invisible="list_stage != 'disbursement'">
-            <field name="verification_ids" readonly="list_workflow_status == 'approved_for_disbursement'" nolabel="1" context="{'default_beneficiary_list_id': beneficiary_list_id}">
-              <tree>
-                <field name="name" string="Name"/>
+            <field name="verification_ids" readonly="list_workflow_status == 'approved_for_disbursement'" nolabel="1">
+              <tree editable="top">
+                <control>
+                    <button 
+                        name="action_add_verification" 
+                        type="object" 
+                        string="Add Verification" 
+                        class="oe_link"
+                        context="{'default_beneficiary_list_id': parent.beneficiary_list_id}"
+                    />
+                </control>
+                <field name="name" string="Name" readonly="1"/>
                 <field name="comment" string="Comment"/>
-                <field name="verification_status" string="Verification Status" widget="badge"/>
                 <field name="verification_timestamp" string="Verification Timestamp"/>
-                <button name="action_verify" type="object" class="fa fa-check" title="Verify"/>
               </tree>
             </field>
           </page>
           <page string="Disbursement Envelopes" invisible="list_stage != 'disbursement'">
-            <!-- <field name="verification_ids" readonly="list_workflow_status == 'approved_for_disbursement'" nolabel="1" context="{'default_beneficiary_list_id': beneficiary_list_id}">
-              <tree>
-                <field name="name" string="Name"/>
-                <field name="comment" string="Comment"/>
-                <field name="verification_status" string="Verification Status" widget="badge"/>
-                <field name="verification_timestamp" string="Verification Timestamp"/>
-                <button name="action_verify" type="object" class="fa fa-check" title="Verify"/>
+            <field name="disbursement_envelope_line_ids" readonly="1" nolabel="1">
+              <tree limit="10">
+                <field name="disbursement_envelope_id" string="Envelope ID"/>
+                <field name="benefit_code_mnemonic" string="Benefit Code"/>
+                <field name="number_of_beneficiaries" string="# Beneficiaries"/>
+                <field name="total_disbursement_quantity" string="Disbursement Qty"/>
+                <field name="measurement_unit" string="Units"/>
+                <button name="action_view_disbursement_envelope" type="object" string="View Envelope" class="oe_link" title="View Disbursement Envelope"/>
               </tree>
-            </field> -->
+            </field>
           </page>
           <page string="Disbursement Batches" invisible="list_stage != 'disbursement'">
-            <!-- <field name="verification_ids" readonly="list_workflow_status == 'approved_for_disbursement'" nolabel="1" context="{'default_beneficiary_list_id': beneficiary_list_id}">
-              <tree>
-                <field name="name" string="Name"/>
-                <field name="comment" string="Comment"/>
-                <field name="verification_status" string="Verification Status" widget="badge"/>
-                <field name="verification_timestamp" string="Verification Timestamp"/>
-                <button name="action_verify" type="object" class="fa fa-check" title="Verify"/>
+            <field name="disbursement_batch_line_ids" readonly="1" nolabel="1">
+              <tree limit="10">
+                <field name="disbursement_envelope_id" string="Envelope ID"/>
+                <field name="benefit_code_mnemonic" string="Benefit Code"/>
+                <field name="number_of_beneficiaries" string="# Beneficiaries"/>
+                <field name="total_disbursement_quantity" string="Disbursement Qty"/>
+                <field name="measurement_unit" string="Units"/>
+                <field name="batch_id"/>
+                <field name="disbursement_status" string="Sent to Bridge" widget="badge"/>
+                <button name="action_view_disbursement_batch" type="object" string="View Batch" class="oe_link" title="View Disbursement Batch" invisible="disbursement_status!='complete'"/>
+                <!-- invisible="disbursement_status != complete" -->
               </tree>
-            </field> -->
+            </field>
           </page>
           </notebook>
         </sheet>

@@ -17,7 +17,9 @@
                     <group>
                         <field name="beneficiary_list_id" string="Enrollment List" readonly="1"/>
                         <field name="comment" string="Comment" readonly="not context.get('beneficiary_list_feedback_form_edit')"/>
-                        <field name="file" string="Feedback" readonly="not context.get('beneficiary_list_feedback_form_edit')"/>
+                        <field name="file" string="Feedback" widget="pdf_viewer" readonly="not context.get('beneficiary_list_feedback_form_edit')"/>
+                        <field name="filename" string="Filename" readonly="1" invisible="1"/>
+                        <field name="content_type" string="Content Type" readonly="1" invisible="1"/>
                     </group>
                 </sheet>
             </form>
@@ -29,12 +31,8 @@
         <field name="arch" type="xml">
             <tree string="Beneficiary List Feedback">
                 <field name="comment" string="Comment"/>
-                <field name="file" string="Feedback"/>
-                <!-- <button name="action_open_edit" type="object" class="fa fa-pencil"/> -->
+                <button name="action_view_feedback_file" string="View Feedback File" type="object" class="oe_link"/>
             </tree>
         </field>
     </record>
-
-    <!-- Menu for Beneficiary List Feedback -->
-    <!-- <menuitem id="menu_g2p_beneficiary_list_feedback_action" name="Beneficiary List Feedback" parent="menu_g2p_program" action="action_g2p_beneficiary_list_feedback" sequence="4"/> -->
 </odoo>
