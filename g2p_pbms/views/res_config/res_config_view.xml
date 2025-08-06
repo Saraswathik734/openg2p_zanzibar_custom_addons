@@ -21,18 +21,9 @@
                             <field name="g2p_bridge_api_url" />
                         </setting>
                     </block>
-                    <block title="G2P Minio Settings">
-                        <setting string="MinIO Endpoint" help="MinIO API URL Endpoint (e.g., localhost:9000 - no path allowed)">
-                            <field name="minio_endpoint" />
-                        </setting>
-                        <setting string="MinIO Access Key">
-                            <field name="minio_access_key" />
-                        </setting>
-                        <setting string="MinIO Secret Key">
-                            <field name="minio_secret_key" />
-                        </setting>
-                        <setting string="MinIO Bucket" help="MinIO Bucket Name">
-                            <field name="minio_bucket" />
+                    <block title="G2P Document Store Settings">
+                        <setting string="Default Document Store Config" help="Select the document store to be used for default document creation">
+                            <field name="g2p_document_store" />
                         </setting>
                     </block>
                 </app>

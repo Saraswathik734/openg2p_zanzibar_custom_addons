@@ -92,7 +92,7 @@ class G2PBeneficiaryList(models.Model):
         default="initiated",
     )
     feedback_ids = fields.One2many(
-        "g2p.beneficiary.list.feedback",
+        "storage.file",
         "beneficiary_list_id",
         string="Community Feedback",
     )
