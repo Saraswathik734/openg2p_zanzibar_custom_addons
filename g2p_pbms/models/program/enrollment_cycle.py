@@ -4,10 +4,11 @@ from datetime import date, timedelta
 class G2PEnrollmentCycle(models.Model):
     _name = "g2p.enrollment.cycle"
     _description = "G2P Enrollment Cycle"
-    _rec_name = "cycle_number"
+    _rec_name = "cycle_mnemonic"
 
     enrollment_cycle_id = fields.Char(string='Enrollment Cycle ID')
     cycle_number = fields.Integer(string="Cycle Number", required=True, default=lambda self: self._get_default_cycle_number())
+    cycle_mnemonic = fields.Char(string="Enrollment Cycle Mnemonic", compute='_compute_cycle_mnemonic')
     program_id = fields.Many2one("g2p.program.definition", string="G2P Program", readonly=True)
     beneficiary_list_ids = fields.One2many(
         "g2p.beneficiary.list", "enrollment_cycle_id", string="Beneficiary Lists"
@@ -31,6 +32,11 @@ class G2PEnrollmentCycle(models.Model):
     def _compute_is_readonly(self):
         for rec in self:
             rec.is_readonly = self.env.context.get('enrollment_cycle_form_view', True)
+
+    @api.onchange('cycle_number')
+    def _compute_cycle_mnemonic(self):
+        for rec in self:
+            rec.cycle_mnemonic = "Enrollment Cycle %s" % rec.cycle_number
 
     @api.model
     def _get_default_cycle_number(self):
