@@ -5,8 +5,9 @@
     "description": "OpenG2P PBMS module",
     "category": "OpenG2P",
     "license": "LGPL-3",
-    "depends": ["base_setup", "web"],
+    "depends": ["base_setup", "web", "g2p_documents"],
     "data": [
+        "security/groups.xml",
         "security/ir.model.access.csv",
         "views/service_providers/agency_view.xml",
         "views/service_providers/warehouse_view.xml",

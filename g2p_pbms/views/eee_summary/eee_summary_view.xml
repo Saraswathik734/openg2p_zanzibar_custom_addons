@@ -6,7 +6,7 @@
     <field name="arch" type="xml">
       <form string="Eligibility Summary">
         <header>
-          <!-- Enrollment Buttons -->
+          <!-- Publish to Communities -->
           <button 
             type="object"
             class="btn-primary"
@@ -15,7 +15,9 @@
             string="Publish to Communities"
             name="action_publish_to_communities"
             invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
+            groups="g2p_pbms.group_beneficiary_list_reviewer"
           />
+          <!-- Community Leader -->
           <button 
             type="object" 
             class="btn-primary" 
@@ -23,7 +25,9 @@
             string="Record Community Feedback" 
             name="action_record_community_feedbacks" 
             invisible="not(list_stage == 'enrollment' and list_workflow_status == 'published_to_communities')"
-          />
+            groups="g2p_pbms.group_beneficiary_list_reviewer"
+          /> 
+          <!-- Enrollment Reviewer -->
           <button 
             type="object" 
             class="btn-success" 
@@ -31,8 +35,9 @@
             name="action_approve_final_enrollment" 
             invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
             string="Approve Final Enrollment" 
+            groups="g2p_pbms.group_enrolment_reviewer"
           />
-          <!-- Disbursement Buttons -->
+          <!-- Disbursement Reviewer -->
           <button 
             type="object" 
             class="btn-success" 
@@ -40,6 +45,7 @@
             name="action_approve_for_disbursement" 
             invisible="approved_for_disbursement or not(list_stage == 'disbursement' and list_workflow_status != 'approved_for_disbursement')"
             string="Approve for Disbursement" 
+            groups="g2p_pbms.group_disbursement_reviewer"
           />
         </header>
         <sheet>

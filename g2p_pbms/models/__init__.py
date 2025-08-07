@@ -1,5 +1,5 @@
 from .feedback import G2PBeneficiaryListFeedback
-from .minio import MinioClient
+from .keymanager import KeymanagerProvider
 from .regions import G2PRegions
 from .benefit_codes import (
     G2PBenefitCodes,

@@ -1,9 +1,10 @@
 from datetime import datetime
+import json
 import logging
 import requests
 import requests
-from odoo.exceptions import UserError
-from odoo import models, fields, api
+from odoo.exceptions import UserError, AccessError
+from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 
 from ..registries import G2PRegistryType
@@ -32,7 +33,7 @@ class G2PEEESummaryWizard(models.TransientModel):
     list_workflow_status = fields.Char(string='List Workflow Status', default="initiated")
 
     feedback_ids = fields.One2many(
-        "g2p.beneficiary.list.feedback",
+        "storage.file",
         string="Community Feedback",
         compute="_compute_feedback_ids",
         default=False
@@ -111,6 +112,7 @@ class G2PEEESummaryWizard(models.TransientModel):
 
     @api.depends("beneficiary_search", "target_registry")
     def _get_query(self):
+        # TODO: move logic to get_beneficiaries
         for rec in self:
             try:
                 domain_value = safe_eval(rec.beneficiary_search or "[]")
@@ -216,8 +218,18 @@ class G2PEEESummaryWizard(models.TransientModel):
                 "order_by": wizard.order_by_condition or "id asc",
             }
         }
+
+        keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1)
+        if not keymanager_provider:
+            raise UserError("No KeymanagerProvider configured in the system.")
+
+        jwt_token = keymanager_provider.jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+        headers = {
+            "content-type": "application/json",
+            "Signature": jwt_token
+        }
         try:
-            response = requests.post(endpoint, json=payload, timeout=10)
+            response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
             response.raise_for_status()
             response_json = response.json()
         except Exception as e:
@@ -260,8 +272,18 @@ class G2PEEESummaryWizard(models.TransientModel):
                     "target_registry": wizard.target_registry
                 }
             }
+
+            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1)
+            if not keymanager_provider:
+                raise UserError("No KeymanagerProvider configured in the system.")
+
+            jwt_token = keymanager_provider.jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            headers = {
+                "content-type": "application/json",
+                "Signature": jwt_token
+            }
             try:
-                response = requests.post(endpoint, json=payload, timeout=10)
+                response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
                 response.raise_for_status()
                 api_response = response.json()
                 _logger.debug("API response: %s", api_response)
@@ -362,8 +384,18 @@ class G2PEEESummaryWizard(models.TransientModel):
                     "beneficiary_list_id": wizard.beneficiary_list_uuid
                 }
             }
+
+            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1)
+            if not keymanager_provider:
+                raise UserError("No KeymanagerProvider configured in the system.")
+
+            jwt_token = keymanager_provider.jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            headers = {
+                "content-type": "application/json",
+                "Signature": jwt_token
+            }
             try:
-                response = requests.post(endpoint, json=payload, timeout=10)
+                response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
                 response.raise_for_status()
                 api_response = response.json()
                 _logger.debug("Disbursement Envelope API response: %s", api_response)
@@ -416,8 +448,18 @@ class G2PEEESummaryWizard(models.TransientModel):
                     "beneficiary_list_id": wizard.beneficiary_list_uuid
                 }
             }
+
+            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1)
+            if not keymanager_provider:
+                raise UserError("No KeymanagerProvider configured in the system.")
+
+            jwt_token = keymanager_provider.jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            headers = {
+                "content-type": "application/json",
+                "Signature": jwt_token
+            }
             try:
-                response = requests.post(endpoint, json=payload, timeout=10)
+                response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
                 response.raise_for_status()
                 api_response = response.json()
                 _logger.debug("Disbursement Batch API response: %s", api_response)
@@ -466,7 +508,7 @@ class G2PEEESummaryWizard(models.TransientModel):
     def _compute_feedback_ids(self):
         for wizard in self:
             if wizard.beneficiary_list_id:
-                feedbacks = self.env['g2p.beneficiary.list.feedback'].search([
+                feedbacks = self.env['storage.file'].search([
                     ('beneficiary_list_id', '=', wizard.beneficiary_list_id)
                 ])
                 wizard.feedback_ids = feedbacks.ids if feedbacks else None
@@ -485,6 +527,10 @@ class G2PEEESummaryWizard(models.TransientModel):
                 wizard.verification_ids = [(5, 0, 0)]
 
     def action_publish_to_communities(self):
+        allowed_group = 'g2p_pbms.group_enrolment_review_publisher'
+        if not self.env.user.has_group(allowed_group):
+            raise AccessError(_("You are not allowed to perform this action."))
+        
         self.ensure_one()
         if not self.list_workflow_status == 'published_to_communities':
             self.list_workflow_status = 'published_to_communities'
@@ -493,6 +539,10 @@ class G2PEEESummaryWizard(models.TransientModel):
             })
 
     def action_approve_final_enrollment(self):
+        allowed_group = 'g2p_pbms.group_enrolment_review_enrollment_approver'
+        if not self.env.user.has_group(allowed_group):
+            raise AccessError(_("You are not allowed to perform this action."))
+
         self.ensure_one()
         if not self.list_workflow_status == 'approved_final_enrolment':
             self.list_workflow_status = 'approved_final_enrolment'
@@ -505,12 +555,17 @@ class G2PEEESummaryWizard(models.TransientModel):
                 'approved_for_enrollment': True,
             })
 
+    @api.model
     def action_record_community_feedbacks(self):
+        allowed_group = 'g2p_pbms.group_enrolment_review_community_leader'
+        if not self.env.user.has_group(allowed_group):
+            raise AccessError(_("You are not allowed to perform this action."))
+        
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
             'name': 'Record Community Feedback',
-            'res_model': 'g2p.beneficiary.list.feedback',
+            'res_model': 'storage.file',
             'view_mode': 'form',
             'view_id': self.env.ref('g2p_pbms.view_g2p_beneficiary_list_feedback_form').id,
             'target': 'new',
@@ -520,7 +575,12 @@ class G2PEEESummaryWizard(models.TransientModel):
             },
         }
 
+    @api.model
     def action_approve_for_disbursement(self):
+        allowed_group = 'g2p_pbms.group_disbursement_review_disbursement_approver'
+        if not self.env.user.has_group(allowed_group):
+            raise AccessError(_("You are not allowed to perform this action."))
+        
         self.ensure_one()
         if not self.list_workflow_status == 'approved_for_disbursement':
             self.list_workflow_status = 'approved_for_disbursement'
