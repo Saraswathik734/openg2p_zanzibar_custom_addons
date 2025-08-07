@@ -527,7 +527,7 @@ class G2PEEESummaryWizard(models.TransientModel):
                 wizard.verification_ids = [(5, 0, 0)]
 
     def action_publish_to_communities(self):
-        allowed_group = 'g2p_pbms.group_enrolment_review_publisher'
+        allowed_group = 'g2p_pbms.group_beneficiary_list_reviewer'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
         
@@ -539,7 +539,7 @@ class G2PEEESummaryWizard(models.TransientModel):
             })
 
     def action_approve_final_enrollment(self):
-        allowed_group = 'g2p_pbms.group_enrolment_review_enrollment_approver'
+        allowed_group = 'g2p_pbms.group_enrolment_reviewer'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
 
@@ -557,7 +557,7 @@ class G2PEEESummaryWizard(models.TransientModel):
 
     @api.model
     def action_record_community_feedbacks(self):
-        allowed_group = 'g2p_pbms.group_enrolment_review_community_leader'
+        allowed_group = 'g2p_pbms.group_beneficiary_list_reviewer'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
         
@@ -577,7 +577,7 @@ class G2PEEESummaryWizard(models.TransientModel):
 
     @api.model
     def action_approve_for_disbursement(self):
-        allowed_group = 'g2p_pbms.group_disbursement_review_disbursement_approver'
+        allowed_group = 'g2p_pbms.group_disbursement_reviewer'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
         
