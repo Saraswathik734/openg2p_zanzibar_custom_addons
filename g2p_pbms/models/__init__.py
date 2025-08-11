@@ -26,13 +26,13 @@ from .eligibility import G2PEligibilityRuleDefinition
 
 from .beneficiary_list import (
     G2PBeneficiaryList,
-    G2PEEESummaryWizard,
+    G2PBGTaskSummaryWizard,
     G2PAPIDisbursementEnvelopeLine,
     G2PAPIDisbursementBatchLine,
     G2PAPISummaryLine,
 )
 from .entitlement import G2PEntitlementRuleDefinition 
-from .config_settings import ResConfigSettings
+from .config_settings import ResConfigSettings, ResGroups
 from .g2p_bridge import DisbursementEnvelopeSummaryWizard, DisbursementBatchSummaryWizard
 from .verification import G2PBeneficiaryListVerification
 from .service_providers import G2PAgency, G2PWarehouse

@@ -1,2 +1,2 @@
-from .eee_summary_wizard import G2PEEESummaryWizard, G2PAPIDisbursementBatchLine, G2PAPIDisbursementEnvelopeLine, G2PAPISummaryLine
+from .bgtask_summary_wizard import G2PBGTaskSummaryWizard, G2PAPIDisbursementBatchLine, G2PAPIDisbursementEnvelopeLine, G2PAPISummaryLine
 from .beneficiary_list import G2PBeneficiaryList

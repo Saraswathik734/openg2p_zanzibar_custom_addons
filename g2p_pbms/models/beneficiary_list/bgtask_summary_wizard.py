@@ -2,7 +2,6 @@ from datetime import datetime
 import json
 import logging
 import requests
-import requests
 from odoo.exceptions import UserError, AccessError
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
@@ -11,9 +10,9 @@ from ..registries import G2PRegistryType
 
 _logger = logging.getLogger(__name__)
 
-class G2PEEESummaryWizard(models.TransientModel):
-    _name = 'g2p.eee.summary.wizard'
-    _description = 'EEE Summary Wizard'
+class G2PBGTaskSummaryWizard(models.TransientModel):
+    _name = 'g2p.bgtask.summary.wizard'
+    _description = 'Background Task Summary Wizard'
     _rec_name = 'mnemonic'
 
     target_registry = fields.Selection(
@@ -77,7 +76,7 @@ class G2PEEESummaryWizard(models.TransientModel):
 
     dummy_beneficiaries_field = fields.Text(string="Beneficiaries", compute="_compute_dummy")
 
-    sql_query = fields.Char(string="Query", compute="_get_query", store=True)
+    sql_query = fields.Char(string="Query", store=True)
     order_by_condition = fields.Char(string="Order By", default="name")
 
     # Fields for Disbursement Envelope and Disbursement Batch Lines
@@ -109,90 +108,87 @@ class G2PEEESummaryWizard(models.TransientModel):
         for rec in self:
             rec.entitlement_group_title = 'Entitlement Statistics for %s' % rec.target_registry.capitalize()
 
-
-    @api.depends("beneficiary_search", "target_registry")
-    def _get_query(self):
-        # TODO: move logic to get_beneficiaries
-        for rec in self:
-            try:
-                domain_value = safe_eval(rec.beneficiary_search or "[]")
-            except Exception as e:
-                _logger.error(
-                    "Error evaluating domain: %s",
-                    e,
-                )
-                rec.sql_query = "Invalid search term"
-                continue
-
-            target_model_mapping = {
-                "student": "g2p.student.registry",
-                "farmer": "g2p.farmer.registry",
-            }
-            target_model_name = target_model_mapping.get(rec.target_registry)
-            if not target_model_name:
-                _logger.error(
-                    "Unknown target_registry '%s'",
-                    rec.target_registry,
-                )
-                rec.sql_query = "Unknown target registry type"
-                continue
-            
-            order_by_field = "id"
-            if rec.target_registry == "student":
-                order_by_field = "name"
-            elif rec.target_registry == "farmer":
-                order_by_field = "name"
-
-            target_model = self.env[target_model_name]
-
-            try:
-                query = target_model._where_calc(domain_value)
-            except Exception as e:
-                _logger.error(
-                    "Error calculating where clause for rule %s: %s", rec.mnemonic, e
-                )
-                rec.sql_query = "Error calculating query"
-                continue
-
-            try:
-                _, where_clause, where_clause_params = query.get_sql()
-            except Exception as e:
-                _logger.error(
-                    "Error generating SQL from query: %s", e
-                )
-                rec.sql_query = "Error generating SQL"
-                continue
-
-            where_str = ("%s" % where_clause) if where_clause else ""
-            # Use the target model's table name in the SQL query.
-            query_str = (
-                where_str 
+    def _build_query_from_domain(self, beneficiary_search, target_registry, mnemonic=None):
+        """
+        Helper to build the SQL query and order_by from the domain and registry.
+        Returns (sql_query, order_by_condition)
+        """
+        try:
+            domain_value = safe_eval(beneficiary_search or "[]")
+        except Exception as e:
+            _logger.error(
+                "Error evaluating domain: %s",
+                e,
             )
-            
-            # Format the parameters as strings.
-            formatted_params = list(
-                map(lambda x: "'" + str(x) + "'", where_clause_params)
+            return "Invalid search term", "id"
+        target_model_mapping = {
+            "student": "g2p.student.registry",
+            "farmer": "g2p.farmer.registry",
+        }
+        target_model_name = target_model_mapping.get(target_registry)
+        if not target_model_name:
+            _logger.error(
+                "Unknown target_registry '%s'",
+                target_registry,
             )
+            return "Unknown target registry type", "id"
+        
+        order_by_field = "id"
+        if target_registry == "student":
+            order_by_field = "name"
+        elif target_registry == "farmer":
+            order_by_field = "name"
 
-            try:
-                formatted_query = query_str % tuple(formatted_params)
-                # formatted_query = formatted_query.replace('"', '\\"')
-                rec.sql_query = formatted_query
-                rec.order_by_condition = order_by_field
-                _logger.info("Query: %s", rec.sql_query)
-            except Exception as e:
-                _logger.error(
-                    "Error formatting query: %s",
-                    e,
-                )
-                rec.sql_query = "Error formatting query"
+        target_model = self.env[target_model_name]
+
+        try:
+            query = target_model._where_calc(domain_value)
+        except Exception as e:
+            _logger.error(
+                "Error calculating where clause for rule %s: %s", mnemonic, e
+            )
+            return "Error calculating query", order_by_field
+
+        try:
+            _, where_clause, where_clause_params = query.get_sql()
+        except Exception as e:
+            _logger.error(
+                "Error generating SQL from query: %s", e
+            )
+            return "Error generating SQL", order_by_field
+
+        where_str = ("%s" % where_clause) if where_clause else ""
+        query_str = where_str
+
+        formatted_params = list(
+            map(lambda x: "'" + str(x) + "'", where_clause_params)
+        )
+
+        try:
+            formatted_query = query_str % tuple(formatted_params)
+            _logger.info("Query: %s", formatted_query)
+            return formatted_query, order_by_field
+        except Exception as e:
+            _logger.error(
+                "Error formatting query: %s",
+                e,
+            )
+            return "Error formatting query", order_by_field
 
     @api.model
     def get_beneficiaries(self, wizard_id, page, page_size):
         wizard = self.sudo().browse(wizard_id)
-        api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
+        api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
         if not api_url:
             _logger.error("API URL not set in environment")
+
+        # Build the query and order_by dynamically from the current domain and registry
+        sql_query, order_by_condition = self._build_query_from_domain(
+            wizard.beneficiary_search, wizard.target_registry, wizard.mnemonic
+        )
+        # Optionally, update the wizard's fields for reference (not required for search)
+        wizard.sql_query = sql_query
+        wizard.order_by_condition = order_by_condition
 
         endpoint = f"{api_url}/search_beneficiaries"
         payload = {
@@ -214,8 +210,8 @@ class G2PEEESummaryWizard(models.TransientModel):
                 "target_registry": wizard.target_registry,
                 "page": page,
                 "page_size": page_size,
-                "search_query": wizard.sql_query or "",
-                "order_by": wizard.order_by_condition or "id asc",
+                "search_query": sql_query or "",
+                "order_by": order_by_condition or "id asc",
             }
         }
 
@@ -249,7 +245,7 @@ class G2PEEESummaryWizard(models.TransientModel):
         excluded_keys = ['id', 'target_registry']
         for wizard in self:
             wizard.summary_line_ids = [(5, 0, 0)]
-            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
+            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
             if not api_url:
                 _logger.error("API_URL not set in environment")
             endpoint = f"{api_url}/summary"
@@ -361,7 +357,7 @@ class G2PEEESummaryWizard(models.TransientModel):
             wizard.disbursement_envelope_line_ids = [(5, 0, 0)]
             if (wizard.list_stage or '').lower() != 'disbursement' or not wizard.beneficiary_list_uuid:
                 continue
-            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
+            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
             if not api_url:
                 _logger.error("API_URL not set in environment")
                 continue
@@ -425,7 +421,7 @@ class G2PEEESummaryWizard(models.TransientModel):
             wizard.disbursement_batch_line_ids = [(5, 0, 0)]
             if (wizard.list_stage or '').lower() != 'disbursement' or not wizard.beneficiary_list_uuid:
                 continue
-            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.eee_api_url')
+            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
             if not api_url:
                 _logger.error("API_URL not set in environment")
                 continue
@@ -598,7 +594,7 @@ class G2PAPISummaryLine(models.TransientModel):
     _name = 'g2p.api.summary.line'
     _description = 'Dynamic API Summary Line'
 
-    wizard_id = fields.Many2one('g2p.eee.summary.wizard', string='Wizard')
+    wizard_id = fields.Many2one('g2p.bgtask.summary.wizard', string='Wizard')
     key = fields.Char(string='Field', required=False)
     value = fields.Text(string='Value', required=False)
     summary_type = fields.Selection(
@@ -611,7 +607,7 @@ class G2PAPIDisbursementEnvelopeLine(models.TransientModel):
     _name = 'g2p.api.disbursement.envelope.line'
     _description = 'Disbursement Envelope Line'
 
-    wizard_id = fields.Many2one('g2p.eee.summary.wizard', string='Wizard')
+    wizard_id = fields.Many2one('g2p.bgtask.summary.wizard', string='Wizard')
     disbursement_envelope_id = fields.Char(string='Disbursement Envelope ID')
     beneficiary_list_id = fields.Char(string='Beneficiary List ID')
     benefit_code_id = fields.Integer(string='Benefit Code ID')
@@ -772,7 +768,7 @@ class G2PAPIDisbursementBatchLine(models.TransientModel):
     _name = 'g2p.api.disbursement.batch.line'
     _description = 'Disbursement Batch Line'
 
-    wizard_id = fields.Many2one('g2p.eee.summary.wizard', string='Wizard')
+    wizard_id = fields.Many2one('g2p.bgtask.summary.wizard', string='Wizard')
 
     batch_id = fields.Char(string='Batch ID')
     beneficiary_list_id = fields.Char(string='Beneficiary List ID')

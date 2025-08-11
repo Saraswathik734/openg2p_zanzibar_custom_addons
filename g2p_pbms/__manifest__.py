@@ -24,7 +24,7 @@
         "views/registries/student_registry_view.xml",
         "views/registries/farmer_registry_view.xml",
         "views/eligibility_rule/eligibility_rule_view.xml",
-        "views/eee_summary/eee_summary_view.xml",
+        "views/bgtask_summary/bgtask_summary_view.xml",
         "views/entitlement_rule/entitlement_rule_view.xml",
         "views/priority_rule/priority_rule_view.xml",
         "views/feedback/beneficiary_list_feedback_view.xml",

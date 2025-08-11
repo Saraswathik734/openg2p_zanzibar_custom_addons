@@ -133,11 +133,11 @@ class G2PBeneficiaryList(models.Model):
             "approved_for_disbursement": self.disbursement_cycle_id.approved_for_disbursement if self.disbursement_cycle_id else None,
         }
 
-        wizard = self.env["g2p.eee.summary.wizard"].create(wizard_vals)
+        wizard = self.env["g2p.bgtask.summary.wizard"].create(wizard_vals)
         return {
             "name": "Eligibility Summary Details",
             "view_mode": "form",
-            "res_model": "g2p.eee.summary.wizard",
+            "res_model": "g2p.bgtask.summary.wizard",
             "res_id": wizard.id,
             "type": "ir.actions.act_window",
             "target": "current",

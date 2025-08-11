@@ -47,8 +47,8 @@ g2p_beneficiary_list_verification_write,Write Beneficiary List Verification,g2p_
 g2p_enrollment_cycle_read,Read Enrollment Cycle,g2p_pbms.model_g2p_enrollment_cycle,group_enrolment_viewer,1,0,0,0
 g2p_enrollment_cycle_write,Write Enrollment Cycle,g2p_pbms.model_g2p_enrollment_cycle,group_enrolment_editor,1,1,1,1
 
-g2p_eee_summary_wizard_read,Read EEE Summary wizard,g2p_pbms.model_g2p_eee_summary_wizard,group_enrolment_viewer,1,0,0,0
-g2p_eee_summary_wizard_write,Write EEE Summary wizard,g2p_pbms.model_g2p_eee_summary_wizard,group_enrolment_editor,1,1,1,1
+g2p_bgtask_summary_wizard_read,Read BG Task Summary wizard,g2p_pbms.model_g2p_bgtask_summary_wizard,group_enrolment_viewer,1,0,0,0
+g2p_bgtask_summary_wizard_write,Write BG Task Summary wizard,g2p_pbms.model_g2p_bgtask_summary_wizard,group_enrolment_editor,1,1,1,1
 
 g2p_api_summary_line_read,Read API Summary Line,g2p_pbms.model_g2p_api_summary_line,group_program_viewer,1,0,0,0
 g2p_api_summary_line_write,Write API Summary Line,g2p_pbms.model_g2p_api_summary_line,group_program_editor,1,1,1,1

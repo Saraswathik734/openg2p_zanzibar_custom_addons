@@ -38,7 +38,7 @@ export class G2PBeneficiariesComponent extends Component {
 
     async _fetchRecords() {
         const result = await this.orm.call(
-            'g2p.eee.summary.wizard',
+            'g2p.bgtask.summary.wizard',
             'get_beneficiaries',
             [this.props.record.resId , this.state.page, this.state.pageSize],
             {},

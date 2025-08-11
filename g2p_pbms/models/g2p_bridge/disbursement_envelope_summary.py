@@ -10,8 +10,8 @@ class DisbursementEnvelopeSummaryWizard(models.TransientModel):
     _description = 'Disbursement Envelope Summary Wizard'
     
     wizard_id = fields.Many2one(
-        'g2p.eee.summary.wizard',
-        string='EEE Summary Wizard',
+        'g2p.bgtask.summary.wizard',
+        string='BG Task Summary Wizard',
         required=False,
     )
     disbursement_envelope_id = fields.Char(string='Disbursement Envelope ID', required=False)

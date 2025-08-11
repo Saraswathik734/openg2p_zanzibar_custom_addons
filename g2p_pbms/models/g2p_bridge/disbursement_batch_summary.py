@@ -6,8 +6,8 @@ class DisbursementBatchSummaryWizard(models.TransientModel):
     _description = 'Disbursement Batch Summary Wizard'
 
     wizard_id = fields.Many2one(
-        'g2p.eee.summary.wizard',
-        string='EEE Summary Wizard',
+        'g2p.bgtask.summary.wizard',
+        string='BG Task Summary Wizard',
         required=False,
     )
     disbursement_batch_control_id = fields.Char(string='Disbursement Batch Control ID', required=True)
