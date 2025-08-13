@@ -215,7 +215,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             }
         }
 
-        keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1)
+        keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1, order=None)
         if not keymanager_provider:
             raise UserError("No KeymanagerProvider configured in the system.")
 
@@ -269,7 +269,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1)
+            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1, order=None)
             if not keymanager_provider:
                 raise UserError("No KeymanagerProvider configured in the system.")
 
@@ -381,7 +381,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1)
+            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1, order=None)
             if not keymanager_provider:
                 raise UserError("No KeymanagerProvider configured in the system.")
 
@@ -445,7 +445,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1)
+            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1, order=None)
             if not keymanager_provider:
                 raise UserError("No KeymanagerProvider configured in the system.")
 
