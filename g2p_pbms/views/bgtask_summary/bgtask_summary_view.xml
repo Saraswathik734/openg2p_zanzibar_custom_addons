@@ -121,18 +121,12 @@
                 <field name="target_registry" invisible="1"/>
                 <!-- Only one beneficiary_search field is shown based on registry type -->
                 <group name="beneficiary_search_farmer" invisible="target_registry != 'farmer'">
-                  <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.farmer.registry'}"/>
-                  <div class="input-group-append">
-                  </div>
+                  <widget name="g2p_beneficiaries_widget" model="g2p.farmer.registry" id="farmer_beneficiary_search_widget"/>
                 </group>
                 <group name="beneficiary_search_student" invisible="target_registry != 'student'">
-                  <field name="beneficiary_search" widget="domain" options="{'model': 'g2p.student.registry'}"/>
-                        <div class="input-group-append">
-                        </div>
+                  <widget name="g2p_beneficiaries_widget" model="g2p.student.registry" id="student_beneficiary_search_widget"/>
                 </group>
               </group>
-            <!-- Container for the QWeb-based beneficiary list -->
-            <field name="dummy_beneficiaries_field" widget="g2p_beneficiaries_widget"/>
           </page>
           <page string="Community Feedbacks" invisible="list_stage != 'enrollment'">
             <field name="feedback_ids" readonly="1" nolabel="1"/>
