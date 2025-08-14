@@ -27,20 +27,24 @@ class KeymanagerProvider(models.AbstractModel):
         include_cert_hash=False,
         **kwargs,
     ) -> str:
-        self.keymanager_api_base_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_base_url')
-        self.keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
-        self.keymanager_sign_application_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
-        self.keymanager_sign_reference_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_reference_id')
+        keymanager_toggle = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_toggle')
 
-        self.ensure_one()
+        keymanager_api_base_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_base_url')
+        keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
+        keymanager_sign_application_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
+        keymanager_sign_reference_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_reference_id')
+
         if isinstance(data, dict):
             data = json.dumps(data).encode()
         elif isinstance(data, str):
             data = data.encode()
-
-        access_token = self.km_get_access_token()
+        
+        access_token: str = None
+        if keymanager_toggle:
+            access_token = self.km_get_access_token()
+            
         current_time = self.km_generate_current_time()
-        url = f"{self.keymanager_api_base_url}/jwtSign"
+        url = f"{keymanager_api_base_url}/jwtSign"
         headers = {"Cookie": f"Authorization={access_token}"}
         payload = {
             "id": "string",
@@ -49,14 +53,14 @@ class KeymanagerProvider(models.AbstractModel):
             "metadata": {},
             "request": {
                 "dataToSign": self.km_urlsafe_b64encode(data),
-                "applicationId": self.keymanager_sign_application_id or "",
-                "referenceId": self.keymanager_sign_reference_id or "",
+                "applicationId": keymanager_sign_application_id or "",
+                "referenceId": keymanager_sign_reference_id or "",
                 "includePayload": include_payload,
                 "includeCertificate": include_certificate,
                 "includeCertHash": include_cert_hash,
             },
         }
-        response = requests.post(url, json=payload, headers=headers, timeout=self.keymanager_api_timeout)
+        response = requests.post(url, json=payload, headers=headers)
         _logger.debug("Keymanager JWT Sign API response: %s", response.text)
         response.raise_for_status()
         if response:
@@ -68,16 +72,14 @@ class KeymanagerProvider(models.AbstractModel):
         raise ValueError("Could not sign jwt, invalid keymanager response")
 
     def jwt_verify_keymanager(self, data: str, **kwargs):
-        self.ensure_one()
-
-        self.keymanager_api_base_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_base_url')
-        self.keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
-        self.keymanager_sign_application_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
-        self.keymanager_sign_reference_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_reference_id')
+        keymanager_api_base_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_base_url')
+        keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
+        keymanager_sign_application_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
+        keymanager_sign_reference_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_reference_id')
 
         access_token = self.km_get_access_token()
         current_time = self.km_generate_current_time()
-        url = f"{self.keymanager_api_base_url}/jwtVerify"
+        url = f"{keymanager_api_base_url}/jwtVerify"
         headers = {"Cookie": f"Authorization={access_token}"}
         payload = {
             "id": "string",
@@ -86,12 +88,12 @@ class KeymanagerProvider(models.AbstractModel):
             "metadata": {},
             "request": {
                 "jwtSignatureData": data,
-                "applicationId": self.keymanager_sign_application_id or "",
-                "referenceId": self.keymanager_sign_reference_id or "",
+                "applicationId": keymanager_sign_application_id or "",
+                "referenceId": keymanager_sign_reference_id or "",
                 "validateTrust": False,
             },
         }
-        response = requests.post(url, json=payload, headers=headers, timeout=self.keymanager_api_timeout)
+        response = requests.post(url, json=payload, headers=headers)
         _logger.debug("Keymanager JWT Verify API response: %s", response.text)
         response.raise_for_status()
         if response:
@@ -107,29 +109,28 @@ class KeymanagerProvider(models.AbstractModel):
         raise ValueError("invalid jwt signature")
 
     def km_get_access_token(self):
-        self.ensure_one()
 
-        self.keymanager_access_token = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_access_token')
-        self.keymanager_access_token_expiry = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_access_token_expiry')
-        self.keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
+        keymanager_access_token = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_access_token')
+        keymanager_access_token_expiry = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_access_token_expiry')
+        keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
         
-        self.keycloak_auth_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_url')
-        self.keycloak_auth_client_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_client_id')
-        self.keycloak_auth_client_secret = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_client_secret')
-        self.keycloak_auth_grant_type = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_grant_type')
+        keycloak_auth_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_url')
+        keycloak_auth_client_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_client_id')
+        keycloak_auth_client_secret = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_client_secret')
+        keycloak_auth_grant_type = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_grant_type')
 
         if (
-            self.keymanager_access_token
-            and self.keymanager_access_token_expiry
-            and self.keymanager_access_token_expiry > datetime.now()
+            keymanager_access_token
+            and keymanager_access_token_expiry
+            and keymanager_access_token_expiry > datetime.now()
         ):
-            return self.keymanager_access_token
+            return keymanager_access_token
         data = {
-            "client_id": self.keycloak_auth_client_id,
-            "client_secret": self.keycloak_auth_client_secret,
-            "grant_type": self.keycloak_auth_grant_type,
+            "client_id": keycloak_auth_client_id,
+            "client_secret": keycloak_auth_client_secret,
+            "grant_type": keycloak_auth_grant_type,
         }
-        response = requests.post(self.keycloak_auth_url, data=data, timeout=self.keymanager_api_timeout)
+        response = requests.post(keycloak_auth_url, data=data)
         _logger.debug("Keymanager get Certificates API response: %s", response.text)
         response.raise_for_status()
         access_token = response.json().get("access_token", None)
