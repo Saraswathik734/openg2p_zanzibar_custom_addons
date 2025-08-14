@@ -89,9 +89,6 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         compute='_compute_disbursement_batch_lines', store=True
     )
 
-    def _compute_dummy(self):
-        for wizard in self:
-            wizard.dummy_beneficiaries_field = ""
 
     @api.depends('target_registry')
     def _compute_general_title(self):
@@ -108,19 +105,19 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         for rec in self:
             rec.entitlement_group_title = 'Entitlement Statistics for %s' % rec.target_registry.capitalize()
 
-    def _build_query_from_domain(self, beneficiary_search, target_registry, mnemonic=None):
-        """
-        Helper to build the SQL query and order_by from the domain and registry.
-        Returns (sql_query, order_by_condition)
-        """
+    def _build_sql_query(self, odoo_domain, target_registry):
+        sql_query=""
+        order_by_field=""
         try:
-            domain_value = safe_eval(beneficiary_search or "[]")
+            domain_value = safe_eval(odoo_domain or "[]")
         except Exception as e:
             _logger.error(
                 "Error evaluating domain: %s",
                 e,
             )
-            return "Invalid search term", "id"
+            sql_query = "Invalid search term"
+            return sql_query, order_by_field
+
         target_model_mapping = {
             "student": "g2p.student.registry",
             "farmer": "g2p.farmer.registry",
@@ -131,7 +128,8 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 "Unknown target_registry '%s'",
                 target_registry,
             )
-            return "Unknown target registry type", "id"
+            sql_query = "Unknown target registry type"
+            return sql_query, order_by_field
         
         order_by_field = "id"
         if target_registry == "student":
@@ -145,9 +143,10 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             query = target_model._where_calc(domain_value)
         except Exception as e:
             _logger.error(
-                "Error calculating where clause for rule %s: %s", mnemonic, e
+                "Error calculating where clause for rule: %s", e
             )
-            return "Error calculating query", order_by_field
+            sql_query = "Error calculating query"
+            return sql_query, order_by_field
 
         try:
             _, where_clause, where_clause_params = query.get_sql()
@@ -155,41 +154,44 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             _logger.error(
                 "Error generating SQL from query: %s", e
             )
-            return "Error generating SQL", order_by_field
+            sql_query = "Error generating SQL"
+            return sql_query, order_by_field
 
         where_str = ("%s" % where_clause) if where_clause else ""
-        query_str = where_str
-
+        # Use the target model's table name in the SQL query.
+        query_str = (
+            where_str 
+        )
+        
+        # Format the parameters as strings.
         formatted_params = list(
             map(lambda x: "'" + str(x) + "'", where_clause_params)
         )
 
         try:
             formatted_query = query_str % tuple(formatted_params)
-            _logger.info("Query: %s", formatted_query)
-            return formatted_query, order_by_field
+            # formatted_query = formatted_query.replace('"', '\\"')
+            sql_query = formatted_query
+            order_by_condition = order_by_field
+            _logger.info("Query: %s", sql_query)
         except Exception as e:
             _logger.error(
                 "Error formatting query: %s",
                 e,
             )
-            return "Error formatting query", order_by_field
+            sql_query = "Error formatting query"
+        return sql_query, order_by_field
 
     @api.model
-    def get_beneficiaries(self, wizard_id, page, page_size):
+    def get_beneficiaries(self, wizard_id, page, page_size, odoo_domain):
         wizard = self.sudo().browse(wizard_id)
         api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
+        sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
+
         if not api_url:
             _logger.error("API URL not set in environment")
 
-        # Build the query and order_by dynamically from the current domain and registry
-        sql_query, order_by_condition = self._build_query_from_domain(
-            wizard.beneficiary_search, wizard.target_registry, wizard.mnemonic
-        )
-        # Optionally, update the wizard's fields for reference (not required for search)
-        wizard.sql_query = sql_query
-        wizard.order_by_condition = order_by_condition
-
+        sql_query, order_by_condition = self._build_sql_query(odoo_domain, wizard.target_registry)
         endpoint = f"{api_url}/search_beneficiaries"
         payload = {
             "signature": "string",
@@ -198,7 +200,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 "message_id": "string",
                 "message_ts": "string",
                 "action": "search_beneficiaries",
-                "sender_id": "string",
+                "sender_id": sender_id,
                 "sender_uri": "",
                 "receiver_id": "",
                 "total_count": 0,
@@ -215,11 +217,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             }
         }
 
-        keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1, order=None)
-        if not keymanager_provider:
-            raise UserError("No KeymanagerProvider configured in the system.")
-
-        jwt_token = keymanager_provider.jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+        jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
         headers = {
             "content-type": "application/json",
             "Signature": jwt_token
@@ -240,12 +238,14 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             }
         return response_json
 
-    @api.depends('target_registry', 'beneficiary_search')
+    @api.depends('target_registry')
     def _compute_summary_lines(self):
         excluded_keys = ['id', 'target_registry']
         for wizard in self:
             wizard.summary_line_ids = [(5, 0, 0)]
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
+            sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
+
             if not api_url:
                 _logger.error("API_URL not set in environment")
             endpoint = f"{api_url}/summary"
@@ -256,7 +256,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                     "message_id": "string",
                     "message_ts": "string",
                     "action": "summary",
-                    "sender_id": "string",
+                    "sender_id": sender_id,
                     "sender_uri": "",
                     "receiver_id": "",
                     "total_count": 0,
@@ -269,11 +269,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1, order=None)
-            if not keymanager_provider:
-                raise UserError("No KeymanagerProvider configured in the system.")
-
-            jwt_token = keymanager_provider.jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "content-type": "application/json",
                 "Signature": jwt_token
@@ -358,6 +354,8 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             if (wizard.list_stage or '').lower() != 'disbursement' or not wizard.beneficiary_list_uuid:
                 continue
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
+            sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
+
             if not api_url:
                 _logger.error("API_URL not set in environment")
                 continue
@@ -369,7 +367,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                     "message_id": "string",
                     "message_ts": "string",
                     "action": "disbursement_envelope",
-                    "sender_id": "string",
+                    "sender_id": sender_id,
                     "sender_uri": "",
                     "receiver_id": "",
                     "total_count": 0,
@@ -381,11 +379,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1, order=None)
-            if not keymanager_provider:
-                raise UserError("No KeymanagerProvider configured in the system.")
-
-            jwt_token = keymanager_provider.jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "content-type": "application/json",
                 "Signature": jwt_token
@@ -422,6 +416,8 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             if (wizard.list_stage or '').lower() != 'disbursement' or not wizard.beneficiary_list_uuid:
                 continue
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
+            sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
+
             if not api_url:
                 _logger.error("API_URL not set in environment")
                 continue
@@ -433,7 +429,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                     "message_id": "string",
                     "message_ts": "string",
                     "action": "disbursement_batch",
-                    "sender_id": "string",
+                    "sender_id": sender_id,
                     "sender_uri": "",
                     "receiver_id": "",
                     "total_count": 0,
@@ -445,11 +441,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            keymanager_provider = self.env['keymanager.provider'].sudo().search([], limit=1, order=None)
-            if not keymanager_provider:
-                raise UserError("No KeymanagerProvider configured in the system.")
-
-            jwt_token = keymanager_provider.jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "content-type": "application/json",
                 "Signature": jwt_token
@@ -551,7 +543,6 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 'approved_for_enrollment': True,
             })
 
-    @api.model
     def action_record_community_feedbacks(self):
         allowed_group = 'g2p_pbms.group_beneficiary_list_reviewer'
         if not self.env.user.has_group(allowed_group):
@@ -571,7 +562,6 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             },
         }
 
-    @api.model
     def action_approve_for_disbursement(self):
         allowed_group = 'g2p_pbms.group_disbursement_reviewer'
         if not self.env.user.has_group(allowed_group):
@@ -645,6 +635,8 @@ class G2PAPIDisbursementEnvelopeLine(models.TransientModel):
         self.ensure_one()
         try:
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.g2p_bridge_api_url')
+            sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
+
             if not api_url:
                 _logger.error("Bridge API URL not set in environment")
             endpoint = f"{api_url}/get_disbursement_envelope_status"
@@ -654,7 +646,7 @@ class G2PAPIDisbursementEnvelopeLine(models.TransientModel):
                     "message_id": "string",
                     "message_ts": "string",
                     "action": "get_disbursement_envelope_status",
-                    "sender_id": "string",
+                    "sender_id": sender_id,
                     "sender_uri": "",
                     "receiver_id": "",
                     "total_count": 0,
@@ -663,14 +655,19 @@ class G2PAPIDisbursementEnvelopeLine(models.TransientModel):
                 },
                 "message": self.disbursement_envelope_id,
             }
+
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
+                "Signature": jwt_token
             }
             try:
                 response = requests.post(endpoint, json=payload, timeout=10, headers=headers)
                 response.raise_for_status()
                 resp_data = response.json()
+                _logger.debug("Disbursement ENvelope Status Response: %s", resp_data)
+
             except Exception as e:
                 _logger.error("API call failed: %s", e)
                 return
@@ -808,6 +805,8 @@ class G2PAPIDisbursementBatchLine(models.TransientModel):
         self.ensure_one()
         try:
             api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.g2p_bridge_api_url')
+            sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
+
             if not api_url:
                 _logger.error("Bridge API URL not set in environment")
             endpoint = f"{api_url}/get_disbursement_batch_control"
@@ -817,7 +816,7 @@ class G2PAPIDisbursementBatchLine(models.TransientModel):
                     "message_id": "string",
                     "message_ts": "string",
                     "action": "get_disbursement_batch_control",
-                    "sender_id": "string",
+                    "sender_id": sender_id,
                     "sender_uri": "",
                     "receiver_id": "",
                     "total_count": 0,
@@ -826,18 +825,18 @@ class G2PAPIDisbursementBatchLine(models.TransientModel):
                 },
                 "message": self.batch_id,
             }
+
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
+                "Signature": jwt_token
             }
-            _logger.info(f"============================PAYLOAD {payload}")
-            _logger.info(f"============================endpoint {endpoint}")
             try:
                 response = requests.post(endpoint, json=payload, timeout=10, headers=headers)
                 response.raise_for_status()
-                _logger.info(f"============================response {response}")
                 resp_data = response.json()
-                _logger.info(f"============================resp_data {resp_data}")
+                _logger.info("Disbursement Batch Status Response: %s", resp_data)
             except Exception as e:
                 _logger.error("API call failed: %s", e)
                 return
