@@ -15,6 +15,12 @@ class ResConfigSettings(models.TransientModel):
     )
 
     # Keymanager configs
+    keymanager_toggle = fields.Boolean(
+        "Keymanager Active?",
+        default=False,
+        config_parameter="g2p_pbms.keymannager_toggle"
+    )
+
     keymanager_api_base_url = fields.Char(
         "Keymanager API Base URL",
         config_parameter="g2p_pbms.keymanager_api_base_url"

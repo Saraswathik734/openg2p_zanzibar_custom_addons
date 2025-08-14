@@ -41,7 +41,9 @@
                         </setting>
                     </block>
                     <block title="Keycloak Configuration (used for client authentication in Keymanager Communication)">
-
+                        <setting string="Keymanager Auth Active" help="Toggle Keymanager Auth ON/OFF">
+                            <field name="keymanager_toggle"/>
+                        </setting>
                         <setting string="Keycloak Auth URL" help="URL for Keycloak authentication endpoint">
                             <field name="keycloak_auth_url"/>
                         </setting>
