@@ -21,7 +21,7 @@
             <t t-if="state.searched">
                 <h3><t t-esc="state.title"/></h3>
             </t>
-            <table class="table table-bordered" style="width: 100%; font-size: 16px;">
+            <table class="table table-bordered" style="width: 150%; font-size: 16px;">
                 <thead>
                     <tr>
                         <th><t t-esc="('Unique ID')"/></th>
