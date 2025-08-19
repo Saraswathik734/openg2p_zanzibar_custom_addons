@@ -16,8 +16,8 @@ AND is_group = False
 AND active = True;
 
 
--- Worker Registry Monthly View
-CREATE OR REPLACE VIEW g2p_worker_registry_monthly AS
+-- Worker Monthly Registry View
+CREATE OR REPLACE VIEW g2p_worker_monthly_registry AS
 SELECT 
     partner_id           AS unique_id,
     name                 AS name,
@@ -26,8 +26,8 @@ SELECT
 FROM g2p_enumerator;
 
 
--- Worker Registry Daily View
-CREATE OR REPLACE VIEW g2p_worker_registry_daily AS
+-- Worker Daily Registry View
+CREATE OR REPLACE VIEW g2p_worker_daily_registry AS
 SELECT 
     worker_id     AS unique_id,
     nrc_number    AS nrc_number,

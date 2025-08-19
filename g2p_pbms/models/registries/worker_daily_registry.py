@@ -1,8 +1,8 @@
 from odoo import models, fields, api
 
-class G2PWorkerRegistryDaily(models.Model):
-    _name = "g2p.worker.registry.daily"
-    _description = "Worker Registry Daily"
+class G2PWorkerDailyRegistry(models.Model):
+    _name = "g2p.worker.daily.registry"
+    _description = "Worker Daily Registry"
 
     unique_id = fields.Integer(string="Unique ID")
 

@@ -35,14 +35,14 @@
                         <field name="pbms_domain" widget="domain"
                                options="{'model': 'g2p.worker.registry'}"
                                invisible="target_registry != 'worker'"/>
-                        <!-- Domain widget for the 'worker daily attendance' type -->
+                        <!-- Domain widget for the 'worker_daily' type -->
                         <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.worker.registry.daily'}"
-                               invisible="target_registry != 'worker daily attendance'"/>
-                        <!-- Domain widget for the 'worker monthly attendance' type -->
+                               options="{'model': 'g2p.worker.daily.registry'}"
+                               invisible="target_registry != 'worker_daily'"/>
+                        <!-- Domain widget for the 'worker_monthly' type -->
                         <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.worker.registry.monthly'}"
-                               invisible="target_registry != 'worker monthly attendance'"/>
+                               options="{'model': 'g2p.worker.monthly.registry'}"
+                               invisible="target_registry != 'worker_monthly'"/>
                     </group>
                 </sheet>
                 <sheet>
