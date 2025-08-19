@@ -16,7 +16,7 @@ class G2PEligibilityRuleDefinition(models.Model):
     description = fields.Char(string="Description")
     program_id = fields.Many2one("g2p.program.definition", string="G2P Program")
     target_registry = fields.Selection(
-        selection=G2PRegistryType.selection(), string="Registry Type", required=True
+        selection=G2PRegistryType.selection(), string="Target Registry", required=True
     )
     pbms_domain = fields.Char(string="Domain", required=True)
     sql_query = fields.Char(string="SQL Query", compute="_get_query", store=True)

@@ -17,18 +17,11 @@
 
                     <!-- Hide fields during creation -->
                     <notebook>
+                        <!-- Priority Rules -->
                         <page string="Priority Rules" invisible="id == False">
-                            <field name="priority_rule_ids" readonly="approved_for_disbursement" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry': target_registry}">
-                                <tree default_order="id desc">
-                                    <control>
-                                        <create string="Add Priority Rule"/>
-                                    </control>
-                                    <field name="mnemonic" string="Rule Mnemonic"/>
-                                    <field name="description" string="Description"/>
-                                    <button name="action_open_view" type="object" string="View Priority Rule" class="oe_link" title="View Priority Rule"/>
-                                </tree>
-                            </field>
+                            <field name="priority_rule_ids" readonly="approved_for_disbursement" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry': target_registry}"/>
                         </page>
+                        <!-- Disbursement List -->
                         <page string="Disbursement List" invisible="id == False">
                             <field name="beneficiary_list_ids" nolabel="1" readonly="approved_for_disbursement">
                                 <tree default_order="creation_date desc" delete="false" limit="10">

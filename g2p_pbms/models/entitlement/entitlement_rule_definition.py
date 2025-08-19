@@ -37,7 +37,7 @@ class G2PEntitlementRuleDefinition(models.Model):
         help="Select an integer field from the registry to use as a multiplier."
     )
     target_registry = fields.Selection(
-        related='program_id.target_registry', string="Registry Type", required=True
+        selection=G2PRegistryType.selection(), string="Target Registry", required=True
     )
     pbms_domain = fields.Char(string="Domain", required=True)
     sql_query = fields.Char(string="SQL Query", compute="_get_query", store=True)
@@ -54,12 +54,12 @@ class G2PEntitlementRuleDefinition(models.Model):
 
         # Add custom logic here
         return super().create(vals)
-
-    @api.depends('program_id.target_registry')
+    
+    @api.depends("target_registry")
     def _compute_multiplier_options(self):
         NUMERIC_FIELD_TYPES = {'integer', 'float', 'double', 'monetary', 'numeric', 'biginteger', 'smallinteger', 'decimal'}
         for rec in self:
-            registry_type = rec.program_id.target_registry
+            registry_type = rec.target_registry
             registry_map = {
                 "student": "g2p.student.registry",
                 "farmer": "g2p.farmer.registry",
