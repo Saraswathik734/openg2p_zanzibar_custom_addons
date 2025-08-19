@@ -9,9 +9,6 @@ class G2PRegistry(models.AbstractModel):
     registration_date = fields.Date(
         string="Registration Date", required=True, default=fields.Date.today
     )
-    bridge_disbursement_id = fields.Char(
-        string="Bridge Disbursement ID", required=False, readonly=True
-    )
 
     def action_open_view(self):
         return {

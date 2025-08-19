@@ -30,7 +30,7 @@
                         <page string="Warehouse Program Benefit Code">
                             <field name="warehouse_program_benefit_codes" nolabel="1" options="{'no_quick_create': True}"/>
                         </page>
-                        <page string="Administrative Areas (Large)">
+                        <page string="Administrative Areas (Large)" invisible="is_sponsor_bank">
                             <field name="administrative_area_large_ids" nolabel="1" options="{'no_quick_create': True}"/>
                         </page>
                     </notebook>

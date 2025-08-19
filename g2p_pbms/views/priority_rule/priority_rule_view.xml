@@ -19,12 +19,25 @@
                         <field name="target_registry" invisible="0"/>
                         <!-- Domain widget for the 'farmer' type -->
                         <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.farmer.registry', 'allowed_fields': ['priority_rank']}}"
+                               options="{'model': 'g2p.farmer.registry', 'allowed_fields': ['priority_rank']}"
                                invisible="target_registry != 'farmer'"/>
                         <!-- Domain widget for the 'student' type -->
                         <field name="pbms_domain" widget="domain"
                                options="{'model': 'g2p.student.registry'}, 'allowed_fields': ['priority_rank']}"
                                invisible="target_registry != 'student'"/>
+                        <!-- Domain widget for the 'worker' type -->
+                        <field name="pbms_domain" widget="domain"
+                               options="{'model': 'g2p.worker.registry', 'allowed_fields': ['priority_rank']}"
+                               invisible="target_registry != 'worker'"/>
+                        <!-- Domain widget for the 'worker daily attendance' type -->
+                        <field name="pbms_domain" widget="domain"
+                               options="{'model': 'g2p.worker.registry.daily', 'allowed_fields': ['priority_rank']}"
+                               invisible="target_registry != 'worker daily attendance'"/>
+                        <!-- Domain widget for the 'worker monthly attendance' type -->
+                        <field name="pbms_domain" widget="domain"
+                               options="{'model': 'g2p.worker.registry.monthly', 'allowed_fields': ['priority_rank']}"
+                               invisible="target_registry != 'worker monthly attendance'"/>
+
                     </group>
                 </sheet>
                 <sheet>

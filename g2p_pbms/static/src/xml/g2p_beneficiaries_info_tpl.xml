@@ -60,17 +60,6 @@
                                 <td><t t-esc="record.small_area_code"/></td>
                                 <td><t t-esc="record.large_area_code"/></td>
                             </t>
-                            
-                            <!-- <t t-if="state.list_workflow_status === 'approved_for_disbursement'">
-                                <td><t t-esc="record.bridge_disbursement_id"/></td>
-                                <td><t t-esc="record.bridge_dispatch_timestamp"/></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary"
-                                            t-on-click="() => fetchDisbursementDetails(record.bridge_disbursement_id)">
-                                        View Status from Bridge
-                                    </button>
-                                </td>
-                            </t> -->
                         </tr>
                     </t>
                 </tbody>

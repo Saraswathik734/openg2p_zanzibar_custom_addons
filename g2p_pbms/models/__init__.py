@@ -21,6 +21,9 @@ from .registries import (
     G2PFarmerRegistry,
     G2PStudentRegistry,
     G2PRegistryType,
+    G2PWorkerRegistry,
+    G2PWorkerRegistryDaily,
+    G2PWorkerRegistryMonthly
 )
 from .eligibility import G2PEligibilityRuleDefinition
 

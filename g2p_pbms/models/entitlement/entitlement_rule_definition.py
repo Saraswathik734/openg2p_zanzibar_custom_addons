@@ -60,9 +60,13 @@ class G2PEntitlementRuleDefinition(models.Model):
         NUMERIC_FIELD_TYPES = {'integer', 'float', 'double', 'monetary', 'numeric', 'biginteger', 'smallinteger', 'decimal'}
         for rec in self:
             registry_type = rec.target_registry
+            print(f"REGISTRY_TYPE: {registry_type}")
             registry_map = {
                 "student": "g2p.student.registry",
                 "farmer": "g2p.farmer.registry",
+                "worker": "g2p.worker.registry",
+                "worker daily attendance": "g2p.worker.registry.daily",
+                "worker monthly attendance": "g2p.worker.registry.monthly"
             }
             model_name = registry_map.get(registry_type)
             if not model_name:
@@ -96,7 +100,9 @@ class G2PEntitlementRuleDefinition(models.Model):
             target_model_mapping = {
                 "student": "g2p.student.registry",
                 "farmer": "g2p.farmer.registry",
-                # add additional mappings if needed
+                "worker": "g2p.worker.registry",
+                "worker daily attendance": "g2p.worker.registry.daily",
+                "worker monthly attendance": "g2p.worker.registry.monthly"
             }
             target_model_name = target_model_mapping.get(rec.target_registry)
             if not target_model_name:

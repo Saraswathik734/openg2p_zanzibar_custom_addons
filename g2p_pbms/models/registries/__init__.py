@@ -2,3 +2,6 @@ from .registry import G2PRegistry
 from .farmer_registry import G2PFarmerRegistry
 from .student_registry import G2PStudentRegistry
 from .registry_type import G2PRegistryType
+from .worker_registry import G2PWorkerRegistry
+from .worker_registry_daily import G2PWorkerRegistryDaily
+from .worker_registry_monthly import G2PWorkerRegistryMonthly

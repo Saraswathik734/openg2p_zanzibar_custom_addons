@@ -40,7 +40,9 @@ class G2PPriorityRuleDefinition(models.Model):
             target_model_mapping = {
                 "student": "g2p.student.registry",
                 "farmer": "g2p.farmer.registry",
-                # add additional mappings if needed
+                "worker": "g2p.worker.registry",
+                "worker daily attendance": "g2p.worker.registry.daily",
+                "worker monthly attendance": "g2p.worker.registry.monthly"
             }
             target_model_name = target_model_mapping.get(rec.target_registry)
             if not target_model_name:

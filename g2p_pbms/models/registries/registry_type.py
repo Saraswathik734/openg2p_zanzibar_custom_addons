@@ -4,6 +4,9 @@ from enum import Enum
 class G2PRegistryType(Enum):
     FARMER = "farmer"
     STUDENT = "student"
+    WORKER = "worker"
+    WORKER_DAILY_ATTENDANCE = "worker daily attendance"
+    WORKER_MONTHLY_ATTENDANCE = "worker monthly attendance"
     OTHER = "other"
 
     @classmethod
