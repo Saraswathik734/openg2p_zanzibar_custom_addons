@@ -15,10 +15,9 @@
             <form string="Beneficiary List Verification">
                 <sheet>
                     <group>
-                        <field name="beneficiary_list_id" string="Disbursement List" readonly="1"/>
-                        <field name="name" string="Name" />
+                        <field name="beneficiary_list_id" string="Disbursement List" invisible="1"/>
+                        <field name="name" string="Name" readonly="1"/>
                         <field name="comment" string="Comment" />
-                        <field name="verification_status" readonly="1" widget="badge"/>
                     </group>
                 </sheet>
             </form>
@@ -29,15 +28,10 @@
         <field name="model">g2p.beneficiary.list.verification</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name" string="Name"/>
+                <field name="name" string="Name" readonly="1"/>
                 <field name="comment" string="Comment"/>
-                <field name="verification_status" string="Verification Status" widget="badge"/>
                 <field name="verification_timestamp" string="Verification Timestamp"/>
-                <button name="action_verify" type="object" class="fa fa-check" title="Verify"/>
             </tree>
         </field>
     </record>
-
-    <!-- Menu for Beneficiary List Verification -->
-    <!-- <menuitem id="menu_g2p_beneficiary_list_verification_action" name="Beneficiary List Verification" parent="menu_g2p_program" action="action_g2p_beneficiary_list_verification" sequence="4"/> -->
 </odoo>

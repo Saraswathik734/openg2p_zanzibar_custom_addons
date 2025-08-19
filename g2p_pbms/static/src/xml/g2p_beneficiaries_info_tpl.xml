@@ -1,49 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="g2p_beneficiaries_info_tpl">
+        <div>
+            <DomainSelector
+                resModel="props.resModel"
+                domain="state.domain"
+                update.bind="onDomainChange"
+                readonly="false"
+                isDebugMode="!!env.debug"
+                className="'o_edit_mode'"
+            />
+        </div>
+        <div class="o_x2m_control_panel d-empty-none mb-4">
+            <button type="button" class="btn btn-secondary" t-on-click="searchRegistrants">
+                <i class="fa fa-search"/>
+            </button>
+        </div>
         <div class="g2p-beneficiaries" style="font-size: 18px;">
             <!-- Search input with search and arch buttons -->
-            <button type="button" class="btn btn-secondary" t-on-click="searchRegistrants">
-                            <i class="fa fa-search"/>
-                        </button>
             <t t-if="state.searched">
                 <h3><t t-esc="state.title"/></h3>
             </t>
-            <table class="table table-bordered" style="width: 100%; font-size: 16px;">
+            <table class="table table-bordered" style="width: 150%; font-size: 16px;">
                 <thead>
                     <tr>
                         <th><t t-esc="('Unique ID')"/></th>
-                        <th><t t-esc="('Registration Date')"/></th>
+                        <!-- <th><t t-esc="('Registration Date')"/></th> -->
 
                         <!-- Conditional columns -->
-                        <t t-if="state.target_registry_type === 'farmer'">
+                        <t t-if="state.target_registry === 'farmer'">
                             <th><t t-esc="('Name')"/></th>
                             <th><t t-esc="('Land Area')"/></th>
                             <th><t t-esc="('Cattle Heads')"/></th>
                             <th><t t-esc="('Poultry Heads')"/></th>
+                            <th><t t-esc="('Annual Income')"/></th>
+                            <th><t t-esc="('Small Area Code')"/></th>
+                            <th><t t-esc="('Large Area Code')"/></th>
                         </t>
-                        <t t-if="state.list_workflow_status === 'approved_for_disbursement'">
+                        <!-- <t t-if="state.list_workflow_status === 'approved_for_disbursement'">
                             <th><t t-esc="('Bridge Disbursement ID')"/></th>
                             <th><t t-esc="('Bridge Dispatch Timestamp')"/></th>
                             <th><t t-esc="('')"/></th>
-                        </t>
+                        </t> -->
                     </tr>
                 </thead>
                 <tbody>
                     <t t-foreach="state.records" t-as="record" t-key="record.id">
                         <tr>
                             <td><t t-esc="record.unique_id"/></td>
-                            <td><t t-esc="record.registration_date"/></td>
+                            <!-- <td><t t-esc="record.registration_date"/></td> -->
 
                             <!-- Conditional cells -->
-                            <t t-if="state.target_registry_type === 'farmer'">
+                            <t t-if="state.target_registry === 'farmer'">
                                 <td><t t-esc="record.name"/></td>
                                 <td><t t-esc="record.land_area"/></td>
                                 <td><t t-esc="record.no_of_cattle_heads"/></td>
                                 <td><t t-esc="record.no_of_poultry_heads"/></td>
+                                <td><t t-esc="record.annual_income"/></td>
+                                <td><t t-esc="record.small_area_code"/></td>
+                                <td><t t-esc="record.large_area_code"/></td>
                             </t>
                             
-                            <t t-if="state.list_workflow_status === 'approved_for_disbursement'">
+                            <!-- <t t-if="state.list_workflow_status === 'approved_for_disbursement'">
                                 <td><t t-esc="record.bridge_disbursement_id"/></td>
                                 <td><t t-esc="record.bridge_dispatch_timestamp"/></td>
                                 <td>
@@ -52,7 +70,7 @@
                                         View Status from Bridge
                                     </button>
                                 </td>
-                            </t>
+                            </t> -->
                         </tr>
                     </t>
                 </tbody>

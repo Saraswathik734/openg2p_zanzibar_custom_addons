@@ -3,38 +3,39 @@
     <!-- Actions for Beneficiary List Feedback -->
     <record id="action_g2p_beneficiary_list_feedback" model="ir.actions.act_window">
         <field name="name">Beneficiary List Feedback</field>
-        <field name="res_model">g2p.beneficiary.list.feedback</field>
+        <field name="res_model">storage.file</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <!-- Views for Beneficiary List Feedback -->
     <record id="view_g2p_beneficiary_list_feedback_form" model="ir.ui.view">
-        <field name="name">g2p.beneficiary.list.feedback.form</field>
-        <field name="model">g2p.beneficiary.list.feedback</field>
+        <field name="name">storage.file.form</field>
+        <field name="model">storage.file</field>
         <field name="arch" type="xml">
             <form string="Beneficiary List Feedback">
                 <sheet>
                     <group>
                         <field name="beneficiary_list_id" string="Enrollment List" readonly="1"/>
+                        <field name="name" string="Name" readonly="not context.get('beneficiary_list_feedback_form_edit')"/>
                         <field name="comment" string="Comment" readonly="not context.get('beneficiary_list_feedback_form_edit')"/>
-                        <field name="file" string="Feedback" readonly="not context.get('beneficiary_list_feedback_form_edit')"/>
+                        <field name="backend_id" string="Storage" readonly="1" invisible="1"/>
+                        <field name="data" string="Data" widget="pdf_viewer" readonly="not context.get('beneficiary_list_feedback_form_edit')"/>
+                        <field name="url" string="Url" readonly="1" invisible="1"/>
+                        <!-- <field name="filename" string="Filename" readonly="1" invisible="1"/> -->
+                        <!-- <field name="content_type" string="Content Type" readonly="1" invisible="1"/> -->
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
     <record id="view_g2p_beneficiary_list_feedback_tree" model="ir.ui.view">
-        <field name="name">g2p.beneficiary.list.feedback.tree</field>
-        <field name="model">g2p.beneficiary.list.feedback</field>
+        <field name="name">storage.file.tree</field>
+        <field name="model">storage.file</field>
         <field name="arch" type="xml">
             <tree string="Beneficiary List Feedback">
                 <field name="comment" string="Comment"/>
-                <field name="file" string="Feedback"/>
-                <!-- <button name="action_open_edit" type="object" class="fa fa-pencil"/> -->
+                <!-- <button name="action_view_feedback_file" string="View Feedback File" type="object" class="oe_link"/> -->
             </tree>
         </field>
     </record>
-
-    <!-- Menu for Beneficiary List Feedback -->
-    <!-- <menuitem id="menu_g2p_beneficiary_list_feedback_action" name="Beneficiary List Feedback" parent="menu_g2p_program" action="action_g2p_beneficiary_list_feedback" sequence="4"/> -->
 </odoo>

@@ -1,12 +1,22 @@
 /** @odoo-module **/
 
 import { Component, useState } from "@odoo/owl";
+import { DomainSelector } from "@web/core/domain_selector/domain_selector";
+// import { Domain, InvalidDomainError } from "@web/core/domain";
+// import { EvaluationError } from "@web/core/py_js/py_builtin";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 
 export class G2PBeneficiariesComponent extends Component {
     static template = "g2p_beneficiaries_info_tpl";
+    static components = {
+        DomainSelector
+    };
+    static props = {
+        context: { type: Object, optional: true },
+        resModel: { type: String, optional: true },
+    };
 
     setup() {
         this.state = useState({
@@ -16,31 +26,44 @@ export class G2PBeneficiariesComponent extends Component {
             pageSize: 3,
             totalCount: 0,
             totalPages: 1,
-            target_registry_type: null,
+            target_registry : this.props.record.data.target_registry,
             searched: false,  // initially hidden title and pagination
-            searchQuery: "",  // bound to the search input
+            domain : "[]",
         });
         this.orm = useService("orm");
+        console.log(this);
+    }
+
+    onDomainChange(newDomain) {
+        this.state.domain = newDomain;
+        this.render();
+    }
+
+    getEvaluatedDomain() {
+        // try {
+        //     const domain = new Domain(this.domain).toList(this.props.context);
+        //     return domain;
+        // } catch (error) {
+        //     if (error instanceof InvalidDomainError || error instanceof EvaluationError) {
+        //         return { isInvalid: true };
+        //     }
+        //     throw error;
+        // }
+        return this.state.domain;
     }
 
     searchRegistrants() {
         this.state.searched = true;  // show title and pagination when search is clicked
         this.state.page = 1;
         this.state.pageSize = 20;
-        this.state.target_registry_type = this.props.record.data.target_registry_type;
-        this.state.list_workflow_status = this.props.record.data.list_workflow_status;
         this._fetchRecords();
-    }
-
-    fetchDisbursementDetails(bridge_disbursement_id) {
-        
     }
 
     async _fetchRecords() {
         const result = await this.orm.call(
-            'g2p.eee.summary.wizard',
+            'g2p.bgtask.summary.wizard',
             'get_beneficiaries',
-            [this.props.record.data.id, this.state.page, this.state.pageSize],
+            [this.props.record.resId , this.state.page, this.state.pageSize, this.getEvaluatedDomain()],
             {},
         );
         if (result.message) {
@@ -51,7 +74,6 @@ export class G2PBeneficiariesComponent extends Component {
             this.state.totalCount = result.total_count;
         }
         this.state.totalPages = Math.ceil(this.state.totalCount / this.state.pageSize) || 1;
-        this.state.target_registry_type = this.props.record.data.target_registry_type;
     }
 
     async nextPage() {
@@ -71,5 +93,12 @@ export class G2PBeneficiariesComponent extends Component {
 
 export const g2pBeneficiariesWidget = {
     component: G2PBeneficiariesComponent,
+    extractProps({ attrs }, dynamicInfo) {
+        console.log(attrs, dynamicInfo)
+        return {
+            resModel: attrs.model,
+            context: dynamicInfo.context,
+        };
+    },
 };
-registry.category("fields").add("g2p_beneficiaries_widget", g2pBeneficiariesWidget);
+registry.category("view_widgets").add("g2p_beneficiaries_widget", g2pBeneficiariesWidget);

@@ -1,16 +1,28 @@
 import uuid
-from odoo import fields, models
+from odoo import fields, models, api
+import base64
+
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class G2PBeneficiaryListFeedback(models.Model):
-    _name = "g2p.beneficiary.list.feedback"
-    _description = "G2P Beneficiary List Feedback"
-    _rec_name = "comment"
+    _inherit = "storage.file"
+    # TODO: Name defaults to UUID
 
-    feedback_id = fields.Char(string="Feedback ID", unique=True, readonly=True, required=True, default=lambda self: str(uuid.uuid4()))
-    comment = fields.Char(string="Comment", readonly=True, required=True)
-    file = fields.Binary(string="File", readonly=True, required=True)
-    minio_file_id = fields.Char(string="Minio File ID", readonly=True)
+    comment = fields.Char(string="Feedback Comment", readonly=True, required=False)
     beneficiary_list_id = fields.Many2one(
-        "g2p.beneficiary.list", string="Beneficiary List", indexed=True, required=True
+        "g2p.beneficiary.list", string="Beneficiary List", index=True, required=True
     )
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super(G2PBeneficiaryListFeedback, self).default_get(fields_list)
+        if 'backend_id' in fields_list and not res.get('backend_id'):
+            doc_store_id_str = (
+                self.env["ir.config_parameter"].sudo().get_param("g2p_pbms.document_store")
+            )
+            if doc_store_id_str:
+                res['backend_id'] = int(doc_store_id_str)
+        return res

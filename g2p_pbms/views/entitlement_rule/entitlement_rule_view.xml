@@ -21,17 +21,16 @@
                         <field name="benefit_code_id" domain="[('id', 'in', allowed_benefit_code_ids)]" options="{'no_quick_create': True}"/>
                         <field name="quantity"/>
                         <field name="multiplier" widget="g2p_pbms.multiplier_widget"/>
-                        <field name="max_quantity"/>
                         <field name="measurement_unit" readonly="1" no_label="1"/>
-                        <field name="target_registry_type" invisible="1"/>
+                        <field name="target_registry" invisible="1"/>
                         <!-- Domain widget for the 'farmer' type -->
                         <field name="pbms_domain" widget="domain"
                                options="{'model': 'g2p.farmer.registry'}"
-                               invisible="target_registry_type != 'farmer'"/>
+                               invisible="target_registry != 'farmer'"/>
                         <!-- Domain widget for the 'student' type -->
                         <field name="pbms_domain" widget="domain"
                                options="{'model': 'g2p.student.registry'}"
-                               invisible="target_registry_type != 'student'"/>
+                               invisible="target_registry != 'student'"/>
                     </group>
                 </sheet>
                 <sheet>
@@ -48,12 +47,16 @@
         <field name="model">g2p.entitlement.rule.definition</field>
         <field name="arch" type="xml">
             <tree string="Entitlement Rule">
-                <field name="mnemonic"/>
-                <field name="description"/>
-                <field name="quantity"/>
-                <field name="target_registry_type" invisible="1"/>
-                <field name="pbms_domain"/>
-                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+                <control>
+                    <create string="Add Entitlement Rule"/>
+                  </control>
+                <field name="mnemonic" string="Rule Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
+                <field name="benefit_code_id" string="Benefit Code"/>
+                <field name="quantity" string="Quantity"/>
+                <field name="measurement_unit" string="Measurement Unit"/>
+                <field name="multiplier" string="Multiplier"/>
+                <field name="description" string="Description"/>
+                <button name="action_open_view" type="object" string="View Entitlement Rule" class="oe_link" title="View Entitlement Rule"/>
             </tree>
         </field>
     </record>

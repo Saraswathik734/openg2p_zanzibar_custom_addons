@@ -10,13 +10,7 @@ class G2PProgramDefinition(models.Model):
 
     program_mnemonic = fields.Char(string="Program Mnemonic", required=True)
     description = fields.Char(string="Description")
-    benefit_code_ids = fields.Many2many(
-        'g2p.benefit.codes',
-        string="Benefit Codes",
-        required=True,
-        help="Select benefit codes that are applicable for this program."
-    )
-    target_registry_type = fields.Selection(
+    target_registry = fields.Selection(
         selection=G2PRegistryType.selection(), string="Target Registry", required=True
     )
     program_status = fields.Selection(
@@ -27,6 +21,14 @@ class G2PProgramDefinition(models.Model):
         ],
         string="Program Status",
         required=True,
+    )
+    benefit_code_ids = fields.Many2many(
+        'g2p.benefit.codes',
+        compute='_compute_benefit_code_ids',
+        string="Benefit Codes"
+    )
+    program_benefit_code_ids = fields.One2many(
+        'g2p.program.benefit.codes', 'program_id', string="Program Benefit Codes"
     )
     eligibility_rule_ids = fields.One2many(
         'g2p.eligibility.rule.definition', 'program_id', string="Eligibility Rules"
@@ -49,35 +51,24 @@ class G2PProgramDefinition(models.Model):
         "program_id",
         string="Disbursement Cycle",
     )
-    distribution_through_agencies = fields.Boolean(
-        string="Distribution through Agencies",
+    service_providers_required = fields.Boolean(
+        string="Service Providers required",
         default=True,
-        help="If checked, the program will require benefits to be collected from specified agencies. If unchecked, beneficiaries may collect benefits from any agency in the country. " \
+        help="If checked, the program will require benefits to be collected from specified agency and warehouse. If unchecked, beneficiaries may collect benefits from any agency/warehouse in the country. " \
     )
-    only_direct_credit_allowed = fields.Boolean(
-        string="Only Direct Credit Allowed",
-        default=True,
-        help="Cash will be directly credited to beneficiary accounts. Beneficiaries who don't have accounts will not receive benefits. Relevant only for cash benefits. " \
-        "If Unchecked, benefits will be distributed as cash through agencies for beneficiaries without accounts."
-    )
-
-    #Entitlement Configuration
-    # max_quantity = fields.Integer(string="Maximum Quantity")
-
-    # Add related field for measurement_unit from benefit_id
-    # measurement_unit = fields.Char(
-    #     related='benefit_code_id.measurement_unit',
-    #     string="Measurement Unit",
-    #     readonly=True
-    # )
-    # benefit_type = fields.Selection(
-    #     related='benefit_code_id.benefit_type',
-    #     string="Benefit Type",
-    #     readonly=True
-    # )
-    # display_quantity = fields.Char(string="Max Quantity", compute="_compute_display_quantity")
 
     # Cycle configuration
+    enrollment_frequency = fields.Selection([
+        ('Daily', 'Daily'),
+        ('Weekly', 'Weekly'),
+        ('Fortnightly', 'Fortnightly'),
+        ('Monthly', 'Monthly'),
+        ('BiMonthly', 'BiMonthly'),
+        ('Quarterly', 'Quarterly'),
+        ('SemiAnnually', 'SemiAnnually'),
+        ('Annually', 'Annually'),
+        ('OnDemand', 'OnDemand'),
+    ], string="Enrollment Frequency", required=True, default='OnDemand')
     disbursement_frequency = fields.Selection([
         ('Daily', 'Daily'),
         ('Weekly', 'Weekly'),
@@ -90,32 +81,6 @@ class G2PProgramDefinition(models.Model):
         ('OnDemand', 'OnDemand'),
     ], string="Disbursement Frequency", required=True, default='OnDemand')
 
-    disbursement_day_of_week = fields.Selection([
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday'),
-    ], string="Day of Week")
-
-    disbursement_day_of_month = fields.Integer(string="Day of Month")
-    disbursement_start_month = fields.Selection([
-        ('January', 'January'),
-        ('February', 'February'),
-        ('March', 'March'),
-        ('April', 'April'),
-        ('May', 'May'),
-        ('June', 'June'),
-        ('July', 'July'),
-        ('August', 'August'),
-        ('September', 'September'),
-        ('October', 'October'),
-        ('November', 'November'),
-        ('December', 'December'),
-    ], string="Start Month")
-
     on_demand_cycle_allowed = fields.Boolean(string="On-Demand Cycle Allowed")
 
     beneficiary_list = fields.Selection([
@@ -126,11 +91,7 @@ class G2PProgramDefinition(models.Model):
     label_for_beneficiary_list_id = fields.Many2one(
         'g2p.beneficiary.list', 
         string="Label for Beneficiary List"
-    )    
-    # Computed booleans for dynamic visibility – stored to allow use in views.
-    show_disbursement_day_of_week = fields.Boolean(compute='_compute_visibility_frequency', store=True)
-    show_disbursement_day_of_month = fields.Boolean(compute='_compute_visibility_frequency', store=True)
-    show_disbursement_start_month = fields.Boolean(compute='_compute_visibility_frequency', store=True)
+    )
     show_label_for_beneficiary_list = fields.Boolean(compute='_compute_visibility_beneficiary', store=True)
 
     _sql_constraints = [
@@ -141,22 +102,15 @@ class G2PProgramDefinition(models.Model):
         )
     ]
 
-    @api.depends('disbursement_frequency')
-    def _compute_visibility_frequency(self):
+    @api.depends('program_benefit_code_ids.benefit_code_id')
+    def _compute_benefit_code_ids(self):
         for rec in self:
-            rec.show_disbursement_day_of_week = rec.disbursement_frequency in ('Weekly')
-            rec.show_disbursement_day_of_month = rec.disbursement_frequency in ('Fortnightly', 'BiMonthly', 'Monthly', 'Quarterly', 'SemiAnnually', 'Annually')
-            rec.show_disbursement_start_month = rec.disbursement_frequency in ('Quarterly', 'SemiAnnually', 'Annually')
-    
+            rec.benefit_code_ids = rec.program_benefit_code_ids.mapped('benefit_code_id')
+
     @api.depends('beneficiary_list')
     def _compute_visibility_beneficiary(self):
         for rec in self:
             rec.show_label_for_beneficiary_list = rec.beneficiary_list == 'labeled'
-
-    # @api.depends('max_quantity', 'measurement_unit')
-    # def _compute_display_quantity(self):
-    #     for rec in self:
-    #         rec.display_quantity = f"{rec.max_quantity} {rec.measurement_unit or ''}"
 
     @api.depends('entitlement_id')
     def _compute_entitlement_inline_ids(self):

@@ -18,6 +18,7 @@
                         <field name="benefit_mnemonic" readonly="not context.get('benefit_code_form_edit')"/>
                         <field name="benefit_type" readonly="not context.get('benefit_code_form_edit')"/>
                         <field name="measurement_unit" widget="g2p_pbms.benefit_unit_widget" readonly="not context.get('benefit_code_form_edit')"/>
+                        <field name="decimal_places" readonly="not context.get('benefit_code_form_edit')"/>
                         <field name="benefit_description" readonly="not context.get('benefit_code_form_edit')"/>
                     </group>
                 </sheet>
@@ -37,7 +38,4 @@
             </tree>
         </field>
     </record>
-
-    <!-- Menu for Benefit Codes -->
-    <menuitem id="menu_g2p_benefit_codes_action" name="Benefit Codes" parent="menu_g2p_agencies" action="action_g2p_benefit_codes" sequence="4"/>
 </odoo>

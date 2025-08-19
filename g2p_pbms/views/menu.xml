@@ -1,0 +1,27 @@
+<odoo>
+    <!-- PBMS menu item -->
+    <menuitem id="menu_g2p_root" name="PBMS" sequence="1"/>
+    
+    <!-- PBMS Menu Ribbon -->
+    <menuitem id="menu_g2p_benefit_codes" name="Benefit Codes" parent="menu_g2p_root" action="action_g2p_benefit_codes" sequence="1"/>
+    <menuitem id="menu_g2p_geography" name="Administrative Areas" parent="menu_g2p_root" sequence="2" />
+    <menuitem id="menu_g2p_service_providers" name="Service Providers" parent="menu_g2p_root" sequence="3"/>
+    <menuitem id="menu_g2p_registry" name="Registry Models" parent="menu_g2p_root" sequence="4"/>
+    <menuitem id="menu_g2p_programs" name="Programs" parent="menu_g2p_root" action="action_g2p_programs" sequence="5"/>
+    
+    <!-- Benefit Codes Menu Items -->
+
+    <!-- Geography Menu Items -->
+    <menuitem id="menu_g2p_administrative_area_large_action" name="Administrative Areas (Large)" parent="menu_g2p_geography" action="action_g2p_administrative_area_large" sequence="1" />
+    <menuitem id="menu_g2p_administrative_area_small_action" name="Administrative Areas (Small)" parent="menu_g2p_geography" action="action_g2p_administrative_area_small" sequence="2" />
+
+    <!-- Service Providers Menu Items -->
+    <menuitem id="menu_g2p_warehouse_action" name="Warehouses" parent="menu_g2p_service_providers" action="action_g2p_warehouse" sequence="1"/>
+    <menuitem id="menu_g2p_agency_action" name="Agencies" parent="menu_g2p_service_providers" action="action_g2p_agency" sequence="2"/>
+
+    <!-- Registry Menu Items -->
+    <menuitem id="menu_g2p_farmer_registry" name="Farmer Registry" parent="menu_g2p_registry" action="action_g2p_farmer_registry" sequence="1"/>
+    <menuitem id="menu_g2p_student_registry" name="Student Registry" parent="menu_g2p_registry" action="action_g2p_student_registry" sequence="2"/>
+    
+    <!-- Program Menu Items -->
+</odoo>

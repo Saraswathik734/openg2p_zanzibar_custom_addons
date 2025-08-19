@@ -25,8 +25,8 @@ docker run -d \
   -e HOST=db \
   -e USER=odoo \
   -e PASSWORD=odoo \
-  -v /Volumes/Work/OpenG2P/odoo-addons/odoo.conf:/etc/odoo/odoo.conf \
-  -v /Volumes/Work/OpenG2P/odoo-addons:/mnt/extra-addons \
+  -v /home/techno-567/Desktop/openg2p/pbms-gen2/odoo-addons/odoo.conf:/etc/odoo/odoo.conf \
+  -v /home/techno-567/Desktop/openg2p/pbms-gen2/odoo-addons:/mnt/extra-addons \
   odoo:17
 ````
 
