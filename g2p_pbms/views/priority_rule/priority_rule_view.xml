@@ -16,7 +16,7 @@
                     <group>
                         <field name="mnemonic"/>
                         <field name="description"/>
-                        <field name="target_registry" invisible="1"/>
+                        <field name="target_registry" invisible="0"/>
                         <!-- Domain widget for the 'farmer' type -->
                         <field name="pbms_domain" widget="domain"
                                options="{'model': 'g2p.farmer.registry', 'allowed_fields': ['priority_rank']}}"
@@ -41,11 +41,13 @@
         <field name="model">g2p.priority.rule.definition</field>
         <field name="arch" type="xml">
             <tree string="Priority Rule">
+                <control>
+                    <create string="Add Priority Rule"/>
+                </control>
                 <field name="mnemonic"/>
                 <field name="description"/>
-                <field name="target_registry" invisible="1"/>
-                <field name="pbms_domain"/>
-                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+                <field name="target_registry" invisible="0"/>
+                <button name="action_open_view" type="object" string="View Priority Rule" class="oe_link" title="View Priority Rule"/>
             </tree>
         </field>
     </record>

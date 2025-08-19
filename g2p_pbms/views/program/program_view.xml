@@ -21,7 +21,7 @@
               <field name="program_status" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Program Configuration">
-              <field name="target_registry" readonly="not context.get('program_form_create')"/>
+              <field string="Base Registry" name="target_registry" readonly="not context.get('program_form_create')"/>
               <field name="service_providers_required" readonly="not context.get('program_form_create')"/> <!-- TODO: Lock this field if benefit_type is cash  -->
             </group>
             <group string="Cycle Configuration" >
@@ -41,16 +41,7 @@
             </page>
             <!-- Eligibility Rules Page -->
             <page string="Eligibility Rules">
-              <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry': target_registry}">
-                <tree default_order="id desc">
-                  <control>
-                    <create string="Add Eligibility Rule"/>
-                  </control>
-                  <field name="mnemonic" string="Rule Mnemonic" options="{'no_create': True, 'no_edit': True}"/>
-                  <field name="description" string="Description"/>
-                  <button name="action_open_view" type="object" string="View Eligibility Rule" class="oe_link" title="View Eligibility Rule"/>
-                </tree>
-              </field>
+              <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry': target_registry}"/>
             </page>
             <!-- Entitlement Rules Page -->
             <page string="Entitlement Rules">

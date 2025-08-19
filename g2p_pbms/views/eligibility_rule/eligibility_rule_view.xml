@@ -16,7 +16,7 @@
                     <group>
                         <field name="mnemonic"/>
                         <field name="description"/>
-                        <field name="target_registry" invisible="1"/>
+                        <field name="target_registry" invisible="0"/>
                         <!-- Domain widget for the 'farmer' type -->
                          <field name="pbms_domain" widget="domain"
                         options="{'model': 'g2p.farmer.registry'}"
@@ -42,11 +42,13 @@
         <field name="model">g2p.eligibility.rule.definition</field>
         <field name="arch" type="xml">
             <tree string="Eligibility Rule">
+                <control>
+                  <create string="Add Eligibility Rule"/>
+                </control>
                 <field name="mnemonic"/>
+                <field name="target_registry" invisible="0"/>
                 <field name="description"/>
-                <field name="target_registry" invisible="1"/>
-                <field name="pbms_domain"/>
-                <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
+                <button name="action_open_view" type="object" string="View Eligibility Rule" class="oe_link" title="View Eligibility Rule"/>
             </tree>
         </field>
     </record>
