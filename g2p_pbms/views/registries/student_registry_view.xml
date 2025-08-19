@@ -18,7 +18,6 @@
                         <field name="name"/>
                         <field name="institution_name"/>
                         <field name="date_of_birth"/>
-                        <field name="registration_date"/>
                     </group>
                 </sheet>
             </form>
@@ -33,7 +32,6 @@
                 <field name="name"/>
                 <field name="institution_name"/>
                 <field name="date_of_birth"/>
-                <field name="registration_date"/>
                 <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
             </tree>
         </field>
