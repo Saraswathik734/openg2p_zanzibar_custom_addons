@@ -6,5 +6,5 @@ class G2PWorkerMonthlyRegistry(models.Model):
 
     unique_id = fields.Integer(string="Unique ID")
     name = fields.Char(string="Name")
-    attendance_month = fields.Char(string="Data Collection Month")
+    attendance_month = fields.Char(string="Attendance Month")
     source_type = fields.Char(string="Source Type")
