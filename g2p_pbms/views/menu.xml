@@ -22,6 +22,9 @@
     <!-- Registry Menu Items -->
     <menuitem id="menu_g2p_farmer_registry" name="Farmer Registry" parent="menu_g2p_registry" action="action_g2p_farmer_registry" sequence="1"/>
     <menuitem id="menu_g2p_student_registry" name="Student Registry" parent="menu_g2p_registry" action="action_g2p_student_registry" sequence="2"/>
+    <menuitem id="menu_g2p_worker_registry" name="Worker Registry" parent="menu_g2p_registry" action="action_g2p_worker_registry" sequence="3"/>
+    <menuitem id="menu_g2p_worker_daily_registry" name="Worker Daily Registry" parent="menu_g2p_registry" action="action_g2p_worker_daily_registry" sequence="4"/>
+    <menuitem id="menu_g2p_worker_monthly_registry" name="Worker Monthly Registry" parent="menu_g2p_registry" action="action_g2p_worker_monthly_registry" sequence="5"/>
     
     <!-- Program Menu Items -->
 </odoo>
