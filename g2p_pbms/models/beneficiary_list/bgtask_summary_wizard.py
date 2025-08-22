@@ -6,7 +6,7 @@ from odoo.exceptions import UserError, AccessError
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 
-from ..registries import G2PRegistryType
+from ..registries import G2PRegistryType, G2PTargetModelMapping
 
 _logger = logging.getLogger(__name__)
 
@@ -107,7 +107,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
 
     def _build_sql_query(self, odoo_domain, target_registry):
         sql_query=""
-        order_by_field=""
+        order_by_field="id"
         try:
             domain_value = safe_eval(odoo_domain or "[]")
         except Exception as e:
@@ -118,14 +118,8 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             sql_query = "Invalid search term"
             return sql_query, order_by_field
 
-        target_model_mapping = {
-            "student": "g2p.student.registry",
-            "farmer": "g2p.farmer.registry",
-            "worker": "g2p.worker.registry",
-            "worker_daily": "g2p.worker.daily.registry",
-            "worker_monthly": "g2p.worker.monthly.registry"
-        }
-        target_model_name = target_model_mapping.get(target_registry)
+        target_model_name = G2PTargetModelMapping.get_target_model_name(target_registry)
+
         if not target_model_name:
             _logger.error(
                 "Unknown target_registry '%s'",
@@ -133,12 +127,6 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             )
             sql_query = "Unknown target registry type"
             return sql_query, order_by_field
-        
-        order_by_field = "id"
-        if target_registry == "student":
-            order_by_field = "name"
-        elif target_registry == "farmer":
-            order_by_field = "name"
 
         target_model = self.env[target_model_name]
 

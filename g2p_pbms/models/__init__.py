@@ -18,6 +18,7 @@ from .geography import (
 )
 from .registries import (
     G2PRegistry,
+    G2PTargetModelMapping,
     G2PFarmerRegistry,
     G2PStudentRegistry,
     G2PRegistryType,

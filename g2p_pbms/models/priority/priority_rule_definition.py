@@ -2,7 +2,7 @@ from odoo import models, fields, api
 from odoo.tools.safe_eval import safe_eval
 
 import logging
-from ..registries import G2PRegistryType
+from ..registries import G2PRegistryType, G2PTargetModelMapping
 
 _logger = logging.getLogger(__name__)
 
@@ -36,15 +36,7 @@ class G2PPriorityRuleDefinition(models.Model):
                 rec.sql_query = "Invalid domain"
                 continue
 
-            # Define a mapping from the selection value to the target model.
-            target_model_mapping = {
-                "student": "g2p.student.registry",
-                "farmer": "g2p.farmer.registry",
-                "worker": "g2p.worker.registry",
-                "worker_daily": "g2p.worker.daily.registry",
-                "worker_monthly": "g2p.worker.monthly.registry"
-            }
-            target_model_name = target_model_mapping.get(rec.target_registry)
+            target_model_name = G2PTargetModelMapping.get_target_model_name(rec.target_registry)
             if not target_model_name:
                 _logger.error(
                     "Unknown target_registry '%s' for rule %s",
