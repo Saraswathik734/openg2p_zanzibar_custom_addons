@@ -18,9 +18,13 @@ from .geography import (
 )
 from .registries import (
     G2PRegistry,
+    G2PTargetModelMapping,
     G2PFarmerRegistry,
     G2PStudentRegistry,
     G2PRegistryType,
+    G2PWorkerRegistry,
+    G2PWorkerDailyRegistry,
+    G2PWorkerMonthlyRegistry
 )
 from .eligibility import G2PEligibilityRuleDefinition
 

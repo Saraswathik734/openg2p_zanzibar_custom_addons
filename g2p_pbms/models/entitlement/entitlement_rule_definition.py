@@ -3,7 +3,7 @@ from odoo.tools.safe_eval import safe_eval
 
 import logging
 import json
-from ..registries import G2PRegistryType
+from ..registries import G2PRegistryType, G2PTargetModelMapping
 
 _logger = logging.getLogger(__name__)
 
@@ -60,11 +60,8 @@ class G2PEntitlementRuleDefinition(models.Model):
         NUMERIC_FIELD_TYPES = {'integer', 'float', 'double', 'monetary', 'numeric', 'biginteger', 'smallinteger', 'decimal'}
         for rec in self:
             registry_type = rec.target_registry
-            registry_map = {
-                "student": "g2p.student.registry",
-                "farmer": "g2p.farmer.registry",
-            }
-            model_name = registry_map.get(registry_type)
+            
+            model_name = G2PTargetModelMapping.get_target_model_name(registry_type)
             if not model_name:
                 rec.allowed_multipliers = "[]"
                 continue
@@ -91,14 +88,7 @@ class G2PEntitlementRuleDefinition(models.Model):
                 )
                 rec.sql_query = "Invalid domain"
                 continue
-
-            # Define a mapping from the selection value to the target model.
-            target_model_mapping = {
-                "student": "g2p.student.registry",
-                "farmer": "g2p.farmer.registry",
-                # add additional mappings if needed
-            }
-            target_model_name = target_model_mapping.get(rec.target_registry)
+            target_model_name = G2PTargetModelMapping.get_target_model_name(rec.target_registry)
             if not target_model_name:
                 _logger.error(
                     "Unknown target_registry '%s' for rule %s",

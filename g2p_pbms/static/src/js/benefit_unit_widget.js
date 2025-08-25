@@ -53,6 +53,7 @@ export class BenefitUnitWidget extends CharField {
             { value: "PKR", label: "PKR" },
             { value: "TWD", label: "TWD" },
             { value: "AED", label: "AED" },
+            { value: "ZMW", label: "ZMW" },
             // Add more ISO codes as needed.
         ];
     }

@@ -51,52 +51,6 @@
                                 <td style="text-align: left;"><span t-esc="doc.benefit_code_mnemonic" /></td>
                             </tr>
 
-                            <!-- FA Resolution -->
-                            <t t-if="doc.benefit_type == 'CASH_DIGITAL'">
-                                <tr>
-                                    <th colspan="2"><h3>FA Resolution</h3></th>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;"><strong>Status:</strong></td>
-                                    <td style="text-align: left;"><span t-esc="doc.fa_resolution_status" /></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;"><strong>Timestamp:</strong></td>
-                                    <td style="text-align: left;"><span t-esc="doc.fa_resolution_timestamp" /></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;"><strong>Latest Error Code:</strong></td>
-                                    <td style="text-align: left;"><span t-esc="doc.fa_resolution_latest_error_code" /></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;"><strong>Attempts:</strong></td>
-                                    <td style="text-align: left;"><span t-esc="doc.fa_resolution_attempts" /></td>
-                                </tr>
-                            </t>
-
-                            <!-- Sponsor Bank Dispatch -->
-                            <t t-if="doc.benefit_type == 'CASH_DIGITAL' or doc.benefit_type == 'CASH_PHYSICAL'">
-                                <tr>
-                                    <th colspan="2"><h3>Sponsor Bank Dispatch</h3></th>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;"><strong>Status:</strong></td>
-                                    <td style="text-align: left;"><span t-esc="doc.sponsor_bank_dispatch_status" /></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;"><strong>Timestamp:</strong></td>
-                                    <td style="text-align: left;"><span t-esc="doc.sponsor_bank_dispatch_timestamp" /></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;"><strong>Latest Error Code:</strong></td>
-                                    <td style="text-align: left;"><span t-esc="doc.sponsor_bank_dispatch_latest_error_code" /></td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left;"><strong>Attempts:</strong></td>
-                                    <td style="text-align: left;"><span t-esc="doc.sponsor_bank_dispatch_attempts" /></td>
-                                </tr>
-                            </t>
-
                             <!-- Geo Resolution -->
                             <t t-if="doc.benefit_type != 'CASH_DIGITAL'">
                                 <tr>
@@ -165,6 +119,53 @@
                                     <td style="text-align: left;"><span t-esc="doc.agency_allocation_attempts" /></td>
                                 </tr>
                             </t>
+
+                            <!-- FA Resolution -->
+                            <t t-if="doc.benefit_type == 'CASH_DIGITAL'">
+                                <tr>
+                                    <th colspan="2"><h3>FA Resolution</h3></th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"><strong>Status:</strong></td>
+                                    <td style="text-align: left;"><span t-esc="doc.fa_resolution_status" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"><strong>Timestamp:</strong></td>
+                                    <td style="text-align: left;"><span t-esc="doc.fa_resolution_timestamp" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"><strong>Latest Error Code:</strong></td>
+                                    <td style="text-align: left;"><span t-esc="doc.fa_resolution_latest_error_code" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"><strong>Attempts:</strong></td>
+                                    <td style="text-align: left;"><span t-esc="doc.fa_resolution_attempts" /></td>
+                                </tr>
+                            </t>
+
+                            <!-- Sponsor Bank Dispatch -->
+                            <t t-if="doc.benefit_type == 'CASH_DIGITAL' or doc.benefit_type == 'CASH_PHYSICAL'">
+                                <tr>
+                                    <th colspan="2"><h3>Sponsor Bank Dispatch</h3></th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"><strong>Status:</strong></td>
+                                    <td style="text-align: left;"><span t-esc="doc.sponsor_bank_dispatch_status" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"><strong>Timestamp:</strong></td>
+                                    <td style="text-align: left;"><span t-esc="doc.sponsor_bank_dispatch_timestamp" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"><strong>Latest Error Code:</strong></td>
+                                    <td style="text-align: left;"><span t-esc="doc.sponsor_bank_dispatch_latest_error_code" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"><strong>Attempts:</strong></td>
+                                    <td style="text-align: left;"><span t-esc="doc.sponsor_bank_dispatch_attempts" /></td>
+                                </tr>
+                            </t>
+
                         </table>
 
                         <!-- Related Geos Table -->

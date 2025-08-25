@@ -19,7 +19,6 @@
                         <field name="land_area"/>
                         <field name="no_of_cattle_heads"/>
                         <field name="no_of_poultry_heads"/>
-                        <field name="registration_date"/>
                     </group>
                 </sheet>
             </form>
@@ -35,7 +34,6 @@
                 <field name="land_area"/>
                 <field name="no_of_cattle_heads"/>
                 <field name="no_of_poultry_heads"/>
-                <field name="registration_date"/>
                 <button name="action_open_view" type="object" class="fa fa-eye" title="View"/>
             </tree>
         </field>
