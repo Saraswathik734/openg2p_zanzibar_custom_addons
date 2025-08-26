@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Actions for Warehouse -->
-    <record id="action_g2p_warehouse" model="ir.actions.act_window">
-        <field name="name">Warehouse</field>
+    <!-- Actions for Sponsor Bank -->
+    <record id="action_g2p_sponsor_bank" model="ir.actions.act_window">
+        <field name="name">Sponsor Banks</field>
         <field name="res_model">g2p.warehouse</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[('is_sponsor_bank', '=', False)]</field>
-        <field name="context">{'default_is_sponsor_bank': False}</field>
-        <field name="views">[('view_g2p_warehouse_tree', 'tree'),('view_g2p_warehouse_form', 'form')]</field>
+        <field name="domain">[('is_sponsor_bank', '=', True)]</field>
+        <field name="context">{'default_is_sponsor_bank': True}</field>
+        <field name="views">[('view_g2p_sponsor_bank_tree', 'tree'),('view_g2p_sponsor_bank_form', 'form')]</field>
     </record>
 
-    <!-- Views for G2P Warehouse -->
-    <record id="view_g2p_warehouse_form" model="ir.ui.view">
-        <field name="name">g2p.warehouse.form</field>
+    <!-- Views for G2P Sponsor Bank -->
+    <record id="view_g2p_sponsor_bank_form" model="ir.ui.view">
+        <field name="name">g2p.sponsor.bank.form</field>
         <field name="model">g2p.warehouse</field>
         <field name="arch" type="xml">
-            <form string="G2P Warehouse">
+            <form string="G2P Sponsor Bank">
                 <sheet>
                     <group colspan="2">
-                        <group string="Warehouse Details">
+                        <group string="Sponsor Bank Details">
                             <field name="name" readonly="not context.get('warehouse_form_edit')"/>
                             <field name="warehouse_mnemonic" readonly="not context.get('warehouse_form_edit')"/>
                             <field name="is_sponsor_bank" invisible="1"/>
@@ -30,24 +30,21 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Warehouse Program Benefit Code">
+                        <page string="Sponsor Bank Program Benefit Code">
                             <field name="warehouse_program_benefit_codes" nolabel="1" options="{'no_quick_create': True}"/>
-                        </page>
-                        <page string="Administrative Areas (Large)" invisible="is_sponsor_bank">
-                            <field name="administrative_area_large_ids" nolabel="1" options="{'no_quick_create': True}"/>
                         </page>
                     </notebook>
                 </sheet>
             </form>
         </field>
     </record>
-    <record id="view_g2p_warehouse_tree" model="ir.ui.view">
-        <field name="name">g2p.warehouse.tree</field>
+    <record id="view_g2p_sponsor_bank_tree" model="ir.ui.view">
+        <field name="name">g2p.sponsor.bank.tree</field>
         <field name="model">g2p.warehouse</field>
         <field name="arch" type="xml">
-            <tree string="G2P Warehouse" limit="10">
+            <tree string="G2P Sponsor Bank" limit="10">
                 <control>
-                    <create string="Add Warehouse"/>
+                    <create string="Add Sponsor Bank"/>
                 </control>
                 <field name="name"/>
                 <field name="warehouse_mnemonic"/>

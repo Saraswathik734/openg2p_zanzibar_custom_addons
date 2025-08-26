@@ -14,7 +14,7 @@
                     Create Agency
                 </button>
                 <button
-                    t-if="model.root.resModel == 'g2p.warehouse'"
+                    t-if="model.root.resModel == 'g2p.warehouse' and env.searchModel and env.searchModel.context and !env.searchModel.context.default_is_sponsor_bank"
                     type="button"
                     class="btn btn-primary o_list_button_add_warehouse"
                     accesskey="p"
@@ -22,6 +22,15 @@
                     t-on-click="load_warehouse_wizard">
                     Create Warehouse
                 </button>
+                <button
+                    t-if="model.root.resModel == 'g2p.warehouse' and env.searchModel and env.searchModel.context and env.searchModel.context.default_is_sponsor_bank"
+                    type="button"
+                    class="btn btn-primary o_list_button_add_sponsor_bank"
+                    accesskey="p"
+                    title="Create a New Sponsor Bank"
+                    t-on-click="load_sponsor_bank_wizard">
+                    Create Sponsor Bank
+                </button>                
                 <button
                     t-if="model.root.resModel == 'g2p.benefit.codes'"
                     type="button"
