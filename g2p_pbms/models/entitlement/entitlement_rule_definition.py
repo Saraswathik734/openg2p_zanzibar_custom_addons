@@ -3,7 +3,7 @@ from odoo.tools.safe_eval import safe_eval
 
 import logging
 import json
-from ..registries import G2PRegistryType, G2PTargetModelMapping
+from odoo.addons.g2p_registry_type_addon.models import G2PRegistryType, G2PTargetModelMapping
 
 _logger = logging.getLogger(__name__)
 
