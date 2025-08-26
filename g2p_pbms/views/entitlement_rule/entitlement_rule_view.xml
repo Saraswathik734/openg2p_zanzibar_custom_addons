@@ -23,26 +23,6 @@
                         <field name="quantity"/>
                         <field name="multiplier" widget="g2p_pbms.multiplier_widget"/>
                         <field name="measurement_unit" readonly="1" no_label="1"/>
-                        <!-- Domain widget for the 'farmer' type -->
-                        <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.farmer.registry'}"
-                               invisible="target_registry != 'farmer'"/>
-                        <!-- Domain widget for the 'student' type -->
-                        <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.student.registry'}"
-                               invisible="target_registry != 'student'"/>
-                        <!-- Domain widget for the 'worker' type -->
-                        <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.worker.registry'}"
-                               invisible="target_registry != 'worker'"/>
-                        <!-- Domain widget for the 'worker_daily' type -->
-                        <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.worker.daily.registry'}"
-                               invisible="target_registry != 'worker_daily'"/>
-                        <!-- Domain widget for the 'worker_monthly' type -->
-                        <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.worker.monthly.registry'}"
-                               invisible="target_registry != 'worker_monthly'"/>
                     </group>
                 </sheet>
                 <sheet>

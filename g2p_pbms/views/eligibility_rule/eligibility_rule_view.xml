@@ -17,26 +17,6 @@
                         <field name="mnemonic"/>
                         <field name="description"/>
                         <field name="target_registry" invisible="0"/>
-                        <!-- Domain widget for the 'farmer' type -->
-                         <field name="pbms_domain" widget="domain"
-                        options="{'model': 'g2p.farmer.registry'}"
-                        invisible="target_registry != 'farmer'"/>
-                        <!-- Domain widget for the Student type -->
-                         <field name="pbms_domain" widget="domain"
-                        options="{'model': 'g2p.student.registry'}"
-                        invisible="target_registry != 'student'"/>
-                        <!-- Domain widget for the 'worker' type -->
-                        <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.worker.registry'}"
-                               invisible="target_registry != 'worker'"/>
-                        <!-- Domain widget for the 'worker_daily' type -->
-                        <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.worker.daily.registry'}"
-                               invisible="target_registry != 'worker_daily'"/>
-                        <!-- Domain widget for the 'worker_monthly' type -->
-                        <field name="pbms_domain" widget="domain"
-                               options="{'model': 'g2p.worker.monthly.registry'}"
-                               invisible="target_registry != 'worker_monthly'"/>
                     </group>
                 </sheet>
                 <sheet>
