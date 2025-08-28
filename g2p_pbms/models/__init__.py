@@ -16,15 +16,9 @@ from .geography import (
     G2PAdministrativeAreaSmall,
     G2PAdministrativeAreaLarge,
 )
-from .registries import (
-    G2PRegistry,
+from odoo.addons.g2p_registry_type_addon.models import (
     G2PTargetModelMapping,
-    G2PFarmerRegistry,
-    G2PStudentRegistry,
     G2PRegistryType,
-    G2PWorkerRegistry,
-    G2PWorkerDailyRegistry,
-    G2PWorkerMonthlyRegistry
 )
 from .eligibility import G2PEligibilityRuleDefinition
 

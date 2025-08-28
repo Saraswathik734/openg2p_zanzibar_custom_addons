@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from ..registries import G2PRegistryType
+from odoo.addons.g2p_registry_type_addon.models import G2PRegistryType
 
 
 class G2PProgramDefinition(models.Model):

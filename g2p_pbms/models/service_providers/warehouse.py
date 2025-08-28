@@ -31,12 +31,38 @@ class G2PWarehouse(models.Model):
 
     def action_open_edit(self):
         self.ensure_one()
+        xmlid = "g2p_pbms.view_g2p_sponsor_bank_form" if self.is_sponsor_bank else "g2p_pbms.view_g2p_warehouse_form"
+        view_id = self.env.ref(xmlid).id
         return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'g2p.agency',
-            'res_id': self.id,
-            'view_mode': 'form',
-            'target': 'current',
-            'context':{'create': False, 'agency_form_edit':True},
+            "type": "ir.actions.act_window",
+            "res_model": "g2p.warehouse",
+            "res_id": self.id,
+            "view_mode": "form",
+            "views": [(view_id, "form")],
+            "target": "current",
+            "context": {"create": False, "warehouse_form_edit": True},
         }
 
+    def action_open_create_warehouse(self):
+        view_id = self.env.ref("g2p_pbms.view_g2p_warehouse_form").id
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Warehouse",
+            "res_model": "g2p.warehouse",
+            "view_mode": "form",
+            "views": [(view_id, "form")],
+            "target": "current",
+            "context": {"create": True, "default_is_sponsor_bank": False, "warehouse_form_edit": True},
+        }
+
+    def action_open_create_sponsor_bank(self):
+        view_id = self.env.ref("g2p_pbms.view_g2p_sponsor_bank_form").id
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Sponsor Bank",
+            "res_model": "g2p.warehouse",
+            "view_mode": "form",
+            "views": [(view_id, "form")],
+            "target": "current",
+            "context": {"create": True, "default_is_sponsor_bank": True, "warehouse_form_edit": True},
+        }

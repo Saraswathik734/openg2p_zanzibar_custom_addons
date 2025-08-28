@@ -8,6 +8,7 @@ patch(ListController.prototype, {
     setup() {
         super.setup();
         this.action = useService("action");
+        this.orm = useService("orm");
     },
 
     load_agency_wizard() {
@@ -23,19 +24,18 @@ patch(ListController.prototype, {
         return window.location;
     },
 
-    load_warehouse_wizard() {
-        this.action.doAction({
-            name: "Warehouse",
-            type: "ir.actions.act_window",
-            res_model: "g2p.warehouse",
-            view_mode: "form",
-            views: [[false, "form"]],
-            target: "current",
-            context: { create: false, warehouse_form_edit: true },
-        });
+    async load_warehouse_wizard() {
+        const action = await this.orm.call("g2p.warehouse", "action_open_create_warehouse", [[]]);
+        this.action.doAction(action);
         return window.location;
     },
-
+    
+    async load_sponsor_bank_wizard() {
+        const action = await this.orm.call("g2p.warehouse", "action_open_create_sponsor_bank", [[]]);
+        this.action.doAction(action);
+        return window.location;
+    },
+    
     load_benefit_code_wizard() {
         this.action.doAction({
             name: "Benefit Codes",

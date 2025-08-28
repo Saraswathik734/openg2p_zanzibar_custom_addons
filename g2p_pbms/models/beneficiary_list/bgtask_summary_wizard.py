@@ -6,7 +6,10 @@ from odoo.exceptions import UserError, AccessError
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
 
-from ..registries import G2PRegistryType, G2PTargetModelMapping
+from odoo.addons.g2p_registry_type_addon.models import (
+    G2PTargetModelMapping,
+    G2PRegistryType,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -163,7 +166,6 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             formatted_query = query_str % tuple(formatted_params)
             # formatted_query = formatted_query.replace('"', '\\"')
             sql_query = formatted_query
-            order_by_condition = order_by_field
             _logger.info("Query: %s", sql_query)
         except Exception as e:
             _logger.error(
