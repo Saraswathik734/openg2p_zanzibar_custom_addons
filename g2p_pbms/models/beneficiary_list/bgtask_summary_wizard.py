@@ -166,7 +166,6 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             formatted_query = query_str % tuple(formatted_params)
             # formatted_query = formatted_query.replace('"', '\\"')
             sql_query = formatted_query
-            order_by_condition = order_by_field
             _logger.info("Query: %s", sql_query)
         except Exception as e:
             _logger.error(

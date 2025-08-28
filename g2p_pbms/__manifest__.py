@@ -36,11 +36,9 @@
     "assets": {
         "web.assets_backend": [
             "/g2p_pbms/static/src/css/custom_styles.scss",
-            "/g2p_pbms/static/src/js/beneficiaries_widget.js",
             "/g2p_pbms/static/src/js/create_button.js",
             "/g2p_pbms/static/src/js/benefit_unit_widget.js",
             "/g2p_pbms/static/src/js/multiplier_widget.js",
-            "/g2p_pbms/static/src/xml/g2p_beneficiaries_info_tpl.xml",
             "/g2p_pbms/static/src/xml/create_button_tpl.xml",
             "/g2p_pbms/static/src/xml/benefit_unit_widget.xml",
             "/g2p_pbms/static/src/xml/multiplier_widget.xml",
