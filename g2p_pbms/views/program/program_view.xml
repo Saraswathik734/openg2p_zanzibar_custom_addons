@@ -16,6 +16,7 @@
         <sheet>
           <group>
             <group string="Program Information">
+              <field name="id" invisible="1"/>
               <field name="program_mnemonic" readonly="not context.get('program_form_edit')"/>
               <field name="description" readonly="not context.get('program_form_edit')"/>
               <field name="program_status" readonly="not context.get('program_form_edit')"/>
@@ -41,7 +42,7 @@
             </page>
             <!-- Eligibility Rules Page -->
             <page string="Eligibility Rules">
-              <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry': target_registry}"/>
+              <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_program_id': id, 'default_target_registry': target_registry}"/>
             </page>
             <!-- Entitlement Rules Page -->
             <page string="Entitlement Rules">
