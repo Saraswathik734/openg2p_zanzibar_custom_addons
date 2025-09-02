@@ -210,10 +210,10 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             }
         }
 
-        # jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+        jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
         headers = {
             "content-type": "application/json",
-            # "Signature": jwt_token
+            "Signature": jwt_token
         }
         try:
             response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
@@ -262,10 +262,10 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            # jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "content-type": "application/json",
-                # "Signature": jwt_token
+                "Signature": jwt_token
             }
             try:
                 response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
@@ -372,10 +372,10 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            # jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "content-type": "application/json",
-                # "Signature": jwt_token
+                "Signature": jwt_token
             }
             try:
                 response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
@@ -434,10 +434,10 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 }
             }
 
-            # jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "content-type": "application/json",
-                # "Signature": jwt_token
+                "Signature": jwt_token
             }
             try:
                 response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
@@ -649,11 +649,11 @@ class G2PAPIDisbursementEnvelopeLine(models.TransientModel):
                 "message": self.disbursement_envelope_id,
             }
 
-            # jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                # "Signature": jwt_token
+                "Signature": jwt_token
             }
             try:
                 response = requests.post(endpoint, json=payload, timeout=10, headers=headers)
@@ -819,11 +819,11 @@ class G2PAPIDisbursementBatchLine(models.TransientModel):
                 "message": self.batch_id,
             }
 
-            # jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
+            jwt_token = self.env['keymanager.provider'].jwt_sign_keymanager(json.dumps(payload, indent=None, separators=(",", ":"), sort_keys=True))
             headers = {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                # "Signature": jwt_token
+                "Signature": jwt_token
             }
             try:
                 response = requests.post(endpoint, json=payload, timeout=10, headers=headers)
