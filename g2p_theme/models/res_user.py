@@ -29,7 +29,7 @@ class ResUser(models.Model):
             with cls.pool.cursor() as cr:
                 self = api.Environment(cr, SUPERUSER_ID, {})[cls._name]
                 user = self.sudo().search([("login", "=", login)])
-                if user and user.partner_id.is_registrant:
-                    raise AccessDenied()
+                # if user and user.partner_id.is_registrant:
+                #     raise AccessDenied()
 
         return user_id
