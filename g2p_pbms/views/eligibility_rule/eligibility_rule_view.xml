@@ -38,6 +38,7 @@
                 <control>
                   <create string="Add Eligibility Rule"/>
                 </control>
+                <field name="rule_number"/>
                 <field name="mnemonic"/>
                 <field name="target_registry"/>
                 <field name="set_operator"/>
