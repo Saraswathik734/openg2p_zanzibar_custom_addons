@@ -5,7 +5,6 @@ import logging
 from datetime import datetime
 
 import requests
-from cryptography.hazmat.primitives.serialization import Encoding
 from jose import jwt
 
 _logger = logging.getLogger(__name__)
@@ -28,9 +27,11 @@ class KeymanagerProvider(models.AbstractModel):
         **kwargs,
     ) -> str:
         keymanager_toggle = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_toggle')
+        if not keymanager_toggle:
+            return None
 
+        keycloak_toggle = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_toggle')
         keymanager_api_base_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_base_url')
-        keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
         keymanager_sign_application_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
         keymanager_sign_reference_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_reference_id')
 
@@ -40,7 +41,7 @@ class KeymanagerProvider(models.AbstractModel):
             data = data.encode()
         
         access_token: str = None
-        if keymanager_toggle:
+        if keycloak_toggle:
             access_token = self.km_get_access_token()
             
         current_time = self.km_generate_current_time()
@@ -72,8 +73,11 @@ class KeymanagerProvider(models.AbstractModel):
         raise ValueError("Could not sign jwt, invalid keymanager response")
 
     def jwt_verify_keymanager(self, data: str, **kwargs):
+        keymanager_toggle = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_toggle')
+        if not keymanager_toggle:
+            return None
+
         keymanager_api_base_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_base_url')
-        keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
         keymanager_sign_application_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
         keymanager_sign_reference_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_reference_id')
 
@@ -109,10 +113,8 @@ class KeymanagerProvider(models.AbstractModel):
         raise ValueError("invalid jwt signature")
 
     def km_get_access_token(self):
-
         keymanager_access_token = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_access_token')
         keymanager_access_token_expiry = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_access_token_expiry')
-        keymanager_api_timeout = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_api_timeout')
         
         keycloak_auth_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_url')
         keycloak_auth_client_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keycloak_auth_client_id')

@@ -14,13 +14,19 @@ class ResConfigSettings(models.TransientModel):
         config_parameter="g2p_pbms.document_store",
     )
 
-    # Keymanager configs
+    # Toggle fields
     keymanager_toggle = fields.Boolean(
         "Keymanager Active?",
         default=False,
         config_parameter="g2p_pbms.keymannager_toggle"
     )
+    keycloak_toggle = fields.Boolean(
+        "Keycloak Auth Active? (for Keymanager)",
+        default=False,
+        config_parameter="g2p_pbms.keycloak_toggle"
+    )
 
+    # Keymanager configs
     keymanager_api_base_url = fields.Char(
         "Keymanager API Base URL",
         config_parameter="g2p_pbms.keymanager_api_base_url"

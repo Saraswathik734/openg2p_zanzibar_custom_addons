@@ -27,6 +27,9 @@
                         </setting>
                     </block>
                     <block title="Keymanager Configuration">
+                        <setting string="Keymanager Active?" help="Toggle Keymanager ON/OFF (Default OFF)">
+                            <field name="keymanager_toggle"/>
+                        </setting>
                         <setting string="Keymanager API Base URL" help="Base URL for the Keymanager API (e.g., https://keymanager.example.com)">
                             <field name="keymanager_api_base_url"/>
                         </setting>
@@ -41,8 +44,8 @@
                         </setting>
                     </block>
                     <block title="Keycloak Configuration (used for client authentication in Keymanager Communication)">
-                        <setting string="Keymanager Auth Active" help="Toggle Keymanager Auth ON/OFF">
-                            <field name="keymanager_toggle"/>
+                        <setting string="Keymanager Auth Active?" help="Toggle Keymanager Auth ON/OFF (Default OFF)">
+                            <field name="keycloak_toggle"/>
                         </setting>
                         <setting string="Keycloak Auth URL" help="URL for Keycloak authentication endpoint">
                             <field name="keycloak_auth_url"/>

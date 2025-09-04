@@ -14,9 +14,11 @@
             <form string="Eligibility Rule">
                 <sheet>
                     <group>
+                        <field name="rule_number" readonly="rule_number==1"/>
                         <field name="mnemonic"/>
                         <field name="description"/>
-                        <field name="target_registry" invisible="0"/>
+                        <field name="target_registry"/>
+                        <field name="set_operator" readonly="rule_number==1"/>
                     </group>
                 </sheet>
                 <sheet>
@@ -32,12 +34,14 @@
         <field name="name">g2p.eligibility.rule.definition.tree</field>
         <field name="model">g2p.eligibility.rule.definition</field>
         <field name="arch" type="xml">
-            <tree string="Eligibility Rule">
+            <tree string="Eligibility Rule" default_order="rule_number asc">
                 <control>
                   <create string="Add Eligibility Rule"/>
                 </control>
+                <field name="rule_number"/>
                 <field name="mnemonic"/>
-                <field name="target_registry" invisible="0"/>
+                <field name="target_registry"/>
+                <field name="set_operator"/>
                 <field name="description"/>
                 <button name="action_open_view" type="object" string="View Eligibility Rule" class="oe_link" title="View Eligibility Rule"/>
             </tree>

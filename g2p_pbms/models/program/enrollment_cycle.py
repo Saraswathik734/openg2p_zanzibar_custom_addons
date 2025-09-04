@@ -28,6 +28,14 @@ class G2PEnrollmentCycle(models.Model):
     approved_for_enrollment = fields.Boolean(string="Approved for Enrollment", default=False)
     is_readonly = fields.Boolean(compute='_compute_is_readonly', store=False)
 
+    _sql_constraints = [
+        (
+            'cycle_number_program_id_unique',
+            'unique(cycle_number, program_id)',
+            'Cycle Number must be unique per Program.'
+        ),
+    ]
+
     @api.depends_context('enrollment_cycle_form_view')
     def _compute_is_readonly(self):
         for rec in self:
@@ -40,7 +48,8 @@ class G2PEnrollmentCycle(models.Model):
 
     @api.model
     def _get_default_cycle_number(self):
-        last = self.search([], order='cycle_number desc', limit=1)
+        program_id = self.env.context.get('default_program_id')
+        last = self.search([('program_id', '=', program_id)], order='cycle_number desc', limit=1)
         return last.cycle_number + 1 if last else 1
 
     def action_open_view(self):
