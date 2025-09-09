@@ -34,16 +34,10 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
     list_stage = fields.Char(string='List Stage', default="enrollment")
     list_workflow_status = fields.Char(string='List Workflow Status', default="initiated")
 
-    feedback_ids = fields.One2many(
-        "storage.file",
-        string="Community Feedback",
-        compute="_compute_feedback_ids",
-        default=False
-    )
     verification_ids = fields.One2many(
-        "g2p.beneficiary.list.verification",
-        string='Verifications',
-        compute='_compute_verification_ids',
+        "storage.file",
+        string="Community Verification",
+        compute="_compute_verification_ids",
         default=False
     )
 
@@ -91,7 +85,47 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         'g2p.api.disbursement.batch.line', 'wizard_id', string='Disbursement Batches',
         compute='_compute_disbursement_batch_lines', store=True
     )
+    # Visibility fields
+    show_approve_enrolment_button = fields.Boolean(
+        string="Show Approve Enrolment Button",
+        compute="_compute_show_approve_enrolment_button",
+        store=True
+    )
+    show_approve_disbursement_button = fields.Boolean(
+        string="Show Approve Disbursement Button",
+        compute="_compute_show_approve_disbursement_button",
+        store=True
+    )
 
+    @api.depends('program_id', 'verification_ids')
+    def _compute_show_approve_enrolment_button(self):
+        for rec in self:
+            show_button = False
+            program = rec.program_id
+            if program and program.verifications_for_enrolment:
+                try:
+                    required_reviews = int(program.verifications_for_enrolment)
+                except (ValueError, TypeError):
+                    required_reviews = 0
+                verification_count = len(rec.verification_ids)
+                if verification_count >= required_reviews:
+                    show_button = True
+            rec.show_approve_enrolment_button = show_button
+    
+    @api.depends('program_id', 'verification_ids')
+    def _compute_show_approve_disbursement_button(self):
+        for rec in self:
+            show_button = False
+            program = rec.program_id
+            if program and program.verifications_for_disbursement:
+                try:
+                    required_reviews = int(program.verifications_for_disbursement)
+                except (ValueError, TypeError):
+                    required_reviews = 0
+                verification_count = len(rec.verification_ids)
+                if verification_count >= required_reviews:
+                    show_button = True
+            rec.show_approve_disbursement_button = show_button
 
     @api.depends('target_registry')
     def _compute_general_title(self):
@@ -486,38 +520,27 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             )
 
     @api.depends('beneficiary_list_id')
-    def _compute_feedback_ids(self):
-        for wizard in self:
-            if wizard.beneficiary_list_id:
-                feedbacks = self.env['storage.file'].search([
-                    ('beneficiary_list_id', '=', wizard.beneficiary_list_id)
-                ])
-                wizard.feedback_ids = feedbacks.ids if feedbacks else None
-            else:
-                wizard.feedback_ids = [(5, 0, 0)]
-
-    @api.depends('beneficiary_list_id')
     def _compute_verification_ids(self):
         for wizard in self:
             if wizard.beneficiary_list_id:
-                verifications = self.env['g2p.beneficiary.list.verification'].search([
+                verifications = self.env['storage.file'].search([
                     ('beneficiary_list_id', '=', wizard.beneficiary_list_id)
                 ])
                 wizard.verification_ids = verifications.ids if verifications else None
             else:
                 wizard.verification_ids = [(5, 0, 0)]
 
-    def action_publish_to_communities(self):
-        allowed_group = 'g2p_pbms.group_beneficiary_list_reviewer'
-        if not self.env.user.has_group(allowed_group):
-            raise AccessError(_("You are not allowed to perform this action."))
+    # def action_publish_to_communities(self):
+    #     allowed_group = 'g2p_pbms.group_beneficiary_list_reviewer'
+    #     if not self.env.user.has_group(allowed_group):
+    #         raise AccessError(_("You are not allowed to perform this action."))
         
-        self.ensure_one()
-        if not self.list_workflow_status == 'published_to_communities':
-            self.list_workflow_status = 'published_to_communities'
-            self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).write({
-                'list_workflow_status': 'published_to_communities'
-            })
+    #     self.ensure_one()
+    #     if not self.list_workflow_status == 'published_to_communities':
+    #         self.list_workflow_status = 'published_to_communities'
+    #         self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).write({
+    #             'list_workflow_status': 'published_to_communities'
+    #         })
 
     def action_approve_final_enrollment(self):
         allowed_group = 'g2p_pbms.group_enrolment_reviewer'
@@ -536,7 +559,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 'approved_for_enrollment': True,
             })
 
-    def action_record_community_feedbacks(self):
+    def action_record_verifications(self):
         allowed_group = 'g2p_pbms.group_beneficiary_list_reviewer'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
@@ -544,14 +567,14 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Record Community Feedback',
+            'name': 'Add a Verification',
             'res_model': 'storage.file',
             'view_mode': 'form',
-            'view_id': self.env.ref('g2p_pbms.view_g2p_beneficiary_list_feedback_form').id,
+            'view_id': self.env.ref('g2p_pbms.view_g2p_beneficiary_list_verification_form').id,
             'target': 'new',
             'context': {
                 'default_beneficiary_list_id': self.beneficiary_list_id,
-                'beneficiary_list_feedback_form_edit': True,
+                'beneficiary_list_verification_form_edit': True,
             },
         }
 

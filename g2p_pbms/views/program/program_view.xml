@@ -24,6 +24,8 @@
             <group string="Program Configuration">
               <field string="Base Registry" name="target_registry" readonly="not context.get('program_form_create')"/>
               <field name="service_providers_required" readonly="not context.get('program_form_create')"/> <!-- TODO: Lock this field if benefit_type is cash  -->
+              <field name="verifications_for_enrolment" readonly="not context.get('program_form_edit')"/>
+              <field name="verifications_for_disbursement" readonly="not context.get('program_form_edit')"/>
             </group>
             <group string="Cycle Configuration" >
               <field name="show_label_for_beneficiary_list" invisible="1"/>
@@ -50,7 +52,7 @@
             </page>
             <!-- Enrollment Cycles Page -->
             <page string="Enrollment Cycles">
-              <field name="enrollment_cycle_ids" no_label="0" context="{'default_program_id': id}"/>
+              <field name="enrollment_cycle_ids" no_label="0" context="{'default_program_id': id}" mode="tree" options="{'no_open': True}"/>
             </page>
             <!-- Disbursement Cycles Page -->
             <page string="Disbursement Cycles">

@@ -84,22 +84,17 @@ class G2PBeneficiaryList(models.Model):
     list_workflow_status = fields.Selection(
         [
             ("initiated", ""),
-            ("published_to_communities", "PUBLISHED TO COMMUNITIES"),
+            # ("published_to_communities", "PUBLISHED TO COMMUNITIES"),
             ("approved_final_enrolment", "APPROVED FINAL ENROLMENT"),
             ("approved_for_disbursement", "APPROVED FOR DISBURSEMENT"),
         ],
         string="List Workflow Status",
         default="initiated",
     )
-    feedback_ids = fields.One2many(
+    verification_ids = fields.One2many(
         "storage.file",
         "beneficiary_list_id",
-        string="Community Feedback",
-    )
-    verification_ids = fields.One2many(
-        "g2p.beneficiary.list.verification",
-        "beneficiary_list_id",
-        string="Verification",
+        string="Community Verification",
     )
     creation_date = fields.Datetime(string="Creation Date", default=fields.Datetime.now , readonly=True)
     processed_date = fields.Datetime(string="Processed Date", default=None, readonly=True)

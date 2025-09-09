@@ -7,7 +7,7 @@
       <form string="Eligibility Summary">
         <header>
           <!-- Publish to Communities -->
-          <button 
+          <!-- <button 
             type="object"
             class="btn-primary"
             icon="fa-files-o"
@@ -16,15 +16,15 @@
             name="action_publish_to_communities"
             invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
             groups="g2p_pbms.group_beneficiary_list_reviewer"
-          />
+          /> -->
           <!-- Community Leader -->
           <button 
             type="object" 
             class="btn-primary" 
             icon="fa-files-o"
-            string="Record Community Feedback" 
-            name="action_record_community_feedbacks" 
-            invisible="not(list_stage == 'enrollment' and list_workflow_status == 'published_to_communities')"
+            string="Add a Verification" 
+            name="action_record_verifications" 
+            invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
             groups="g2p_pbms.group_beneficiary_list_reviewer"
           /> 
           <!-- Enrollment Reviewer -->
@@ -33,17 +33,26 @@
             class="btn-success" 
             icon="fa-thumbs-o-up"
             name="action_approve_final_enrollment" 
-            invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
+            invisible="not(show_approve_enrolment_button and list_stage == 'enrollment' and list_workflow_status == 'initiated')"
             string="Approve Final Enrollment" 
             groups="g2p_pbms.group_enrolment_reviewer"
           />
           <!-- Disbursement Reviewer -->
           <button 
             type="object" 
+            class="btn-primary" 
+            icon="fa-files-o"
+            string="Add a Verification" 
+            name="action_record_verifications" 
+            invisible="not(list_stage == 'disbursement' and list_workflow_status == 'initiated')"
+            groups="g2p_pbms.group_beneficiary_list_reviewer"
+          /> 
+          <button 
+            type="object" 
             class="btn-success" 
             icon="fa-thumbs-o-up"
             name="action_approve_for_disbursement" 
-            invisible="approved_for_disbursement or not(list_stage == 'disbursement' and list_workflow_status != 'approved_for_disbursement')"
+            invisible="not(show_approve_disbursement_button and list_stage == 'disbursement' and list_workflow_status == 'initiated')"
             string="Approve for Disbursement" 
             groups="g2p_pbms.group_disbursement_reviewer"
           />
@@ -62,6 +71,8 @@
               <field name="enrollment_cycle_id" readonly="1"/>
               <field name="enrollment_start_date" readonly="1"/>
               <field name="enrollment_end_date" readonly="1"/>
+              <field name="show_approve_enrolment_button" invisible="1"/>
+              <field name="show_approve_disbursement_button" invisible="1"/>
             </group>
             <group string="Disbursement Cycle Info" invisible="list_stage != 'disbursement'">
               <field name="disbursement_cycle_mnemonic" readonly="1"/>
@@ -78,7 +89,7 @@
                     </strong>
                   </div>
                   <field name="summary_general_line_ids" nolabel="1" colspan="2">
-                    <tree class="summary_tree_view" create="false" edit="false">
+                    <tree class="summary_tree_view" create="false" edit="false" no_open="1">
                       <field name="summary_type" nolabel="1" invisible="1"/>
                       <field name="key" nolabel="1"/>
                       <field name="value" nolabel="1"/>
@@ -93,7 +104,7 @@
                       </strong>
                     </div>
                     <field name="summary_eligibility_line_ids" nolabel="1" colspan="2">
-                      <tree class="summary_tree_view" create="false" edit="false">
+                      <tree class="summary_tree_view" create="false" edit="false" no_open="1">
                         <field name="summary_type" nolabel="1" invisible="1"/>
                         <field name="key" nolabel="1"/>
                         <field name="value" nolabel="1"/>
@@ -107,7 +118,7 @@
                       </strong>
                     </div>
                     <field name="summary_entitlement_line_ids" nolabel="1" colspan="2">
-                      <tree class="summary_tree_view" create="false" edit="false">
+                      <tree class="summary_tree_view" create="false" edit="false" no_open="1">
                         <field name="summary_type" nolabel="1" invisible="1"/>
                         <field name="key" nolabel="1"/>
                         <field name="value" nolabel="1"/>
@@ -119,33 +130,22 @@
             <page string="Beneficiaries">
             <group>
                 <field name="target_registry" invisible="1"/>
-                
             </group>
           </page>
-          <page string="Community Feedbacks" invisible="list_stage != 'enrollment'">
-            <field name="feedback_ids" readonly="1" nolabel="1"/>
-          </page>
-          <page string="Verifications" invisible="list_stage != 'disbursement'">
-            <field name="verification_ids" readonly="list_workflow_status == 'approved_for_disbursement'" nolabel="1">
-              <tree editable="top">
-                <control>
-                    <button 
-                        name="action_add_verification" 
-                        type="object" 
-                        string="Add Verification" 
-                        class="oe_link"
-                        context="{'default_beneficiary_list_id': parent.beneficiary_list_id}"
-                    />
-                </control>
-                <field name="name" string="Name" readonly="1"/>
-                <field name="comment" string="Comment"/>
-                <field name="verification_timestamp" string="Verification Timestamp"/>
+          <page string="Verifications">
+            <field name="verification_ids" readonly="1" nolabel="1">
+              <tree>
+                <field name="verified_by"/>
+                <field name="comment"/>
+                <field name="verification_timestamp"/>
+                <field name="data" widget="download_binary" filename="data_filename"/>
               </tree>
             </field>
           </page>
+
           <page string="Disbursement Envelopes" invisible="list_stage != 'disbursement'">
             <field name="disbursement_envelope_line_ids" readonly="1" nolabel="1">
-              <tree limit="10">
+              <tree limit="10" no_open="1">
                 <field name="disbursement_envelope_id" string="Envelope ID"/>
                 <field name="benefit_code_mnemonic" string="Benefit Code"/>
                 <field name="number_of_beneficiaries" string="# Beneficiaries"/>
@@ -157,7 +157,7 @@
           </page>
           <page string="Disbursement Batches" invisible="list_stage != 'disbursement'">
             <field name="disbursement_batch_line_ids" readonly="1" nolabel="1">
-              <tree limit="10">
+              <tree limit="10" no_open="1">
                 <field name="disbursement_envelope_id" string="Envelope ID"/>
                 <field name="benefit_code_mnemonic" string="Benefit Code"/>
                 <field name="number_of_beneficiaries" string="# Beneficiaries"/>
@@ -166,7 +166,6 @@
                 <field name="batch_id"/>
                 <field name="disbursement_status" string="Sent to Bridge" widget="badge"/>
                 <button name="action_view_disbursement_batch" type="object" string="View Batch" class="oe_link" title="View Disbursement Batch" invisible="disbursement_status!='complete'"/>
-                <!-- invisible="disbursement_status != complete" -->
               </tree>
             </field>
           </page>

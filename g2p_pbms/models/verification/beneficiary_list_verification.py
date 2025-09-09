@@ -1,38 +1,68 @@
+import hashlib
 import uuid
 from odoo import fields, models, api
+import base64
+
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class G2PBeneficiaryListVerification(models.Model):
-    _name = "g2p.beneficiary.list.verification"
-    _description = "G2P Beneficiary List Verification"
-    _rec_name = "name"
+    _inherit = "storage.file"
 
-    verification_id = fields.Char(string="Verification ID", unique=True, readonly=True, required=True, default=lambda self: str(uuid.uuid4()))
-    beneficiary_list_id = fields.Many2one(
-        "g2p.beneficiary.list", string="Beneficiary List", index=True, required=True
-    )
     name = fields.Char(
-        string="Verifier Name",
+        string="File Name",
+        default=lambda self: str(uuid.uuid4()),
+        required=False
+    )
+    verified_by = fields.Many2one(
+        'res.users',
+        string="Verified by",
         required=True,
-        readonly=True,
-        default=lambda self: self.env.user.name if self.env.user else "Anonymous"
+        default=lambda self: self.env.user
     )
     comment = fields.Text(string="Comment", required=True)
     verification_timestamp = fields.Datetime(
         string="Verification Timestamp", default=fields.Datetime.now, readonly=True
     )
+    beneficiary_list_id = fields.Many2one(
+        "g2p.beneficiary.list", string="Beneficiary List", index=True, required=True
+    )
 
-    def action_add_verification(self):
-        context = self.env.context
-        beneficiary_list_id = context.get('default_beneficiary_list_id') or context.get('active_id') or self.beneficiary_list_id
+    @api.model
+    def default_get(self, fields_list):
+        res = super(G2PBeneficiaryListVerification, self).default_get(fields_list)
+        if 'backend_id' in fields_list and not res.get('backend_id'):
+            doc_store_id_str = (
+                self.env["ir.config_parameter"].sudo().get_param("g2p_pbms.document_store")
+            )
+            if doc_store_id_str:
+                res['backend_id'] = int(doc_store_id_str)
+        return res
+    
+    def _prepare_meta_for_file(self):
+        """Safely prepare metadata only if a file is present."""
+        if not self.data:
+            return {}
+        bin_data = base64.b64decode(self.data)
+        checksum = hashlib.sha1(bin_data).hexdigest()
+        relative_path = self._build_relative_path(checksum)
         return {
-            'type': 'ir.actions.act_window',
-            'name': 'Record Verification',
-            'res_model': 'g2p.beneficiary.list.verification',
-            'view_mode': 'form',
-            'view_id': self.env.ref('g2p_pbms.view_g2p_beneficiary_list_verification_form').id,
-            'target': 'new',
-            'context': {
-                'default_beneficiary_list_id': beneficiary_list_id,
-            },
+            "checksum": checksum,
+            "file_size": len(bin_data),
+            "relative_path": relative_path,
         }
+
+    def _inverse_data(self):
+        """Push data to backend only if file content exists."""
+        for record in self:
+            if not record.data:
+                continue
+            record.write(record._prepare_meta_for_file())
+            record.backend_id.sudo().add(
+                record.relative_path,
+                record.data,
+                mimetype=record.mimetype,
+                binary=False,
+            )
