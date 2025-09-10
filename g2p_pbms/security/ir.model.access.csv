@@ -35,9 +35,6 @@ g2p_eligibility_rule_definition_write,Write Eligibility Rule,g2p_pbms.model_g2p_
 g2p_beneficiary_list_read,Read Beneficiary List,g2p_pbms.model_g2p_beneficiary_list,g2p_pbms.group_beneficiary_list_viewer,1,0,0,0
 g2p_beneficiary_list_write,Write Beneficiary List,g2p_pbms.model_g2p_beneficiary_list,g2p_pbms.group_beneficiary_list_editor,1,1,1,1
 
-g2p_beneficiary_list_verification_read,Read Beneficiary List Verification,g2p_pbms.model_g2p_beneficiary_list_verification,group_beneficiary_list_verifier,1,0,0,0
-g2p_beneficiary_list_verification_write,Write Beneficiary List Verification,g2p_pbms.model_g2p_beneficiary_list_verification,group_beneficiary_list_verifier,1,1,1,1
-
 g2p_enrollment_cycle_read,Read Enrollment Cycle,g2p_pbms.model_g2p_enrollment_cycle,group_enrolment_viewer,1,0,0,0
 g2p_enrollment_cycle_write,Write Enrollment Cycle,g2p_pbms.model_g2p_enrollment_cycle,group_enrolment_editor,1,1,1,1
 

@@ -1,4 +1,4 @@
-from .feedback import G2PBeneficiaryListFeedback
+from .verification import G2PBeneficiaryListVerification
 from .keymanager import KeymanagerProvider
 from .regions import G2PRegions
 from .benefit_codes import (
@@ -32,5 +32,4 @@ from .beneficiary_list import (
 from .entitlement import G2PEntitlementRuleDefinition 
 from .config_settings import ResConfigSettings, ResGroups
 from .g2p_bridge import DisbursementEnvelopeSummaryWizard, DisbursementBatchSummaryWizard
-from .verification import G2PBeneficiaryListVerification
 from .service_providers import G2PAgency, G2PWarehouse

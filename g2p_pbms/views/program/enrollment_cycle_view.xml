@@ -23,17 +23,16 @@
                     <notebook>
                         <page string="Enrollment Lists" invisible="id == False">
                             <field name="beneficiary_list_ids" nolabel="1" readonly="approved_for_enrollment">
-                                <tree default_order="creation_date desc" delete="false" limit="10">
+                                <tree default_order="creation_date desc" delete="false" limit="10" no_open="1">
                                     <control>
                                         <create string="Create New Enrollment List" />
                                     </control>
                                     <field name="mnemonic" string="Mnemonic"/>
                                     <field name="eligibility_process_status" string="Eligibility Process Status" widget="badge"/>
-                                    <!-- <field name="entitlement_process_status" string=" Entitlement Process Status" widget="badge"/> -->
                                     <field name="creation_date" string="Created On" readonly="1"/>
                                     <field name="processed_date" string="Processed On" readonly="1"/>
                                     <field name="list_workflow_status" string="Status" widget="badge" invisible="list_workflow_status == 'initiated'"/>                  
-                                    <button name="action_open_summary_wizard" type="object" string="View Enrollment List" class="oe_link" invisible="eligibility_process_status!='complete'"/>
+                                    <button name="action_open_summary_wizard" type="object" string="View Enrollment List" class="oe_link" invisible="0"/>
                                 </tree>
                             </field>
                         </page>
@@ -54,7 +53,7 @@
         <field name="name">g2p.enrollment.cycle.tree</field>
         <field name="model">g2p.enrollment.cycle</field>
         <field name="arch" type="xml">
-            <tree delete="false">
+            <tree delete="false" no_open="1">
                 <control>
                     <create string="Create New Enrollment Cycle"/>
                 </control>

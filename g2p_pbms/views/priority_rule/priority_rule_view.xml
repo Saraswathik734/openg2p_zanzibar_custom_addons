@@ -32,7 +32,7 @@
         <field name="name">g2p.priority.rule.definition.tree</field>
         <field name="model">g2p.priority.rule.definition</field>
         <field name="arch" type="xml">
-            <tree string="Disbursement Rule">
+            <tree string="Disbursement Rule" no_open="1">
                 <control>
                     <create string="Add Disbursement Rule"/>
                 </control>

@@ -38,7 +38,7 @@
         <field name="name">g2p.entitlement.rule.definition.tree</field>
         <field name="model">g2p.entitlement.rule.definition</field>
         <field name="arch" type="xml">
-            <tree string="Entitlement Rule">
+            <tree string="Entitlement Rule" no_open="1">
                 <control>
                     <create string="Add Entitlement Rule"/>
                   </control>

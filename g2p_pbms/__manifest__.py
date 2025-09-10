@@ -26,7 +26,6 @@
         "views/bgtask_summary/bgtask_summary_view.xml",
         "views/entitlement_rule/entitlement_rule_view.xml",
         "views/priority_rule/priority_rule_view.xml",
-        "views/feedback/beneficiary_list_feedback_view.xml",
         "views/verification/beneficiary_list_verification_view.xml",
         "views/res_config/res_config_view.xml",
         "views/g2p_bridge/disbursement_envelope_summary_report.xml",
