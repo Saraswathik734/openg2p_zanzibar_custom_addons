@@ -54,7 +54,7 @@
 
     <!-- Tree view for Disbursement Cycle -->
     <record id="view_g2p_disbursement_cycle_tree" model="ir.ui.view">
-        <field name="name">view_g2p_disbursement_cycle_tree</field>
+        <field name="name">g2p.disbursement.cycle.tree</field>
         <field name="model">g2p.disbursement.cycle</field>
         <field name="arch" type="xml">
             <tree default_order="creation_date desc" delete="false" no_open="1">

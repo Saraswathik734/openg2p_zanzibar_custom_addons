@@ -27,7 +27,7 @@
     </record>
 
     <record id="view_g2p_beneficiary_list_tree" model="ir.ui.view">
-        <field name="name">view_g2p_beneficiary_list_tree</field>
+        <field name="name">g2p.beneficiary.list.tree</field>
         <field name="model">g2p.beneficiary.list</field>
         <field name="arch" type="xml">
             <tree default_order="creation_date desc" delete="false">
