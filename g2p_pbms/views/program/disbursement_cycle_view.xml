@@ -45,8 +45,8 @@
     </record>
 
     <!-- Action for Disbursement Cycle -->
-    <record id="action_g2p_disbursement_cycle" model="ir.actions.act_window">
-        <field name="name">g2p_disbursement_cycle_tree</field>
+    <record id="action_disbursement_cycle" model="ir.actions.act_window">
+        <field name="name">Disbursement Cycle</field>
         <field name="res_model">g2p.disbursement.cycle</field>
         <field name="view_mode">tree</field>
         <field name="context">{}</field>
