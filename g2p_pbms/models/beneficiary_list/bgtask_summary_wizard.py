@@ -411,7 +411,6 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 "content-type": "application/json",
                 "Signature": jwt_token
             }
-            _logger.info(f"Headers: {jwt_token}")
             try:
                 response = requests.post(endpoint, json=payload, headers=headers, timeout=10)
                 response.raise_for_status()
