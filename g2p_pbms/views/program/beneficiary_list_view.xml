@@ -36,10 +36,9 @@
                 </control>
                 <field name="mnemonic" string="Mnemonic" options="{'title': 'brief'}"/>
                 <field name="eligibility_process_status" string="Eligibility Process Status" widget="badge"/>
-                <!-- <field name="entitlement_process_status" string=" Entitlement Process Status" widget="badge"/> -->
                 <field name="creation_date" string="Created On" readonly="1"/>
                 <field name="processed_date" string="Processed On" readonly="1"/>
-                <button name="action_open_summary_wizard" type="object" string="View Beneficiary List" class="oe_link" invisible="0"/>
+                <button name="action_open_summary_wizard" type="object" string="View Beneficiary List" class="oe_link" invisible="eligibility_process_status!='complete'"/>
             </tree>
         </field>
     </record>

@@ -34,7 +34,7 @@
                                     <field name="creation_date" string="Created On" readonly="1"/>
                                     <field name="processed_date" string="Processed On" readonly="1"/>
                                     <field name="list_workflow_status" string="Status" widget="badge" invisible="list_workflow_status != 'approved_for_disbursement'"/>
-                                    <button name="action_open_summary_wizard" type="object" string="View Disbursement List" class="oe_link" invisible="0"/>
+                                    <button name="action_open_summary_wizard" type="object" string="View Disbursement List" class="oe_link" invisible="entitlement_process_status!='complete'"/>
                                 </tree>
                             </field>
                         </page>
