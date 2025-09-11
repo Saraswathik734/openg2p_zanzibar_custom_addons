@@ -23,7 +23,7 @@
                     <notebook>
                         <page string="Enrollment Lists" invisible="id == False">
                             <field name="beneficiary_list_ids" nolabel="1" readonly="approved_for_enrollment">
-                                <tree default_order="creation_date desc" delete="false" limit="10" no_open="1">
+                                <tree default_order="creation_date desc" delete="false" limit="10" >
                                     <control>
                                         <create string="Create New Enrollment List" />
                                     </control>
@@ -53,7 +53,7 @@
         <field name="name">g2p.enrollment.cycle.tree</field>
         <field name="model">g2p.enrollment.cycle</field>
         <field name="arch" type="xml">
-            <tree delete="false" no_open="1">
+            <tree delete="false" >
                 <control>
                     <create string="Create New Enrollment Cycle"/>
                 </control>

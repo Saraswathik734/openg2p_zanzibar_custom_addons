@@ -24,7 +24,7 @@
                         <!-- Disbursement List -->
                         <page string="Disbursement List" invisible="id == False">
                             <field name="beneficiary_list_ids" nolabel="1" readonly="approved_for_disbursement">
-                                <tree default_order="creation_date desc" delete="false" limit="10" no_open="1">
+                                <tree default_order="creation_date desc" delete="false" limit="10" >
                                     <control>
                                         <create string="Create New Disbursement List" />
                                     </control>
@@ -45,8 +45,8 @@
     </record>
 
     <!-- Action for Disbursement Cycle -->
-    <record id="action_g2p_disbursement_cycle" model="ir.actions.act_window">
-        <field name="name">g2p_disbursement_cycle_tree</field>
+    <record id="action_disbursement_cycle" model="ir.actions.act_window">
+        <field name="name">Disbursement Cycle</field>
         <field name="res_model">g2p.disbursement.cycle</field>
         <field name="view_mode">tree</field>
         <field name="context">{}</field>
@@ -54,10 +54,10 @@
 
     <!-- Tree view for Disbursement Cycle -->
     <record id="view_g2p_disbursement_cycle_tree" model="ir.ui.view">
-        <field name="name">view_g2p_disbursement_cycle_tree</field>
+        <field name="name">g2p.disbursement.cycle.tree</field>
         <field name="model">g2p.disbursement.cycle</field>
         <field name="arch" type="xml">
-            <tree default_order="creation_date desc" delete="false" no_open="1">
+            <tree default_order="creation_date desc" delete="false" >
                 <control>
                     <create string="Create New Disbursement Cycle"/>
                 </control>

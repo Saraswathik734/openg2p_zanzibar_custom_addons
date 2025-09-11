@@ -34,7 +34,7 @@
         <field name="name">g2p.eligibility.rule.definition.tree</field>
         <field name="model">g2p.eligibility.rule.definition</field>
         <field name="arch" type="xml">
-            <tree string="Eligibility Rule" default_order="rule_number asc" no_open="1">
+            <tree string="Eligibility Rule" default_order="rule_number asc" >
                 <control>
                   <create string="Add Eligibility Rule"/>
                 </control>

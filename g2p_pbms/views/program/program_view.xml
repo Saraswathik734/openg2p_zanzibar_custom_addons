@@ -52,7 +52,7 @@
             </page>
             <!-- Enrollment Cycles Page -->
             <page string="Enrollment Cycles">
-              <field name="enrollment_cycle_ids" no_label="0" context="{'default_program_id': id}" mode="tree" options="{'no_open': True}"/>
+              <field name="enrollment_cycle_ids" no_label="0" context="{'default_program_id': id}" mode="tree" />
             </page>
             <!-- Disbursement Cycles Page -->
             <page string="Disbursement Cycles">

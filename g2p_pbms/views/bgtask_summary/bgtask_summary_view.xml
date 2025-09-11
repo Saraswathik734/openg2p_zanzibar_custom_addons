@@ -89,7 +89,7 @@
                     </strong>
                   </div>
                   <field name="summary_general_line_ids" nolabel="1" colspan="2">
-                    <tree class="summary_tree_view" create="false" edit="false" no_open="1">
+                    <tree class="summary_tree_view" create="false" edit="false" >
                       <field name="summary_type" nolabel="1" invisible="1"/>
                       <field name="key" nolabel="1"/>
                       <field name="value" nolabel="1"/>
@@ -104,7 +104,7 @@
                       </strong>
                     </div>
                     <field name="summary_eligibility_line_ids" nolabel="1" colspan="2">
-                      <tree class="summary_tree_view" create="false" edit="false" no_open="1">
+                      <tree class="summary_tree_view" create="false" edit="false" >
                         <field name="summary_type" nolabel="1" invisible="1"/>
                         <field name="key" nolabel="1"/>
                         <field name="value" nolabel="1"/>
@@ -118,7 +118,7 @@
                       </strong>
                     </div>
                     <field name="summary_entitlement_line_ids" nolabel="1" colspan="2">
-                      <tree class="summary_tree_view" create="false" edit="false" no_open="1">
+                      <tree class="summary_tree_view" create="false" edit="false" >
                         <field name="summary_type" nolabel="1" invisible="1"/>
                         <field name="key" nolabel="1"/>
                         <field name="value" nolabel="1"/>
@@ -145,7 +145,7 @@
 
           <page string="Disbursement Envelopes" invisible="list_stage != 'disbursement'">
             <field name="disbursement_envelope_line_ids" readonly="1" nolabel="1">
-              <tree limit="10" no_open="1">
+              <tree limit="10" >
                 <field name="disbursement_envelope_id" string="Envelope ID"/>
                 <field name="benefit_code_mnemonic" string="Benefit Code"/>
                 <field name="number_of_beneficiaries" string="# Beneficiaries"/>
@@ -157,7 +157,7 @@
           </page>
           <page string="Disbursement Batches" invisible="list_stage != 'disbursement'">
             <field name="disbursement_batch_line_ids" readonly="1" nolabel="1">
-              <tree limit="10" no_open="1">
+              <tree limit="10" >
                 <field name="disbursement_envelope_id" string="Envelope ID"/>
                 <field name="benefit_code_mnemonic" string="Benefit Code"/>
                 <field name="number_of_beneficiaries" string="# Beneficiaries"/>
