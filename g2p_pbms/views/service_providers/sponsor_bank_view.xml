@@ -19,8 +19,8 @@
                 <sheet>
                     <group colspan="2">
                         <group string="Sponsor Bank Details">
-                            <field name="name" readonly="not context.get('warehouse_form_edit')"/>
-                            <field name="warehouse_mnemonic" readonly="not context.get('warehouse_form_edit')"/>
+                            <field name="name" string="Sponsor Bank Name" readonly="not context.get('warehouse_form_edit')"/>
+                            <field name="warehouse_mnemonic" string="Sponsor Bank Mnemonic" readonly="not context.get('warehouse_form_edit')"/>
                             <field name="is_sponsor_bank" invisible="1"/>
                         </group>
                         <group string="Administrator Details">
@@ -46,8 +46,8 @@
                 <control>
                     <create string="Add Sponsor Bank"/>
                 </control>
-                <field name="name"/>
-                <field name="warehouse_mnemonic"/>
+                <field name="name" string="Sponsor Bank Name"/>
+                <field name="warehouse_mnemonic" string="Sponsor Bank Mnemonic"/>
                 <button name="action_open_edit" type="object" class="fa fa-pencil" title="Edit"/>
             </tree>
         </field>
