@@ -18,7 +18,7 @@ class ResConfigSettings(models.TransientModel):
     keymanager_toggle = fields.Boolean(
         "Keymanager Active?",
         default=False,
-        config_parameter="g2p_pbms.keymannager_toggle"
+        config_parameter="g2p_pbms.keymanager_toggle"
     )
     keycloak_toggle = fields.Boolean(
         "Keycloak Auth Active? (for Keymanager)",
