@@ -32,7 +32,7 @@
                                     <field name="creation_date" string="Created On" readonly="1"/>
                                     <field name="processed_date" string="Processed On" readonly="1"/>
                                     <field name="list_workflow_status" string="Status" widget="badge" invisible="list_workflow_status == 'initiated'"/>                  
-                                    <button name="action_open_summary_wizard" type="object" string="View Enrollment List" class="oe_link" invisible="0"/>
+                                    <button name="action_open_summary_wizard" type="object" string="View Enrollment List" class="oe_link" invisible="eligibility_process_status!='complete'"/>
                                 </tree>
                             </field>
                         </page>
