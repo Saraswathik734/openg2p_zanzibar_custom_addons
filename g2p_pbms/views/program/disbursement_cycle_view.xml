@@ -5,7 +5,7 @@
         <field name="name">g2p.disbursement.cycle.form</field>
         <field name="model">g2p.disbursement.cycle</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="0">
                 <sheet>
                     <group>
                         <field name="program_id" readonly="1"/>
