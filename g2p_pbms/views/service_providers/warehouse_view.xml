@@ -49,8 +49,8 @@
                 <control>
                     <create string="Add Warehouse"/>
                 </control>
-                <field name="name"/>
-                <field name="warehouse_mnemonic"/>
+                <field name="name" string="Warehouse Name"/>
+                <field name="warehouse_mnemonic" string="Warehouse Mnemonic"/>
                 <button name="action_open_edit" type="object" class="fa fa-pencil" title="Edit"/>
             </tree>
         </field>
