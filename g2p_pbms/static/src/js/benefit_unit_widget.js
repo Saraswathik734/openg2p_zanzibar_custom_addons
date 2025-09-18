@@ -47,12 +47,10 @@ export class BenefitUnitWidget extends CharField {
             { value: "CLP", label: "CLP" },
             { value: "COP", label: "COP" },
             { value: "PEN", label: "PEN" },
-            { value: "NOK", label: "NOK" },
             { value: "DOP", label: "DOP" },
             { value: "VND", label: "VND" },
             { value: "PKR", label: "PKR" },
             { value: "TWD", label: "TWD" },
-            { value: "AED", label: "AED" },
             { value: "ZMW", label: "ZMW" },
             // Add more ISO codes as needed.
         ];
