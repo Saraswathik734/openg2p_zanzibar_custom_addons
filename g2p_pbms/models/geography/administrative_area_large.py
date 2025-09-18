@@ -1,0 +1,21 @@
+from odoo import models, fields
+import logging
+
+_logger = logging.getLogger(__name__)
+
+
+class G2PAdministrativeAreaLarge(models.Model):
+    _name = "g2p.administrative.area.large"
+    _description = "Administrative Area Large"
+    _rec_name = "area_mnemonic"
+
+    area_mnemonic = fields.Char(string="Area Mnemonic", required=True)
+    area_description = fields.Char(string="Area Description", required=True)
+
+    def action_open_edit(self):
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "g2p.administrative.area.large",
+            "view_mode": "form",
+            "res_id": self.id,
+        }

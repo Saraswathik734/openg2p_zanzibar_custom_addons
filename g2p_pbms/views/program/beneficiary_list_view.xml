@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_g2p_beneficiary_list_form" model="ir.ui.view">
+        <field name="name">g2p.beneficiary.list.form</field>
+        <field name="model">g2p.beneficiary.list</field>
+        <field name="arch" type="xml">
+            <form create="0">
+                <group>
+                    <field name="program_id" readonly="1"/>
+                    <field name="mnemonic"/>
+                    <field name="brief"/>
+                    <!-- Hide fields during creation -->
+                    <field name="eligibility_process_status" invisible="1"/>
+                    <!-- <field name="entitlement_process_status" invisible="1"/> -->
+                    <field name="processed_date" invisible="1"/>
+                    <field name="creation_date" invisible="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_g2p_beneficiary_list" model="ir.actions.act_window">
+        <field name="name">Beneficiary List</field>
+        <field name="res_model">g2p.beneficiary.list</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="view_g2p_beneficiary_list_tree" model="ir.ui.view">
+        <field name="name">g2p.beneficiary.list.tree</field>
+        <field name="model">g2p.beneficiary.list</field>
+        <field name="arch" type="xml">
+            <tree default_order="creation_date desc" delete="false">
+                <control>
+                    <create string="Create New Beneficiary List"/>
+                </control>
+                <field name="mnemonic" string="Mnemonic" options="{'title': 'brief'}"/>
+                <field name="eligibility_process_status" string="Eligibility Process Status" widget="badge"/>
+                <field name="creation_date" string="Created On" readonly="1"/>
+                <field name="processed_date" string="Processed On" readonly="1"/>
+                <button name="action_open_summary_wizard" type="object" string="View Beneficiary List" class="oe_link" invisible="eligibility_process_status!='complete'"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

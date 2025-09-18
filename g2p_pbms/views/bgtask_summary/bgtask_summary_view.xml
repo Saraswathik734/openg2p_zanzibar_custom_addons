@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_g2p_eligibility_summary_wizard_form" model="ir.ui.view">
+    <field name="name">g2p.bgtask.summary.wizard.form</field>
+    <field name="model">g2p.bgtask.summary.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Eligibility Summary" create="0">
+        <header>
+          <!-- Publish to Communities -->
+          <!-- <button 
+            type="object"
+            class="btn-primary"
+            icon="fa-files-o"
+            title="Publish to Communities"
+            string="Publish to Communities"
+            name="action_publish_to_communities"
+            invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
+            groups="g2p_pbms.group_beneficiary_list_reviewer"
+          /> -->
+          <!-- Community Leader -->
+          <button 
+            type="object" 
+            class="btn-primary" 
+            icon="fa-files-o"
+            string="Add a Verification" 
+            name="action_record_verifications" 
+            invisible="not(list_stage == 'enrollment' and list_workflow_status == 'initiated')"
+            groups="g2p_pbms.group_beneficiary_list_reviewer"
+          /> 
+          <!-- Enrollment Reviewer -->
+          <button 
+            type="object" 
+            class="btn-success" 
+            icon="fa-thumbs-o-up"
+            name="action_approve_final_enrollment" 
+            invisible="not(show_approve_enrolment_button and list_stage == 'enrollment' and list_workflow_status == 'initiated')"
+            string="Approve Final Enrollment" 
+            groups="g2p_pbms.group_enrolment_reviewer"
+          />
+          <!-- Disbursement Reviewer -->
+          <button 
+            type="object" 
+            class="btn-primary" 
+            icon="fa-files-o"
+            string="Add a Verification" 
+            name="action_record_verifications" 
+            invisible="not(list_stage == 'disbursement' and list_workflow_status == 'initiated')"
+            groups="g2p_pbms.group_beneficiary_list_reviewer"
+          /> 
+          <button 
+            type="object" 
+            class="btn-success" 
+            icon="fa-thumbs-o-up"
+            name="action_approve_for_disbursement" 
+            invisible="not(show_approve_disbursement_button and list_stage == 'disbursement' and list_workflow_status == 'initiated')"
+            string="Approve for Disbursement" 
+            groups="g2p_pbms.group_disbursement_reviewer"
+          />
+        </header>
+        <sheet>
+          <group>
+            <group string="Beneficiary List Info">
+              <field name="program_id" readonly="1"/>
+              <field name="mnemonic" string="List Mnemonic" readonly="1"/>
+              <field name="brief" string="Brief" readonly="1"/>
+              <field name="beneficiary_list_id" invisible="1"/>
+              <field name="list_stage" invisible="1"/>
+              <field name="list_workflow_status" widget="badge" invisible="1"/>
+            </group>
+            <group string="Enrollment Cycle Info" invisible="list_stage != 'enrollment'">
+              <field name="enrollment_cycle_id" readonly="1"/>
+              <field name="enrollment_start_date" readonly="1"/>
+              <field name="enrollment_end_date" readonly="1"/>
+              <field name="show_approve_enrolment_button" invisible="1"/>
+              <field name="show_approve_disbursement_button" invisible="1"/>
+            </group>
+            <group string="Disbursement Cycle Info" invisible="list_stage != 'disbursement'">
+              <field name="disbursement_cycle_mnemonic" readonly="1"/>
+              <field name="approved_for_disbursement" invisible="1"/>
+            </group>
+          </group>
+          <notebook>
+            <!-- Enrollment Summary Page -->
+            <page string="Summary">
+                <group>
+                  <div style="white-space: nowrap; margin-bottom: 10px;">
+                    <strong>
+                      <field name="general_title" readonly="1" widget="handle_display"/>
+                    </strong>
+                  </div>
+                  <field name="summary_general_line_ids" nolabel="1" colspan="2">
+                    <tree class="summary_tree_view" create="false" edit="false" >
+                      <field name="summary_type" nolabel="1" invisible="1"/>
+                      <field name="key" nolabel="1"/>
+                      <field name="value" nolabel="1"/>
+                    </tree>
+                  </field>
+                </group>
+                <group colspan='2'>
+                  <group>
+                    <div style="white-space: nowrap; margin-bottom: 10px;">
+                      <strong>
+                        <field name="eligibility_group_title" readonly="1" widget="handle_display"/>
+                      </strong>
+                    </div>
+                    <field name="summary_eligibility_line_ids" nolabel="1" colspan="2">
+                      <tree class="summary_tree_view" create="false" edit="false" >
+                        <field name="summary_type" nolabel="1" invisible="1"/>
+                        <field name="key" nolabel="1"/>
+                        <field name="value" nolabel="1"/>
+                      </tree>
+                    </field>
+                  </group>
+                  <group>
+                    <div style="white-space: nowrap; margin-bottom: 10px;">
+                      <strong>
+                        <field name="entitlement_group_title" readonly="1" widget="handle_display"/>
+                      </strong>
+                    </div>
+                    <field name="summary_entitlement_line_ids" nolabel="1" colspan="2">
+                      <tree class="summary_tree_view" create="false" edit="false" >
+                        <field name="summary_type" nolabel="1" invisible="1"/>
+                        <field name="key" nolabel="1"/>
+                        <field name="value" nolabel="1"/>
+                      </tree>
+                    </field>
+                  </group>
+                </group>
+            </page>
+            <page string="Beneficiaries">
+            <group>
+                <field name="target_registry" invisible="1"/>
+            </group>
+          </page>
+          <page string="Verifications">
+            <field name="verification_ids" readonly="1" nolabel="1">
+              <tree>
+                <field name="verified_by"/>
+                <field name="comment"/>
+                <field name="verification_timestamp"/>
+                <field name="data" widget="download_binary" filename="data_filename"/>
+              </tree>
+            </field>
+          </page>
+
+          <page string="Disbursement Envelopes" invisible="list_stage != 'disbursement'">
+            <field name="disbursement_envelope_line_ids" readonly="1" nolabel="1">
+              <tree limit="10" >
+                <field name="disbursement_envelope_id" string="Envelope ID"/>
+                <field name="benefit_code_mnemonic" string="Benefit Code"/>
+                <field name="number_of_beneficiaries" string="# Beneficiaries"/>
+                <field name="total_disbursement_quantity" string="Disbursement Qty"/>
+                <field name="measurement_unit" string="Units"/>
+                <button name="action_view_disbursement_envelope" type="object" string="View Envelope" class="oe_link" title="View Disbursement Envelope"/>
+              </tree>
+            </field>
+          </page>
+          <page string="Disbursement Batches" invisible="list_stage != 'disbursement'">
+            <field name="disbursement_batch_line_ids" readonly="1" nolabel="1">
+              <tree limit="10" >
+                <field name="disbursement_envelope_id" string="Envelope ID"/>
+                <field name="benefit_code_mnemonic" string="Benefit Code"/>
+                <field name="number_of_beneficiaries" string="# Beneficiaries"/>
+                <field name="total_disbursement_quantity" string="Disbursement Qty"/>
+                <field name="measurement_unit" string="Units"/>
+                <field name="batch_id"/>
+                <field name="disbursement_status" string="Sent to Bridge" widget="badge"/>
+                <button name="action_view_disbursement_batch" type="object" string="View Batch" class="oe_link" title="View Disbursement Batch" invisible="disbursement_status!='complete'"/>
+              </tree>
+            </field>
+          </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,42 @@
+.o_field_domain_panel.d-flex {
+    display: none !important;
+}
+
+.o_form_button_save_new {
+    display: none !important;
+}
+
+.o_form_label.o_form_label_readonly {
+    opacity: 1 !important;
+    font-weight: 500 !important;
+}
+
+.o_resize {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+.o_list_table th[data-name="brief"],
+.o_list_table td[name="brief"] {
+    width: 60% !important;
+}
+
+.o_list_table th[data-name="enumeration_status"],
+.o_list_table td[name="enumeration_status"] {
+    width: 8% !important;
+}
+
+.o_list_table th[data-name="creation_date"],
+.o_list_table td[name="creation_date"] {
+    width: 16% !important;
+}
+
+.o_list_table th[data-name="processed_date"],
+.o_list_table td[name="processed_date"] {
+    width: 16% !important;
+}
+
+/* Remove table lines */
+.summary_tree_view > div > table > tbody > tr {
+    border-style : hidden !important;
+}

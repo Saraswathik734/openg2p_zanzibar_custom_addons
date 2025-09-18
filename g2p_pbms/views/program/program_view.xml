@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Action for Programs -->
+  <record id="action_g2p_programs" model="ir.actions.act_window">
+    <field name="name">Programs</field>
+    <field name="res_model">g2p.program.definition</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- Program Form View -->
+  <record id="view_g2p_programs_form" model="ir.ui.view">
+    <field name="name">g2p.programs.form</field>
+    <field name="model">g2p.program.definition</field>
+    <field name="arch" type="xml">
+      <form string="G2P Programs">
+        <sheet>
+          <group>
+            <group string="Program Information">
+              <field name="id" invisible="1"/>
+              <field name="program_mnemonic" readonly="not context.get('program_form_edit')"/>
+              <field name="description" readonly="not context.get('program_form_edit')"/>
+              <field name="program_status" readonly="not context.get('program_form_edit')"/>
+            </group>
+            <group string="Program Configuration">
+              <field string="Base Registry" name="target_registry" readonly="not context.get('program_form_create')"/>
+              <field name="service_providers_required" readonly="not context.get('program_form_create')"/> <!-- TODO: Lock this field if benefit_type is cash  -->
+              <field name="verifications_for_enrolment" readonly="not context.get('program_form_edit')"/>
+              <field name="verifications_for_disbursement" readonly="not context.get('program_form_edit')"/>
+            </group>
+            <group string="Cycle Configuration" >
+              <field name="show_label_for_beneficiary_list" invisible="1"/>
+              <field name="disbursement_frequency" readonly="not context.get('program_form_edit')"/>
+              <field name="enrollment_frequency" readonly="not context.get('program_form_edit')"/>
+            </group>
+          </group>
+          <notebook>
+            <!-- Benefit Codes Page (Invisible) -->
+            <page string="Benefit Codes" invisible="1">
+              <field name="benefit_code_ids" nolabel="1" options="{'no_quick_create': True}"/>
+            </page>
+            <!-- Program Benefit Codes Page -->
+            <page string="Program Benefit Codes">
+              <field name="program_benefit_code_ids" nolabel="1" options="{'no_quick_create': True}"/>
+            </page>
+            <!-- Eligibility Rules Page -->
+            <page string="Eligibility Rules">
+              <field name="eligibility_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_program_id': id, 'default_target_registry': target_registry}"/>
+            </page>
+            <!-- Entitlement Rules Page -->
+            <page string="Entitlement Rules">
+              <field name="entitlement_rule_ids" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry': target_registry, 'default_allowed_benefit_code_ids': benefit_code_ids}"/>
+            </page>
+            <!-- Enrollment Cycles Page -->
+            <page string="Enrollment Cycles">
+              <field name="enrollment_cycle_ids" no_label="0" context="{'default_program_id': id}" mode="tree" />
+            </page>
+            <!-- Disbursement Cycles Page -->
+            <page string="Disbursement Cycles">
+              <field name="disbursement_cycle_ids" nolabel="1"/>                
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Program Tree View -->
+  <record id="view_g2p_programs_tree" model="ir.ui.view">
+    <field name="name">g2p.programs.tree</field>
+    <field name="model">g2p.program.definition</field>
+    <field name="arch" type="xml">
+      <tree string="G2P Programs">
+        <control>
+          <create string="Add Program"/>
+        </control>
+        <field name="program_mnemonic" />
+        <field name="description"/>
+        <field name="target_registry"/>
+        <field name="program_status"/>
+        <button name="action_open_edit" type="object" class="fa fa-pencil" title="Edit"/>
+      </tree>
+    </field>
+  </record>
+</odoo>
