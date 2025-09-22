@@ -18,7 +18,7 @@
                     <!-- Hide fields during creation -->
                     <notebook>
                         <!-- Priority Rules -->
-                        <page string="Priority Rules" invisible="id == False">
+                        <page string="Disbursement Rules" invisible="id == False">
                             <field name="priority_rule_ids" readonly="approved_for_disbursement" nolabel="1" options="{'no_quick_create': True}" context="{'default_target_registry': target_registry}"/>
                         </page>
                         <!-- Disbursement List -->
