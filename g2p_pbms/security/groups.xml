@@ -162,6 +162,7 @@
   <record id="group_service_provider_operations" model="res.groups">
     <field name="implied_ids" eval="[
       ref('group_agency_editor'),
+      ref('group_agency_viewer'),
       ref('group_warehouse_editor'),
       ref('group_warehouse_viewer'),
     ]"/>
@@ -203,6 +204,7 @@
     <field name="implied_ids" eval="[
       ref('group_beneficiary_list_editor'),
       ref('group_beneficiary_list_viewer'),
+      ref('group_document_editor'),
       ref('group_disbursement_editor'),
       ref('group_priority_rules_editor'),
       ref('group_program_viewer'),
@@ -215,6 +217,7 @@
       ref('group_disbursement_viewer'),
       ref('group_disbursement_reviewer'),
       ref('group_beneficiary_list_reviewer'),
+      ref('group_document_viewer'),
       ref('group_priority_rules_viewer'),
       ref('group_program_viewer'),
     ]"/>
