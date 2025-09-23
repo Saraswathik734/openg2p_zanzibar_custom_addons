@@ -1,6 +1,5 @@
 from .verification import G2PBeneficiaryListVerification
 from .keymanager import KeymanagerProvider
-from .regions import G2PRegions
 from .benefit_codes import (
     G2PBenefitCodes,
     G2PProgramBenefitCodes,

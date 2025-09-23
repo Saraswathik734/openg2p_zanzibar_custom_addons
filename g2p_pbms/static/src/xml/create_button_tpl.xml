@@ -50,13 +50,22 @@
                     Create Program
                 </button>
                 <button
-                    t-if="model.root.resModel == 'g2p.regions'"
+                    t-if="model.root.resModel == 'g2p.administrative.area.large'"
                     type="button"
-                    class="btn btn-primary o_list_button_add_region"
+                    class="btn btn-primary o_list_button_add_large_area"
                     accesskey="p"
-                    title="Create a New Region"
-                    t-on-click="load_region_wizard">
-                    Create Region
+                    title="Create a New Large Administrative Area"
+                    t-on-click="load_administrative_area_large_wizard">
+                    Create Large Area
+                </button>
+                <button
+                    t-if="model.root.resModel == 'g2p.administrative.area.small'"
+                    type="button"
+                    class="btn btn-primary o_list_button_add_small_area"
+                    accesskey="p"
+                    title="Create a New Small Administrative Area"
+                    t-on-click="load_administrative_area_small_wizard">
+                    Create Small Area
                 </button>
             </t>
         </xpath>
@@ -71,7 +80,8 @@
                 model.root.resModel != 'g2p.benefit.classification.codes' and
                 model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and
-                model.root.resModel != 'g2p.regions'
+                model.root.resModel != 'g2p.administrative.area.large' and
+                model.root.resModel != 'g2p.administrative.area.small'
             </attribute>
         </xpath>
     </t>
@@ -83,7 +93,8 @@
                 model.root.resModel != 'g2p.benefit.classification.codes' and
                 model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and
-                model.root.resModel != 'g2p.regions'
+                model.root.resModel != 'g2p.administrative.area.large' and
+                model.root.resModel != 'g2p.administrative.area.small'
             </attribute>
         </xpath>
         <xpath expr="//button[contains(@class, 'btn-outline-primary o_form_button_create')]" position="attributes">
@@ -93,7 +104,8 @@
                 model.root.resModel != 'g2p.benefit.classification.codes' and
                 model.root.resModel != 'g2p.benefit.codes' and
                 model.root.resModel != 'g2p.program.definition' and
-                model.root.resModel != 'g2p.regions'
+                model.root.resModel != 'g2p.administrative.area.large' and
+                model.root.resModel != 'g2p.administrative.area.small'
             </attribute>
         </xpath>
     </t>

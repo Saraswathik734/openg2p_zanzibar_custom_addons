@@ -62,15 +62,27 @@ patch(ListController.prototype, {
         return window.location;
     },
 
-    load_region_wizard() {
+    load_administrative_area_large_wizard() {
         this.action.doAction({
-            name: "Region",
+            name: "Administrative Area (Large)",
             type: "ir.actions.act_window",
-            res_model: "g2p.regions",
+            res_model: "g2p.administrative.area.large",
             view_mode: "form",
             views: [[false, "form"]],
             target: "current",
-            context: { create: false, region_form_edit: true },
+            context: { create: false, area_form_edit: true },
+        });
+        return window.location;
+    },
+    load_administrative_area_small_wizard() {
+        this.action.doAction({
+            name: "Administrative Area (Small)",
+            type: "ir.actions.act_window",
+            res_model: "g2p.administrative.area.small",
+            view_mode: "form",
+            views: [[false, "form"]],
+            target: "current",
+            context: { create: false, area_form_edit: true },
         });
         return window.location;
     },

@@ -5,9 +5,6 @@ g2p_agency_write,Write Agency,g2p_pbms.model_g2p_agency,group_agency_editor,1,1,
 g2p_warehouse_read,Read Warehouse,g2p_pbms.model_g2p_warehouse,group_warehouse_viewer,1,0,0,0
 g2p_warehouse_write,Write Warehouse,g2p_pbms.model_g2p_warehouse,group_warehouse_editor,1,1,1,1
 
-g2p_regions_read,Read Regions,g2p_pbms.model_g2p_regions,group_geography_viewer,1,0,0,0
-g2p_regions_write,Write Regions,g2p_pbms.model_g2p_regions,group_geography_editor,1,1,1,1
-
 g2p_benefit_codes_read,Read Benefit Codes,g2p_pbms.model_g2p_benefit_codes,group_benefit_codes_viewer,1,0,0,0
 g2p_benefit_codes_write,Write Benefit Codes,g2p_pbms.model_g2p_benefit_codes,group_benefit_codes_editor,1,1,1,1
 
@@ -53,7 +50,7 @@ g2p_api_disbursement_batch_line_write,Write API Disbursement Batch Line,g2p_pbms
 g2p_entitlement_rule_definition_read,Read Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,group_program_viewer,1,0,0,0
 g2p_entitlement_rule_definition_write,Write Entitlement Rule,g2p_pbms.model_g2p_entitlement_rule_definition,group_program_editor,1,1,1,1
 
-g2p_disbursement_cycle_read,Read Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,group_disbursement_editor,1,0,0,0
+g2p_disbursement_cycle_read,Read Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,group_disbursement_viewer,1,0,0,0
 g2p_disbursement_cycle_write,Write Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,group_disbursement_editor,1,1,1,1
 
 g2p_priority_rule_definition_read,Read Priority Rule,g2p_pbms.model_g2p_priority_rule_definition,group_priority_rules_viewer,1,0,0,0
