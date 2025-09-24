@@ -530,20 +530,8 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             else:
                 wizard.verification_ids = [(5, 0, 0)]
 
-    # def action_publish_to_communities(self):
-    #     allowed_group = 'g2p_pbms.group_beneficiary_list_reviewer'
-    #     if not self.env.user.has_group(allowed_group):
-    #         raise AccessError(_("You are not allowed to perform this action."))
-        
-    #     self.ensure_one()
-    #     if not self.list_workflow_status == 'published_to_communities':
-    #         self.list_workflow_status = 'published_to_communities'
-    #         self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).write({
-    #             'list_workflow_status': 'published_to_communities'
-    #         })
-
     def action_approve_final_enrollment(self):
-        allowed_group = 'g2p_pbms.group_enrolment_reviewer'
+        allowed_group = 'g2p_pbms.group_enrolment_approver'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
 
@@ -560,7 +548,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             })
 
     def action_record_verifications(self):
-        allowed_group = 'g2p_pbms.group_beneficiary_list_reviewer'
+        allowed_group = 'g2p_pbms.group_beneficiary_list_verifier'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
         
@@ -579,7 +567,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         }
 
     def action_approve_for_disbursement(self):
-        allowed_group = 'g2p_pbms.group_disbursement_reviewer'
+        allowed_group = 'g2p_pbms.group_disbursement_approver'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
         

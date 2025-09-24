@@ -33,6 +33,9 @@
                         <page string="Sponsor Bank Program Benefit Code">
                             <field name="warehouse_program_benefit_codes" nolabel="1" options="{'no_quick_create': True}"/>
                         </page>
+                        <page string="Administrative Areas (Large)" invisible="is_sponsor_bank">
+                            <field name="administrative_area_large_ids" nolabel="1" options="{'no_quick_create': True}"/>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
@@ -48,7 +51,7 @@
                 </control>
                 <field name="name" string="Sponsor Bank Name"/>
                 <field name="warehouse_mnemonic" string="Sponsor Bank Mnemonic"/>
-                <button name="action_open_edit" type="object" class="fa fa-pencil" title="Edit"/>
+                <button name="action_open_edit" type="object" class="fa fa-pencil" title="Edit" groups="g2p_pbms.group_warehouse_editor"/>
             </tree>
         </field>
     </record>
