@@ -36,6 +36,7 @@ g2p_beneficiary_list_approver_disbursement,Approver Disbursement Beneficiary Lis
 
 g2p_enrollment_cycle_read,Read Enrollment Cycle,g2p_pbms.model_g2p_enrollment_cycle,group_enrolment_viewer,1,0,0,0
 g2p_enrollment_cycle_write,Write Enrollment Cycle,g2p_pbms.model_g2p_enrollment_cycle,group_enrolment_editor,1,1,1,1
+g2p_enrollment_cycle_approver_enrolment,Approver Enrolment Enrollment Cycle,g2p_pbms.model_g2p_enrollment_cycle,group_enrolment_approver,1,1,0,0
 
 g2p_bgtask_summary_wizard_read,Read BG Task Summary wizard,g2p_pbms.model_g2p_bgtask_summary_wizard,group_beneficiary_list_viewer,1,1,1,0
 g2p_bgtask_summary_wizard_write,Write BG Task Summary wizard,g2p_pbms.model_g2p_bgtask_summary_wizard,group_beneficiary_list_editor,1,1,1,1
@@ -54,6 +55,7 @@ g2p_entitlement_rule_definition_write,Write Entitlement Rule,g2p_pbms.model_g2p_
 
 g2p_disbursement_cycle_read,Read Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,group_disbursement_viewer,1,0,0,0
 g2p_disbursement_cycle_write,Write Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,group_disbursement_editor,1,1,1,1
+g2p_disbursement_cycle_approver_disbursement,Approver Disbursement Disbursement Cycle,g2p_pbms.model_g2p_disbursement_cycle,group_disbursement_approver,1,1,0,0
 
 g2p_priority_rule_definition_read,Read Priority Rule,g2p_pbms.model_g2p_priority_rule_definition,group_priority_rules_viewer,1,0,0,0
 g2p_priority_rule_definition_write,Write Priority Rule,g2p_pbms.model_g2p_priority_rule_definition,group_priority_rules_editor,1,1,1,1
