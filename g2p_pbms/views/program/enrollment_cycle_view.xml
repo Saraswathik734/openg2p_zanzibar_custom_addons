@@ -4,7 +4,7 @@
         <field name="name">g2p.enrollment.cycle.form</field>
         <field name="model">g2p.enrollment.cycle</field>
         <field name="arch" type="xml">
-            <form create="0">
+            <form create="0" delete="0">
                 <sheet>
                     <group colspan="2">
                         <group string="Enrollment Cycle">
