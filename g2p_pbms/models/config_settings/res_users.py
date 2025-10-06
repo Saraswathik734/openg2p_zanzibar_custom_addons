@@ -6,23 +6,24 @@ class ResUsers(models.Model):
     def write(self, vals):
         # Get HLG and LLG xmlids
         hlg_xmlids = [
+            'g2p_pbms.group_program_super_administration',
             'g2p_pbms.group_program_administration',
-            'g2p_pbms.group_enrolment_operations',
-            'g2p_pbms.group_enrolment_review',
+            'g2p_pbms.group_enrolment_operation',
+            'g2p_pbms.group_enrolment_verification',
             'g2p_pbms.group_enrolment_approval',
-            'g2p_pbms.group_disbursement_operations',
-            'g2p_pbms.group_disbursement_review',
+            'g2p_pbms.group_disbursement_operation',
+            'g2p_pbms.group_disbursement_verification',
             'g2p_pbms.group_disbursement_approval',
-            'g2p_pbms.group_geography_operations',
-            'g2p_pbms.group_service_provider_operations',
-            'g2p_pbms.group_audit_operations',
+            'g2p_pbms.group_geography_operation',
+            'g2p_pbms.group_service_provider_operation',
+            'g2p_pbms.group_audit_operation',
         ]
         llg_xmlids = [
             'g2p_pbms.group_abstract_model_viewer',
             'g2p_pbms.group_agency_viewer',
             'g2p_pbms.group_agency_editor',
-            'g2p_pbms.group_benefit_codes_viewer',
-            'g2p_pbms.group_benefit_codes_editor',
+            'g2p_pbms.group_benefit_code_viewer',
+            'g2p_pbms.group_benefit_code_editor',
             'g2p_pbms.group_program_viewer',
             'g2p_pbms.group_program_editor',
             'g2p_pbms.group_warehouse_viewer',

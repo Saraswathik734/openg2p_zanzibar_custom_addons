@@ -26,8 +26,9 @@ patch(ListController.prototype, {
             this.permissions.canCreateWarehouse = await this.user.hasGroup("g2p_pbms.group_warehouse_editor");
             this.permissions.canCreateSponsorBank = await this.user.hasGroup("g2p_pbms.group_warehouse_editor");
             this.permissions.canCreateBenefitCode = await this.user.hasGroup("g2p_pbms.group_benefit_code_editor");
-            this.permissions.canCreateProgram = await this.user.hasGroup("g2p_pbms.group_program_editor");
             this.permissions.canCreateGeography = await this.user.hasGroup("g2p_pbms.group_geography_editor");
+
+            this.permissions.canCreateProgram = await this.user.hasGroup("g2p_pbms.group_program_super_administration");
         });
     },
 
