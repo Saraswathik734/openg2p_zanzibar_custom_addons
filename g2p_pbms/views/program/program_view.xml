@@ -23,14 +23,18 @@
             </group>
             <group string="Program Configuration">
               <field string="Base Registry" name="target_registry" readonly="not context.get('program_form_create')"/>
-              <field name="service_providers_required" readonly="not context.get('program_form_create')"/> <!-- TODO: Lock this field if benefit_type is cash  -->
-              <field name="verifications_for_enrolment" readonly="not context.get('program_form_edit')"/>
-              <field name="verifications_for_disbursement" readonly="not context.get('program_form_edit')"/>
-            </group>
-            <group string="Cycle Configuration" >
+              <field name="service_providers_required" readonly="not context.get('program_form_create') or "/>
               <field name="show_label_for_beneficiary_list" invisible="1"/>
-              <field name="disbursement_frequency" readonly="not context.get('program_form_edit')"/>
-              <field name="enrollment_frequency" readonly="not context.get('program_form_edit')"/>
+            </group>
+            <group string="Enrollment Configuration" >
+              <field string="Frequency" name="enrollment_frequency" readonly="not context.get('program_form_edit')"/>
+              <field string="# of Verifications" name="verifications_for_enrolment" readonly="not context.get('program_form_edit')"/>
+              <field name="auto_approve_enrolment" readonly="not context.get('program_form_edit')"/>
+            </group>
+            <group string="Disbursement Configuration" >
+              <field string="Frequency" name="disbursement_frequency" readonly="not context.get('program_form_edit')"/>
+              <field string="# of Verifications" name="verifications_for_disbursement" readonly="not context.get('program_form_edit')"/>
+              <field name="auto_approve_disbursement" readonly="not context.get('program_form_edit')"/>
             </group>
           </group>
           <notebook>
