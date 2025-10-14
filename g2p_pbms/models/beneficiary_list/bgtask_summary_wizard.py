@@ -102,7 +102,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         for rec in self:
             show_button = False
             program = rec.program_id
-            if program and program.verifications_for_enrolment:
+            if program and program.verifications_for_enrolment is not None:
                 try:
                     required_reviews = int(program.verifications_for_enrolment)
                 except (ValueError, TypeError):
@@ -117,7 +117,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         for rec in self:
             show_button = False
             program = rec.program_id
-            if program and program.verifications_for_disbursement:
+            if program and program.verifications_for_disbursement is not None:
                 try:
                     required_reviews = int(program.verifications_for_disbursement)
                 except (ValueError, TypeError):
@@ -530,11 +530,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             else:
                 wizard.verification_ids = [(5, 0, 0)]
 
-    def action_approve_final_enrollment(self):
-        allowed_group = 'g2p_pbms.group_enrolment_approver'
-        if not self.env.user.has_group(allowed_group):
-            raise AccessError(_("You are not allowed to perform this action."))
-
+    def approve_final_enrollment(self):
         self.ensure_one()
         if not self.list_workflow_status == 'approved_final_enrolment':
             self.list_workflow_status = 'approved_final_enrolment'
@@ -547,10 +543,45 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 'approved_for_enrollment': True,
             })
 
+    def action_approve_final_enrollment(self):
+        allowed_group = 'g2p_pbms.group_enrolment_approver'
+        if not self.env.user.has_group(allowed_group):
+            raise AccessError(_("You are not allowed to perform this action."))
+
+        self.approve_final_enrollment()
+    
+    def approve_for_disbursement(self):
+        self.ensure_one()
+        if not self.list_workflow_status == 'approved_for_disbursement':
+            self.list_workflow_status = 'approved_for_disbursement'
+            self.approved_for_disbursement = True
+            self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).write({
+                'list_workflow_status': 'approved_for_disbursement',
+                'approval_date': fields.Date.context_today(self),
+                'envelope_creation_status': 'pending'
+            })
+            self.env['g2p.disbursement.cycle'].browse(self.disbursement_cycle_id).write({
+                'approved_for_disbursement': True,
+            })
+
+    def action_approve_for_disbursement(self):
+        allowed_group = 'g2p_pbms.group_disbursement_approver'
+        if not self.env.user.has_group(allowed_group):
+            raise AccessError(_("You are not allowed to perform this action."))
+        
+        self.approve_for_disbursement()
+
     def action_record_verifications(self):
         allowed_group = 'g2p_pbms.group_beneficiary_list_verifier'
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
+        
+        program = self.env['g2p.program.definition'].browse(self.program_id)
+
+        if self.list_stage == 'enrollment' and self.list_workflow_status!='approved_final_enrolment' and program.auto_approve_enrolment:
+            self.approve_final_enrollment(self)
+        elif self.list_stage == 'disbursement' and self.list_workflow_status!='approved_for_disbursement' and program.auto_approve_disbursement:
+            self.approve_for_disbursement(self)
         
         self.ensure_one()
         return {
@@ -565,24 +596,6 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 'beneficiary_list_verification_form_edit': True,
             },
         }
-
-    def action_approve_for_disbursement(self):
-        allowed_group = 'g2p_pbms.group_disbursement_approver'
-        if not self.env.user.has_group(allowed_group):
-            raise AccessError(_("You are not allowed to perform this action."))
-        
-        self.ensure_one()
-        if not self.list_workflow_status == 'approved_for_disbursement':
-            self.list_workflow_status = 'approved_for_disbursement'
-            self.approved_for_disbursement = True
-            self.env['g2p.beneficiary.list'].browse(self.beneficiary_list_id).write({
-                'list_workflow_status': 'approved_for_disbursement',
-                'approval_date': fields.Date.context_today(self),
-                'envelope_creation_status': 'pending'
-            })
-            self.env['g2p.disbursement.cycle'].browse(self.disbursement_cycle_id).write({
-                'approved_for_disbursement': True,
-            })
 
 class G2PAPISummaryLine(models.TransientModel):
     _name = 'g2p.api.summary.line'
