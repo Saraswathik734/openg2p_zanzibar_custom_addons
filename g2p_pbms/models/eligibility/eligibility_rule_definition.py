@@ -128,4 +128,6 @@ class G2PEligibilityRuleDefinition(models.Model):
             "view_mode": "form",
             "target": "new",
             "flags": {"mode": "readonly"},
+            "views": [[False, "form"]],
+            "context": dict(self._context, default_no_create=True, no_create=True, create=False),
         }

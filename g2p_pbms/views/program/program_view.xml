@@ -23,7 +23,7 @@
             </group>
             <group string="Program Configuration">
               <field string="Base Registry" name="target_registry" readonly="not context.get('program_form_create')"/>
-              <field name="service_providers_required" readonly="not context.get('program_form_create') or "/>
+              <field name="service_providers_required" readonly="not context.get('program_form_create')"/>
               <field name="show_label_for_beneficiary_list" invisible="1"/>
             </group>
             <group string="Enrollment Configuration" >
