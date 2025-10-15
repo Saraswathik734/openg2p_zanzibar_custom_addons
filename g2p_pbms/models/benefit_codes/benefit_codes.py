@@ -25,7 +25,7 @@ class G2PBenefitCodes(models.Model):
     benefit_description = fields.Text(string="Benefit Description")
     decimal_places = fields.Integer(
         string="Decimal Places",
-        help="Number of decimal places to use for this benefit code's value.",
+        help="Number of decimal places to use for this benefit code's value. Maximum allowed value is 5.",
         default=0,
         store=True
     )

@@ -90,14 +90,24 @@ class G2PPriorityRuleDefinition(models.Model):
                 )
                 rec.sql_query = "Error formatting query"
 
+    @api.model
+    def default_get(self, fields):
+        """Override to change default modal title from 'Create Priority Rule' to 'Disbursement Rule'."""
+        res = super(G2PPriorityRuleDefinition, self).default_get(fields)
+        self = self.with_context(default_name="Create Disbursement Rule")
+        return res
+
     def action_open_view(self):
         return {
             "type": "ir.actions.act_window",
-            "name": "View Priority Rule Details",
+            "name": "View Disbursement Rule Details",
             "res_model": self._name,
             "res_id": self.id,
             "view_mode": "form",
             "target": "new",
             "flags": {"mode": "readonly"},
+            "views": [[False, "form"]],
+            "context": dict(self._context, default_no_create=True, no_create=True, create=False),
+
         }
 
