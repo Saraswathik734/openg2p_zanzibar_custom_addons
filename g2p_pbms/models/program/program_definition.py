@@ -63,7 +63,7 @@ class G2PProgramDefinition(models.Model):
     auto_approve_enrolment = fields.Boolean(
         string="Auto approve enrollment",
         default=False,
-        help="If enabled and the number of required verifications is 0, lists will be automatically approved as soon as they are viewed, without needing any verifications."
+        help="If enabled and the number of required verifications is 0, lists will be automatically approved as soon as they are created, without needing any verifications."
     )
     verifications_for_disbursement = fields.Integer(
         string="Verifications required for disbursement",
@@ -73,7 +73,7 @@ class G2PProgramDefinition(models.Model):
     auto_approve_disbursement = fields.Boolean(
         string="Auto approve disbursement",
         default=False,
-        help="If enabled and the number of required verifications is 0, lists will be automatically approved as soon as they are viewed, without needing any verifications."
+        help="If enabled and the number of required verifications is 0, lists will be automatically approved as soon as they are created, without needing any verifications."
     )
     # Cycle configuration
     enrollment_frequency = fields.Selection([
