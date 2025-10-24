@@ -186,6 +186,7 @@
       ref('group_warehouse_viewer'),
       ref('group_program_viewer'),
       ref('group_benefit_code_viewer'),
+      ref('group_geography_viewer'),
     ]"/>
     <field name="category_id" ref="g2p_pbms" />
   </record>
