@@ -576,7 +576,9 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         if not self.env.user.has_group(allowed_group):
             raise AccessError(_("You are not allowed to perform this action."))
         
-        program = self.env['g2p.program.definition'].browse(self.program_id)
+        program = self.program_id
+        if not program:
+            raise UserError(_("No program is linked to this record."))
 
         if self.list_stage == 'enrollment' and self.list_workflow_status!='approved_final_enrolment' and program.auto_approve_enrolment:
             self.approve_final_enrollment(self)
