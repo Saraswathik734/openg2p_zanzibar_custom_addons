@@ -12,6 +12,14 @@ class G2PAdministrativeAreaLarge(models.Model):
     area_mnemonic = fields.Char(string="Area Mnemonic", required=True)
     area_description = fields.Char(string="Area Description", required=True)
 
+    _sql_constraints = [
+        (
+            'unique_area_mnemonic',
+            'unique(area_mnemonic)',
+            'The Area Mnemonic must be unique!'
+        )
+    ]
+
     def action_open_edit(self):
         return {
             "type": "ir.actions.act_window",
