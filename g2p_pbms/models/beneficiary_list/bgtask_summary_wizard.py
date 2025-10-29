@@ -212,7 +212,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
     @api.model
     def get_beneficiaries(self, wizard_id, page, page_size, odoo_domain):
         wizard = self.sudo().browse(wizard_id)
-        api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
+        api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.staff_portal_api_url')
         sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
 
         if not api_url:
@@ -270,7 +270,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         excluded_keys = ['id', 'target_registry']
         for wizard in self:
             wizard.summary_line_ids = [(5, 0, 0)]
-            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
+            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.staff_portal_api_url')
             sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
 
             if not api_url:
@@ -380,7 +380,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             wizard.disbursement_envelope_line_ids = [(5, 0, 0)]
             if (wizard.list_stage or '').lower() != 'disbursement' or not wizard.beneficiary_list_uuid:
                 continue
-            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
+            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.staff_portal_api_url')
             sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
 
             if not api_url:
@@ -442,7 +442,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
             wizard.disbursement_batch_line_ids = [(5, 0, 0)]
             if (wizard.list_stage or '').lower() != 'disbursement' or not wizard.beneficiary_list_uuid:
                 continue
-            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.bgtask_api_url')
+            api_url = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.staff_portal_api_url')
             sender_id = self.env['ir.config_parameter'].sudo().get_param('g2p_pbms.keymanager_sign_application_id')
 
             if not api_url:
