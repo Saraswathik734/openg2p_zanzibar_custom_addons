@@ -17,7 +17,7 @@
                         </setting>
                     </block>
                     <block title="G2P Bridge Settings">
-                        <setting string="Bridge API URL" help="Bridge API URL Endpoint (e.g., https://localhost:8000 - no path allowed)">
+                        <setting string="Bridge Partner API URL" help="Bridge Partner API URL Endpoint (e.g., https://localhost:8000 - no path allowed)">
                             <field name="g2p_bridge_api_url" />
                         </setting>
                     </block>
