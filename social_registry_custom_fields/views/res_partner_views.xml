@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_res_partner_form_inherit_custom" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.custom</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="g2p_registry_individual.view_individuals_form"/>
+        <field name="arch" type="xml">
+            <!-- Move fields to the right-side group -->
+            <!-- Add Zan ID after Registration Date -->
+            <xpath expr="//field[@name='registration_date']" position="after">
+                <field name="benf_zan_id"/>
+            </xpath>
+            
+            <!-- Add Post Code before Address with proper label -->
+            <xpath expr="//span[@name='address_name']" position="before">
+                <field name="benf_post_code"/>
+            </xpath>
+            
+            <!-- Add the Yes/No questions to the first group (right column) to align with Post Code/Address -->
+            <xpath expr="//page[@name='basic_info']/group[1]/group[2]" position="inside">
+                <field name="disability" widget="radio" options="{'horizontal': true}"/>
+                <field name="is_receiving_allowance" widget="radio" options="{'horizontal': true}"/>
+                <field name="has_health_insurance" widget="radio" options="{'horizontal': true}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
