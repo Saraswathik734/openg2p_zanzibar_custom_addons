@@ -16,3 +16,7 @@ class ResPartner(models.Model):
         [("yes", "Yes"), ("no", "No")],
         string="Are you covered with any health insurance scheme?",
     )
+
+    x_region_code=fields.Char("X_Reg")
+    
+    x_district_code=fields.Char("X_dist")
