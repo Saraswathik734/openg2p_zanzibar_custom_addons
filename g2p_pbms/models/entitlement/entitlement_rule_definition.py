@@ -122,8 +122,9 @@ class G2PEntitlementRuleDefinition(models.Model):
 
             where_str = (" WHERE %s" % where_clause) if where_clause else ""
             # Use the target model's table name in the SQL query.
+            id_field = "id" if target_model._name == "res.partner" else "link_registry_id"
             query_str = (
-                'SELECT "%s".link_registry_id FROM ' % target_model._table + from_clause + where_str
+                'SELECT "%s".%s FROM ' % (target_model._table, id_field) + from_clause + where_str
             )
 
             # Format the parameters as strings.
