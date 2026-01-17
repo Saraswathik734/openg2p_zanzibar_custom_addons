@@ -40,7 +40,13 @@ class G2PEntitlementRuleDefinition(models.Model):
         selection=G2PRegistryType.selection(), string="Target Registry", required=True
     )
     pbms_domain = fields.Char(string="Domain", required=True)
+    target_model_name = fields.Char(compute="_compute_target_model_name")
     sql_query = fields.Char(string="SQL Query", compute="_get_query", store=True)
+
+    @api.depends("target_registry")
+    def _compute_target_model_name(self):
+        for rec in self:
+            rec.target_model_name = G2PTargetModelMapping.get_target_model_name(rec.target_registry)
     allowed_benefit_code_ids = fields.Many2many(
         'g2p.benefit.codes', related='program_id.benefit_code_ids', store=False
     )
@@ -124,7 +130,7 @@ class G2PEntitlementRuleDefinition(models.Model):
             # Use the target model's table name in the SQL query.
             id_field = "id" if target_model._name == "res.partner" else "link_registry_id"
             query_str = (
-                'SELECT "%s".%s FROM ' % (target_model._table, id_field) + from_clause + where_str
+                'SELECT "%s".%s::TEXT FROM ' % (target_model._table, id_field) + from_clause + where_str
             )
 
             # Format the parameters as strings.

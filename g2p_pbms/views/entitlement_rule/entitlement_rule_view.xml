@@ -19,6 +19,8 @@
                         <field name="mnemonic"/>
                         <field name="description"/>
                         <field name="target_registry" invisible="0"/>
+                        <field name="target_model_name" invisible="1"/>
+                        <field name="pbms_domain" widget="domain" options="{'model': 'target_model_name'}"/>
                         <field name="benefit_code_id" domain="[('id', 'in', allowed_benefit_code_ids)]" options="{'no_quick_create': True}"/>
                         <field name="quantity"/>
                         <field name="multiplier" widget="g2p_pbms.multiplier_widget"/>

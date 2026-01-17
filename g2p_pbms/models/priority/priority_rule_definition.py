@@ -19,7 +19,13 @@ class G2PPriorityRuleDefinition(models.Model):
         selection=G2PRegistryType.selection(), string="Registry Type", required=True
     )
     pbms_domain = fields.Char(string="Domain", required=True)
+    target_model_name = fields.Char(compute="_compute_target_model_name")
     sql_query = fields.Char(string="SQL Query", compute="_get_query", store=True)
+
+    @api.depends("target_registry")
+    def _compute_target_model_name(self):
+        for rec in self:
+            rec.target_model_name = G2PTargetModelMapping.get_target_model_name(rec.target_registry)
 
     @api.depends("pbms_domain", "target_registry")
     def _get_query(self):
@@ -70,8 +76,9 @@ class G2PPriorityRuleDefinition(models.Model):
 
             where_str = (" WHERE %s" % where_clause) if where_clause else ""
             # Use the target model's table name in the SQL query.
+            id_field = "id" if target_model._name == "res.partner" else "link_registry_id"
             query_str = (
-                'SELECT "%s".link_registry_id FROM ' % target_model._table + from_clause + where_str
+                'SELECT "%s".%s::TEXT FROM ' % (target_model._table, id_field) + from_clause + where_str
             )
 
             # Format the parameters as strings.

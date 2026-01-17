@@ -18,7 +18,9 @@
                         <field name="mnemonic"/>
                         <field name="description"/>
                         <field name="target_registry"/>
+                        <field name="target_model_name" invisible="1"/>
                         <field name="set_operator" readonly="rule_number==1"/>
+                        <field name="pbms_domain" widget="domain" options="{'model': 'target_model_name'}"/>
                     </group>
                 </sheet>
                 <sheet>
