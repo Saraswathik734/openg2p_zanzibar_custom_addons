@@ -15,9 +15,6 @@ class G2PBenefitCodes(models.Model):
         [   
             ("CASH_DIGITAL", "Cash (Digital)"),
             ("CASH_PHYSICAL", "Cash (Physical)"),
-            ("COMMODITY", "Commodity"),
-            ("SERVICE", "Service"),
-            ("COMBINATION", "Combination"),
         ],
         string="Benefit Type",
         required=True,
