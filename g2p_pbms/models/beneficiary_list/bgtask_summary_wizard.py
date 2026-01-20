@@ -5,6 +5,7 @@ import requests
 from odoo.exceptions import UserError, AccessError
 from odoo import models, fields, api, _
 from odoo.tools.safe_eval import safe_eval
+from dateutil.relativedelta import relativedelta
 
 from odoo.addons.g2p_registry_type_addon.models import (
     G2PTargetModelMapping,
@@ -142,11 +143,61 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
         for rec in self:
             rec.entitlement_group_title = 'Entitlement Statistics for %s' % rec.target_registry.capitalize()
 
+    def _rewrite_age_domain(self, term):
+        if not (isinstance(term, (list, tuple)) and len(term) == 3 and term[0] == 'age'):
+            return term
+
+        field, operator, value = term
+        today = fields.Date.context_today(self)
+        try:
+            years = int(value)
+        except (ValueError, TypeError):
+            return term
+
+        if operator == '>=':
+            return ('birthdate', '<=', today - relativedelta(years=years))
+        if operator == '>':
+            return ('birthdate', '<', today - relativedelta(years=years))
+        if operator == '<=':
+            return ('birthdate', '>=', today - relativedelta(years=years))
+        if operator == '<':
+            return ('birthdate', '>', today - relativedelta(years=years))
+        if operator == '=':
+            return [
+                '&',
+                ('birthdate', '<=', today - relativedelta(years=years)),
+                ('birthdate', '>', today - relativedelta(years=years + 1)),
+            ]
+        if operator == '!=':
+            return [
+                '|',
+                ('birthdate', '>', today - relativedelta(years=years)),
+                ('birthdate', '<=', today - relativedelta(years=years + 1)),
+            ]
+        return term
+
+    def _preprocess_domain(self, domain):
+        if not isinstance(domain, list):
+            return domain
+
+        new_domain = []
+        for term in domain:
+            if isinstance(term, (list, tuple)):
+                rewritten = self._rewrite_age_domain(term)
+                if isinstance(rewritten, list):
+                    new_domain.extend(rewritten)
+                else:
+                    new_domain.append(rewritten)
+            else:
+                new_domain.append(term)
+        return new_domain
+
     def _build_sql_query(self, odoo_domain, target_registry):
         sql_query=""
         order_by_field="id"
         try:
             domain_value = safe_eval(odoo_domain or "[]")
+            domain_value = self._preprocess_domain(domain_value)
         except Exception as e:
             _logger.error(
                 "Error evaluating domain: %s",
