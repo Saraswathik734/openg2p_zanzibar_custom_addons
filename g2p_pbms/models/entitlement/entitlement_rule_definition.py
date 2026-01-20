@@ -3,6 +3,7 @@ from odoo.tools.safe_eval import safe_eval
 
 import logging
 import json
+from dateutil.relativedelta import relativedelta
 from odoo.addons.g2p_registry_type_addon.models import G2PRegistryType, G2PTargetModelMapping
 
 _logger = logging.getLogger(__name__)
@@ -80,12 +81,62 @@ class G2PEntitlementRuleDefinition(models.Model):
             ]
             rec.allowed_multipliers = json.dumps(numeric_fields)
 
+    def _rewrite_age_domain(self, term):
+        if not (isinstance(term, (list, tuple)) and len(term) == 3 and term[0] == 'age'):
+            return term
+
+        field, operator, value = term
+        today = fields.Date.context_today(self)
+        try:
+            years = int(value)
+        except (ValueError, TypeError):
+            return term
+
+        if operator == '>=':
+            return ('birthdate', '<=', today - relativedelta(years=years))
+        if operator == '>':
+            return ('birthdate', '<', today - relativedelta(years=years))
+        if operator == '<=':
+            return ('birthdate', '>=', today - relativedelta(years=years))
+        if operator == '<':
+            return ('birthdate', '>', today - relativedelta(years=years))
+        if operator == '=':
+            return [
+                '&',
+                ('birthdate', '<=', today - relativedelta(years=years)),
+                ('birthdate', '>', today - relativedelta(years=years + 1)),
+            ]
+        if operator == '!=':
+            return [
+                '|',
+                ('birthdate', '>', today - relativedelta(years=years)),
+                ('birthdate', '<=', today - relativedelta(years=years + 1)),
+            ]
+        return term
+
+    def _preprocess_domain(self, domain):
+        if not isinstance(domain, list):
+            return domain
+
+        new_domain = []
+        for term in domain:
+            if isinstance(term, (list, tuple)):
+                rewritten = self._rewrite_age_domain(term)
+                if isinstance(rewritten, list):
+                    new_domain.extend(rewritten)
+                else:
+                    new_domain.append(rewritten)
+            else:
+                new_domain.append(term)
+        return new_domain
+
     @api.depends("pbms_domain", "target_registry")
     def _get_query(self):
         for rec in self:
             try:
                 # Convert the domain string into a valid Python list of tuples.
                 domain_value = safe_eval(rec.pbms_domain or "[]")
+                domain_value = rec._preprocess_domain(domain_value)
             except Exception as e:
                 _logger.error(
                     "Error evaluating domain for entitlement rule %s: %s",
