@@ -184,7 +184,7 @@ class G2PEntitlementRuleDefinition(models.Model):
             # Use the target model's table name in the SQL query.
             id_field = "id" if target_model._name == "res.partner" else "link_registry_id"
             query_str = (
-                'SELECT "%s".%s::TEXT FROM ' % (target_model._table, id_field) + from_clause + where_str
+                'SELECT "%s".%s::TEXT AS link_registry_id FROM ' % (target_model._table, id_field) + from_clause + where_str
             )
 
             # Format the parameters as strings.
