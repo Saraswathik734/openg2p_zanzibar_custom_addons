@@ -92,25 +92,28 @@ class G2PEntitlementRuleDefinition(models.Model):
         except (ValueError, TypeError):
             return term
 
+        start = today - relativedelta(years=years)
+        end = today - relativedelta(years=years + 1)
+
         if operator == '>=':
-            return ('birthdate', '<=', today - relativedelta(years=years))
+            return ('birthdate', '<=', start)
         if operator == '>':
-            return ('birthdate', '<', today - relativedelta(years=years))
+            return ('birthdate', '<=', end)
         if operator == '<=':
-            return ('birthdate', '>=', today - relativedelta(years=years))
+            return ('birthdate', '>', end)
         if operator == '<':
-            return ('birthdate', '>', today - relativedelta(years=years))
+            return ('birthdate', '>', start)
         if operator == '=':
             return [
                 '&',
-                ('birthdate', '<=', today - relativedelta(years=years)),
-                ('birthdate', '>', today - relativedelta(years=years + 1)),
+                ('birthdate', '<=', start),
+                ('birthdate', '>', end),
             ]
         if operator == '!=':
             return [
                 '|',
-                ('birthdate', '>', today - relativedelta(years=years)),
-                ('birthdate', '<=', today - relativedelta(years=years + 1)),
+                ('birthdate', '>', start),
+                ('birthdate', '<=', end),
             ]
         return term
 
