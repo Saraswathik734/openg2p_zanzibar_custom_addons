@@ -131,17 +131,17 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
     @api.depends('target_registry')
     def _compute_general_title(self):
         for rec in self:
-            rec.general_title = 'General Statistics for %s' % rec.target_registry.capitalize()
+            rec.general_title = _('General Statistics for %s') % rec.target_registry.capitalize()
 
     @api.depends('target_registry')
     def _compute_eligibility_group_title(self):
         for rec in self:
-            rec.eligibility_group_title = 'Eligibility Statistics for %s' % rec.target_registry.capitalize()
+            rec.eligibility_group_title = _('Eligibility Statistics for %s') % rec.target_registry.capitalize()
     
     @api.depends('target_registry')
     def _compute_entitlement_group_title(self):
         for rec in self:
-            rec.entitlement_group_title = 'Entitlement Statistics for %s' % rec.target_registry.capitalize()
+            rec.entitlement_group_title = _('Entitlement Statistics for %s') % rec.target_registry.capitalize()
 
     def _rewrite_age_domain(self, term):
         if not (isinstance(term, (list, tuple)) and len(term) == 3 and term[0] == 'age'):
@@ -396,7 +396,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 else:
                     lines.append((0, 0, {
                         'wizard_id': wizard.id,
-                        'key': key.replace('_', ' ').title(),
+                        'key': _(key.replace('_', ' ').title()),
                         'value': '{:,}'.format(int(value)) if isinstance(value, (int, float)) else str(value),
                         'summary_type': 'general'
                     }))
@@ -420,7 +420,7 @@ class G2PBGTaskSummaryWizard(models.TransientModel):
                 else:
                     lines.append((0, 0, {
                         'wizard_id': wizard.id,
-                        'key': key.replace('_', ' ').title(),
+                        'key': _(key.replace('_', ' ').title()),
                         # Format the value with thousands separator if it's a number, otherwise convert to string
                         'value': '{:,}'.format(int(value)) if isinstance(value, (int, float)) else str(value),
                         'summary_type': 'eligibility'

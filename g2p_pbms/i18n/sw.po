@@ -612,3 +612,96 @@ msgstr " Hali ya Muhtasari wa Haki"
 #: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
 msgid "View Disbursement List"
 msgstr "Angalia Orodha ya Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Beneficiary List Info"
+msgstr "Maelezo ya Orodha ya Walengwa"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Enrollment Cycle Info"
+msgstr "Maelezo ya Mzunguko wa Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Disbursement Cycle Info"
+msgstr "Maelezo ya Mzunguko wa Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "List Mnemonic"
+msgstr "Msimbo wa Orodha"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Brief"
+msgstr "Muhtasari"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Enrollment Cycle"
+msgstr "Mzunguko wa Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Enrollment Start Date"
+msgstr "Tarehe ya Kuanza Kuandikisha"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Enrollment End Date"
+msgstr "Tarehe ya Mwisho ya Kuandikisha"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Summary"
+msgstr "Muhtasari"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Beneficiaries"
+msgstr "Walengwa"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Verifications"
+msgstr "Uhakiki"
+
+#. module: g2p_pbms
+#: code:addons/g2p_pbms/models/beneficiary_list/bgtask_summary_wizard.py:0
+#, python-format
+msgid "General Statistics for %s"
+msgstr "Takwimu za Jumla za %s"
+
+#. module: g2p_pbms
+#: code:addons/g2p_pbms/models/beneficiary_list/bgtask_summary_wizard.py:0
+#, python-format
+msgid "Eligibility Statistics for %s"
+msgstr "Takwimu za Kustahiki za %s"
+
+#. module: g2p_pbms
+#: code:addons/g2p_pbms/models/beneficiary_list/bgtask_summary_wizard.py:0
+#, python-format
+msgid "Entitlement Statistics for %s"
+msgstr "Takwimu za Haki za %s"
+
+#. module: g2p_pbms
+msgid "Program Id"
+msgstr "Kitambulisho cha Programu"
+
+#. module: g2p_pbms
+msgid "Program Mnemonic"
+msgstr "Msimbo wa Programu"
+
+#. module: g2p_pbms
+msgid "Beneficiary List Id"
+msgstr "Kitambulisho cha Orodha ya Walengwa"
+
+#. module: g2p_pbms
+msgid "Number Of Registrants"
+msgstr "Idadi ya Waliojiandikisha"
+
+#. module: g2p_pbms
+msgid "Date Created"
+msgstr "Tarehe Iliyoundwa"
