@@ -1,0 +1,614 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* g2p_pbms
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-21 00:00+0000\n"
+"PO-Revision-Date: 2024-01-21 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sw\n"
+
+#. module: g2p_pbms
+#: model:ir.model,name:g2p_pbms.model_g2p_benefit_codes
+#: model:ir.ui.menu,name:g2p_pbms.menu_g2p_benefit_codes
+#: model:ir.actions.act_window,name:g2p_pbms.action_g2p_benefit_codes
+msgid "Benefit Codes"
+msgstr "Misimbo ya Faida"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_benefit_codes__benefit_mnemonic
+msgid "Benefit Mnemonic"
+msgstr "Msimbo wa Faida"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_benefit_codes__benefit_type
+msgid "Benefit Type"
+msgstr "Aina ya Faida"
+
+#. module: g2p_pbms
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_benefit_codes__benefit_type__cash_digital
+msgid "Cash (Digital)"
+msgstr "Pesa (Kidijitali)"
+
+#. module: g2p_pbms
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_benefit_codes__benefit_type__cash_physical
+msgid "Cash (Physical)"
+msgstr "Pesa (Taslimu)"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_benefit_codes__benefit_description
+msgid "Benefit Description"
+msgstr "Maelezo ya Faida"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_benefit_codes__measurement_unit
+msgid "Measurement Unit"
+msgstr "Kipimo"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_benefit_codes__decimal_places
+msgid "Decimal Places"
+msgstr "Nafasi za Desimali"
+
+#. module: g2p_pbms
+#: model:ir.model.constraint,message:g2p_pbms.constraint_g2p_benefit_codes_unique_benefit_mnemonic
+msgid "The benefit mnemonic must be unique!"
+msgstr "Msimbo wa faida lazima uwe wa kipekee!"
+
+#. module: g2p_pbms
+#, python-format
+msgid "View Benefit Code Details"
+msgstr "Tazama Maelezo ya Msimbo wa Faida"
+
+#. module: g2p_pbms
+#, python-format
+msgid "Create Code"
+msgstr "Unda Msimbo"
+
+#. module: g2p_pbms
+#, python-format
+msgid "Create a New Benefit Code"
+msgstr "Unda Msimbo Mpya wa Faida"
+
+#. module: g2p_pbms
+#, python-format
+msgid "Create Agency"
+msgstr "Unda Wakala"
+
+#. module: g2p_pbms
+#, python-format
+msgid "Create Warehouse"
+msgstr "Unda Ghala"
+
+#. module: g2p_pbms
+#, python-format
+msgid "Create Sponsor Bank"
+msgstr "Unda Benki ya Mfadhili"
+
+#. module: g2p_pbms
+#, python-format
+msgid "Create Program"
+msgstr "Unda Programu"
+
+#. module: g2p_pbms
+#, python-format
+msgid "Create Large Area"
+msgstr "Unda Eneo Kubwa"
+
+#. module: g2p_pbms
+#, python-format
+msgid "Create Small Area"
+msgstr "Unda Eneo Dogo"
+
+#. module: g2p_pbms
+#: model:ir.ui.menu,name:g2p_pbms.menu_g2p_service_providers
+msgid "Service Providers"
+msgstr "Watoa Huduma"
+
+#. module: g2p_pbms
+#: model:ir.ui.menu,name:g2p_pbms.menu_g2p_registry
+msgid "Registry Models"
+msgstr "Mifano ya Usajili"
+
+#. module: g2p_pbms
+#: model:ir.ui.menu,name:g2p_pbms.menu_g2p_programs
+msgid "Programs"
+msgstr "Programu"
+
+#. module: g2p_pbms
+#: model:ir.ui.menu,name:g2p_pbms.menu_g2p_sponsor_bank_action
+msgid "Sponsor Banks"
+msgstr "Benki za Wafadhili"
+
+#. module: g2p_pbms
+#: model:ir.model,name:g2p_registry_addon.model_g2p_individual_registry
+msgid "Individual Registry"
+msgstr "Usajili wa Mtu Binafsi"
+
+#. module: g2p_pbms
+#: model:ir.actions.act_window,name:g2p_pbms.action_g2p_programs
+msgid "Programs"
+msgstr "Programu"
+
+#. module: g2p_pbms
+#: model:ir.model,name:g2p_pbms.model_g2p_program_definition
+msgid "G2P Program Definition"
+msgstr "Ufafanuzi wa Programu ya G2P"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__program_mnemonic
+msgid "Program Mnemonic"
+msgstr "Msimbo wa Programu"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__description
+msgid "Description"
+msgstr "Maelezo"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__target_registry
+msgid "Target Registry"
+msgstr "Usajili Unaolengwa"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__program_status
+msgid "Program Status"
+msgstr "Hali ya Programu"
+
+#. module: g2p_pbms
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_program_definition__program_status__active
+msgid "Active"
+msgstr "Amilifu"
+
+#. module: g2p_pbms
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_program_definition__program_status__paused
+msgid "Paused"
+msgstr "Imesitishwa"
+
+#. module: g2p_pbms
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_program_definition__program_status__closed
+msgid "Closed"
+msgstr "Imefungwa"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Program Information"
+msgstr "Taarifa za Programu"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Program Configuration"
+msgstr "Usanidi wa Programu"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Enrollment Configuration"
+msgstr "Usanidi wa Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Disbursement Configuration"
+msgstr "Usanidi wa Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Base Registry"
+msgstr "Usajili wa Msingi"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__service_providers_required
+msgid "Service Providers required"
+msgstr "Watoa Huduma wanahitajika"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Frequency"
+msgstr "Marudio"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "# of Verifications"
+msgstr "Idadi ya Uthibitishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__auto_approve_enrolment
+msgid "Auto approve enrollment"
+msgstr "Uidhinishaji wa kiotomatiki wa uandikishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__auto_approve_disbursement
+msgid "Auto approve disbursement"
+msgstr "Uidhinishaji wa kiotomatiki wa utoaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__program_benefit_code_ids
+msgid "Program Benefit Codes"
+msgstr "Misimbo ya Faida ya Programu"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__eligibility_rule_ids
+msgid "Eligibility Rules"
+msgstr "Sheria za Kustahiki"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__entitlement_rule_ids
+msgid "Entitlement Rules"
+msgstr "Sheria za Haki"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__enrollment_cycle_ids
+msgid "Enrollment Cycles"
+msgstr "Mizunguko ya Uandikishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_definition__disbursement_cycle_ids
+msgid "Disbursement Cycles"
+msgstr "Mizunguko ya Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Add Program Benefit Code"
+msgstr "Ongeza Msimbo wa Faida ya Programu"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Program Benefit Codes"
+msgstr "Misimbo ya Faida ya Programu"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Eligibility Rules"
+msgstr "Sheria za Kustahiki"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Entitlement Rules"
+msgstr "Sheria za Haki"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Enrollment Cycles"
+msgstr "Mizunguko ya Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Disbursement Cycles"
+msgstr "Mizunguko ya Utoaji"
+
+#. module: g2p_pbms
+#: model:ir.model,name:g2p_pbms.model_g2p_program_benefit_codes
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_program_benefit_codes_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_program_benefit_codes_tree
+msgid "Program Benefit Codes"
+msgstr "Misimbo ya Faida ya Programu"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_benefit_codes__benefit_code_id
+msgid "Benefit Code"
+msgstr "Msimbo wa Faida"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_benefit_codes__max_quantity
+msgid "Maximum Quantity"
+msgstr "Kiasi cha Juu"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_benefit_codes__benefit_mnemonic
+msgid "Benefit Mnemonic"
+msgstr "Msimbo wa Faida"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_benefit_codes__benefit_type
+msgid "Benefit Type"
+msgstr "Aina ya Faida"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_benefit_codes__measurement_unit
+msgid "Measurement Unit"
+msgstr "Kipimo"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_program_benefit_codes__benefit_description
+msgid "Benefit Description"
+msgstr "Maelezo ya Faida"
+
+#. module: g2p_pbms
+#: model:ir.model,name:g2p_pbms.model_g2p_eligibility_rule_definition
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_rule_definition_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_rule_definition_tree
+msgid "Eligibility Rule"
+msgstr "Sheria ya Kustahiki"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_eligibility_rule_definition__rule_number
+msgid "Rule Number"
+msgstr "Nambari ya Sheria"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_eligibility_rule_definition__mnemonic
+msgid "Rule Mnemonic"
+msgstr "Msimbo wa Sheria"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_eligibility_rule_definition__description
+msgid "Description"
+msgstr "Maelezo"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_eligibility_rule_definition__target_registry
+msgid "Target Registry"
+msgstr "Usajili Unaolengwa"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_eligibility_rule_definition__set_operator
+msgid "Set Operator"
+msgstr "Weka Opereta"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_eligibility_rule_definition__pbms_domain
+msgid "Domain"
+msgstr "Kikoa"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_eligibility_rule_definition__sql_query
+msgid "SQL Query"
+msgstr "Maulizo ya SQL"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_rule_definition_tree
+msgid "Add Eligibility Rule"
+msgstr "Ongeza Sheria ya Kustahiki"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_rule_definition_tree
+msgid "View Eligibility Rule"
+msgstr "Angalia Sheria ya Kustahiki"
+
+#. module: g2p_pbms
+#: model:ir.model,name:g2p_pbms.model_g2p_entitlement_rule_definition
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Entitlement Rule"
+msgstr "Sheria ya Haki"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__mnemonic
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Rule Mnemonic"
+msgstr "Msimbo wa Sheria"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__benefit_code_id
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Benefit Code"
+msgstr "Msimbo wa Faida"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__target_registry
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Target Registry"
+msgstr "Usajili Unaolengwa"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__quantity
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Quantity"
+msgstr "Kiasi"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__measurement_unit
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Measurement Unit"
+msgstr "Kipimo"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__multiplier
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Multiplier"
+msgstr "Kizidishi"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__description
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Description"
+msgstr "Maelezo"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__pbms_domain
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Domain"
+msgstr "Kikoa"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_entitlement_rule_definition__sql_query
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "SQL Query"
+msgstr "Maulizo ya SQL"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "Add Entitlement Rule"
+msgstr "Ongeza Sheria ya Haki"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_entitlement_rule_definition_tree
+msgid "View Entitlement Rule"
+msgstr "Angalia Sheria ya Haki"
+
+#. module: g2p_pbms
+#: model:ir.model,name:g2p_pbms.model_g2p_enrollment_cycle
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "Enrollment Cycle"
+msgstr "Mzunguko wa Uandikishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_enrollment_cycle__cycle_number
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "Cycle Number"
+msgstr "Nambari ya Mzunguko"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_enrollment_cycle__enrollment_start_date
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "Enrollment Start Date"
+msgstr "Tarehe ya Kuanza Uandikishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_enrollment_cycle__enrollment_end_date
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "Enrollment End Date"
+msgstr "Tarehe ya Kumaliza Uandikishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_enrollment_cycle__disbursement_start_date
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "Disbursement Start Date"
+msgstr "Tarehe ya Kuanza Utoaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_enrollment_cycle__disbursement_end_date
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "Disbursement End Date"
+msgstr "Tarehe ya Kumaliza Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "Create New Enrollment Cycle"
+msgstr "Unda Mzunguko Mpya wa Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "View Enrollment Cycle"
+msgstr "Angalia Mzunguko wa Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_programs_form
+msgid "Cycle Configuration"
+msgstr "Usanidi wa Mzunguko"
+
+#. module: g2p_pbms
+#: model:ir.model,name:g2p_pbms.model_g2p_disbursement_cycle
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_tree
+msgid "Disbursement Cycle"
+msgstr "Mzunguko wa Utoaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_disbursement_cycle__cycle_mnemonic
+msgid "Cycle Mnemonic"
+msgstr "Msimbo wa Mzunguko"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_disbursement_cycle__approved_for_disbursement
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_tree
+msgid "Approved for Disbursement"
+msgstr "Imeidhinishwa kwa Utoaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_disbursement_cycle__creation_date
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_tree
+msgid "Created On"
+msgstr "Imeundwa Mnamo"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_tree
+msgid "Approved for Enrollment"
+msgstr "Imeidhinishwa kwa Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_tree
+msgid "Cycle"
+msgstr "Mzunguko"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_tree
+msgid "Create New Disbursement Cycle"
+msgstr "Unda Mzunguko Mpya wa Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_tree
+msgid "View Disbursement Cycle"
+msgstr "Angalia Mzunguko wa Utoaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_enrollment_cycle__program_id
+msgid "G2P Program"
+msgstr "Programu ya G2P"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+msgid "Enrollment Lists"
+msgstr "Orodha za Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid "Disbursement Rules"
+msgstr "Sheria za Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid "Disbursement List"
+msgstr "Orodha ya Utoaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_disbursement_cycle__program_id
+msgid "G2P Program"
+msgstr "Programu ya G2P"
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid "Mnemonic"
+msgstr "Msimbo"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+msgid "Eligibility Process Status"
+msgstr "Hali ya Mchakato wa Kustahiki"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid "Created On"
+msgstr "Imeundwa Mnamo"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid "Processed On"
+msgstr "Imeshughulikiwa Mnamo"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid "Status"
+msgstr "Hali"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_enrollment_cycle_form
+msgid "View Enrollment List"
+msgstr "Angalia Orodha ya Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid "Priority Process Status"
+msgstr "Hali ya Mchakato wa Kipaumbele"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid " Entitlement Summary Status"
+msgstr " Hali ya Muhtasari wa Haki"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid "View Disbursement List"
+msgstr "Angalia Orodha ya Utoaji"
