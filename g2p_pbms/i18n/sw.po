@@ -744,7 +744,7 @@ msgstr "Muda wa Uthibitishaji"
 #. module: g2p_pbms
 #: model:ir.model.fields,field_description:g2p_pbms.field_storage_file__data
 msgid "Data"
-msgstr "Data"
+msgstr "Taarifa"
 
 #. module: g2p_pbms
 #: model:ir.model.fields,field_description:g2p_pbms.field_g2p_priority_rule_definition__mnemonic
@@ -790,10 +790,12 @@ msgid "Disbursement Cycle"
 msgstr "Mzunguko wa Utoaji"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Disbursement Envelopes"
 msgstr "Bahasha za Utoaji"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Disbursement Batches"
 msgstr "Mafungu ya Utoaji"
 
@@ -810,42 +812,46 @@ msgid "Verification Timestamp"
 msgstr "Muda wa Uthibitishaji"
 
 #. module: g2p_pbms
-msgid "Data"
-msgstr "Data"
-
-#. module: g2p_pbms
 msgid "Program"
 msgstr "Programu"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Envelope ID"
 msgstr "Kitambulisho cha Bahasha"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "# Beneficiaries"
 msgstr "# Walengwa"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Disbursement Qty"
 msgstr "Kiasi cha Utoaji"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Units"
 msgstr "Vizio"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Benefit Code"
 msgstr "Msimbo wa Faida"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Batch ID"
 msgstr "Kitambulisho cha Fungu"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Sent to Bridge"
 msgstr "Imetumwa kwa Daraja"
 
 #. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
 msgid "Number of Beneficiaries"
 msgstr "Idadi ya Walengwa"
 
@@ -853,6 +859,89 @@ msgstr "Idadi ya Walengwa"
 #: code:addons/g2p_pbms/static/src/xml/create_button_tpl.xml:0
 msgid "Create Code"
 msgstr "Unda Msimbo"
+
+#. module: g2p_pbms
+#: model:ir.actions.act_window,name:g2p_pbms.action_enrollment_cycle
+msgid "Enrollment Cycle"
+msgstr "Mzunguko wa Uandikishaji"
+
+#. module: g2p_pbms
+msgid "Cycle Configuration"
+msgstr "Usanidi wa Mzunguko"
+
+#. module: g2p_pbms
+msgid "Enrollment Lists"
+msgstr "Orodha za Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_disbursement_cycle_form
+msgid " Entitlement Summary Status"
+msgstr "Hali ya Muhtasari wa Haki"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Data"
+msgstr "Taarifa"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Add a Verification"
+msgstr "Ongeza Uthibitisho"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Approve Final Enrollment"
+msgstr "Idhinisha Uandikishaji wa Mwisho"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Approve for Disbursement"
+msgstr "Idhinisha kwa Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Beneficiary List Info"
+msgstr "Taarifa za Orodha ya Walengwa"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Enrollment Cycle Info"
+msgstr "Taarifa za Mzunguko wa Uandikishaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Disbursement Cycle Info"
+msgstr "Taarifa za Mzunguko wa Utoaji"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "List Mnemonic"
+msgstr "Msimbo wa Orodha"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Summary"
+msgstr "Muhtasari"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Beneficiaries"
+msgstr "Walengwa"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "Verifications"
+msgstr "Uhakiki"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "View Envelope"
+msgstr "Angalia Bahasha"
+
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.view_g2p_eligibility_summary_wizard_form
+msgid "View Batch"
+msgstr "Angalia Fungu"
 
 
 
