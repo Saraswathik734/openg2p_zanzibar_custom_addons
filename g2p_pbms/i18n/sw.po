@@ -705,3 +705,160 @@ msgstr "Idadi ya Waliojiandikisha"
 #. module: g2p_pbms
 msgid "Date Created"
 msgstr "Tarehe Iliyoundwa"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_bgtask_summary_wizard__program_id
+msgid "Program"
+msgstr "Programu"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_bgtask_summary_wizard__enrollment_cycle_id
+msgid "Enrollment Cycle"
+msgstr "Mzunguko wa Uandikishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_bgtask_summary_wizard__enrollment_start_date
+msgid "Enrollment Start Date"
+msgstr "Tarehe ya Kuanza Uandikishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_bgtask_summary_wizard__enrollment_end_date
+msgid "Enrollment End Date"
+msgstr "Tarehe ya Kumaliza Uandikishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_storage_file__verified_by
+msgid "Verified by"
+msgstr "Imethibitishwa na"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_storage_file__comment
+msgid "Comment"
+msgstr "Maoni"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_storage_file__verification_timestamp
+msgid "Verification Timestamp"
+msgstr "Muda wa Uthibitishaji"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_storage_file__data
+msgid "Data"
+msgstr "Data"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_priority_rule_definition__mnemonic
+msgid "Rule Mnemonic"
+msgstr "Msimbo wa Sheria"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_priority_rule_definition__description
+msgid "Description"
+msgstr "Maelezo"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_priority_rule_definition__target_registry
+msgid "Registry Type"
+msgstr "Aina ya Usajili"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_beneficiary_list__entitlement_process_status
+msgid "Entitlement Summary Status"
+msgstr "Hali ya Muhtasari wa Haki"
+
+#. module: g2p_pbms
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_beneficiary_list__eligibility_process_status__complete
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_beneficiary_list__entitlement_process_status__complete
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_beneficiary_list__envelope_creation_status__complete
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_beneficiary_list__disbursement_batch_creation_status__complete
+msgid "complete"
+msgstr "Imekamilika"
+
+#. module: g2p_pbms
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_beneficiary_list__list_workflow_status__approved_final_enrolment
+msgid "APPROVED FINAL ENROLMENT"
+msgstr "IMEIDHINISHWA UANDIKISHAJI WA MWISHO"
+
+#. module: g2p_pbms
+#: model:ir.model.fields.selection,name:g2p_pbms.selection__g2p_beneficiary_list__list_workflow_status__approved_for_disbursement
+msgid "APPROVED FOR DISBURSEMENT"
+msgstr "IMEIDHINISHWA KWA UTOAJI"
+
+#. module: g2p_pbms
+#: model:ir.model.fields,field_description:g2p_pbms.field_g2p_bgtask_summary_wizard__disbursement_cycle_mnemonic
+msgid "Disbursement Cycle"
+msgstr "Mzunguko wa Utoaji"
+
+#. module: g2p_pbms
+msgid "Disbursement Envelopes"
+msgstr "Bahasha za Utoaji"
+
+#. module: g2p_pbms
+msgid "Disbursement Batches"
+msgstr "Mafungu ya Utoaji"
+
+#. module: g2p_pbms
+msgid "Verified by"
+msgstr "Imethibitishwa na"
+
+#. module: g2p_pbms
+msgid "Comment"
+msgstr "Maoni"
+
+#. module: g2p_pbms
+msgid "Verification Timestamp"
+msgstr "Muda wa Uthibitishaji"
+
+#. module: g2p_pbms
+msgid "Data"
+msgstr "Data"
+
+#. module: g2p_pbms
+msgid "Program"
+msgstr "Programu"
+
+#. module: g2p_pbms
+msgid "Envelope ID"
+msgstr "Kitambulisho cha Bahasha"
+
+#. module: g2p_pbms
+msgid "# Beneficiaries"
+msgstr "# Walengwa"
+
+#. module: g2p_pbms
+msgid "Disbursement Qty"
+msgstr "Kiasi cha Utoaji"
+
+#. module: g2p_pbms
+msgid "Units"
+msgstr "Vizio"
+
+#. module: g2p_pbms
+msgid "Benefit Code"
+msgstr "Msimbo wa Faida"
+
+#. module: g2p_pbms
+msgid "Batch ID"
+msgstr "Kitambulisho cha Fungu"
+
+#. module: g2p_pbms
+msgid "Sent to Bridge"
+msgstr "Imetumwa kwa Daraja"
+
+#. module: g2p_pbms
+msgid "Number of Beneficiaries"
+msgstr "Idadi ya Walengwa"
+
+#. module: g2p_pbms
+#: code:addons/g2p_pbms/static/src/xml/create_button_tpl.xml:0
+msgid "Create Code"
+msgstr "Unda Msimbo"
+
+
+
+
+
+
+
+
+
