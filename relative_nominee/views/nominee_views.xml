@@ -17,7 +17,7 @@
                             <field name="nominee_zanid" />
                             <field name="nominee_rel_benf" />
                         </group>
-                        <group string="Address">
+                        <group>
                             <field name="nominee_house_street" />
                             <field name="nominee_shehia" />
                             <field name="nominee_post_code"/>

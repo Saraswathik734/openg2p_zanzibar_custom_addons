@@ -12,7 +12,7 @@
                     <group col="2">
 
                         <!-- Preferred Bank section directly after Other ID -->
-                        <group string="Payment Method">
+                        <group>
                             <field name="payment_mode" />
                             <field name="bank_name"
                                 invisible="payment_mode != 'bank'" />

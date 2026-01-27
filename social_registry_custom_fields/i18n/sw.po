@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* social_registry_custom_fields
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. module: social_registry_custom_fields
+#: model:ir.model.fields,field_description:social_registry_custom_fields.field_res_partner__benf_post_code
+msgid "Post Code"
+msgstr "Msimbo wa Posta"
+
+#. module: social_registry_custom_fields
+#: model:ir.model.fields,field_description:social_registry_custom_fields.field_res_partner__benf_zan_id
+msgid "Zan ID"
+msgstr "Kitambulisho cha Zanzibar"
+
+#. module: social_registry_custom_fields
+#: model:ir.model.fields,field_description:social_registry_custom_fields.field_res_partner__disability
+msgid "Do you have any disability?"
+msgstr "Je, una ulemavu wowote?"
+
+#. module: social_registry_custom_fields
+#: model:ir.model.fields,field_description:social_registry_custom_fields.field_res_partner__is_receiving_allowance
+msgid "Are you receiving 5000 allowance from district council? (Below 70 years)"
+msgstr "Je, unapokea posho ya 5000 kutoka baraza la wilaya? (Chini ya miaka 70)"
+
+#. module: social_registry_custom_fields
+#: model:ir.model.fields,field_description:social_registry_custom_fields.field_res_partner__has_health_insurance
+msgid "Are you covered with any health insurance scheme?"
+msgstr "Je, unahudumiwa na mpango wowote wa bima ya afya?"
+
+#. module: social_registry_custom_fields
+#: model:ir.model.fields,selection:social_registry_custom_fields.selection__res_partner__disability__yes
+#: model:ir.model.fields,selection:social_registry_custom_fields.selection__res_partner__is_receiving_allowance__yes
+#: model:ir.model.fields,selection:social_registry_custom_fields.selection__res_partner__has_health_insurance__yes
+msgid "Yes"
+msgstr "Ndiyo"
+
+#. module: social_registry_custom_fields
+#: model:ir.model.fields,selection:social_registry_custom_fields.selection__res_partner__disability__no
+#: model:ir.model.fields,selection:social_registry_custom_fields.selection__res_partner__is_receiving_allowance__no
+#: model:ir.model.fields,selection:social_registry_custom_fields.selection__res_partner__has_health_insurance__no
+msgid "No"
+msgstr "Hapana"

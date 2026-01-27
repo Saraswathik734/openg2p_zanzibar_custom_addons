@@ -10,7 +10,7 @@
                 <page name="IDS" string="ID's">
                     <!-- Right column: Other ID -->
                     <group col="2">
-                        <group string="Other ID">
+                        <group>
                             <field name="other_id_available" />
                             <field name="other_id_type"
                                 invisible="other_id_available != 'yes'" />

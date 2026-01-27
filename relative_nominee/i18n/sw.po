@@ -24,8 +24,18 @@ msgstr "Wahusiano"
 
 #. module: relative_nominee
 #: model:ir.ui.view,arch_db:relative_nominee.view_partner_relatives_form
-msgid "Address"
-msgstr "Anuani"
+msgid "Nominee info"
+msgstr "Taarifa ya Mteule"
+
+#. module: relative_nominee
+#: model:ir.ui.view,arch_db:relative_nominee.view_partner_relatives_form
+msgid "Nominee Info"
+msgstr "Taarifa ya Mteule"
+
+#. module: relative_nominee
+#: model:ir.ui.view,arch_db:relative_nominee.view_partner_relatives_form
+msgid "Nominee Address"
+msgstr "Anwani"
 
 #. module: relative_nominee
 #: model:ir.model.fields,field_description:relative_nominee.field_res_partner__nominee_first_name
@@ -38,6 +48,7 @@ msgid "Nominee Last Name"
 msgstr "Jina la Mwisho la Mteule"
 
 #. module: relative_nominee
+#: model_terms:ir.ui.view,arch_db:relative_nominee.view_partner_relatives_form
 #: model:ir.model.fields,field_description:relative_nominee.field_res_partner__nominee_gender
 msgid "Gender"
 msgstr "Jinsia"
