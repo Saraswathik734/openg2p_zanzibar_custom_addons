@@ -944,10 +944,7 @@ msgid "View Batch"
 msgstr "Angalia Fungu"
 
 
-
-
-
-
-
-
-
+#. module: g2p_pbms
+#: model_terms:ir.ui.view,arch_db:g2p_pbms.CustomListViewButtons
+msgid "Create Code"
+msgstr "Unda Msimbo"

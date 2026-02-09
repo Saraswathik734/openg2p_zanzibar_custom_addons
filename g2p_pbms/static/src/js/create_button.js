@@ -3,10 +3,14 @@ import { ListController } from "@web/views/list/list_controller";
 import { patch } from "@web/core/utils/patch";
 import { useService } from "@web/core/utils/hooks";
 import { useState, onWillStart } from "@odoo/owl";
+import { _t } from "@web/core/l10n/translation";
+
 
 patch(ListController.prototype, {
     setup() {
         super.setup();
+        // this.env._t = _t;
+        this._t = _t;
         this.action = useService("action");
         this.orm = useService("orm");
         this.user = useService("user");

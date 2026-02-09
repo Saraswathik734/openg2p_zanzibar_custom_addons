@@ -28,7 +28,7 @@
                     t-on-click="load_sponsor_bank_wizard">
                     Create Sponsor Bank
                 </button>
-                <button
+                <!-- <button
                     t-if="model.root.resModel == 'g2p.benefit.codes' and permissions.canCreateBenefitCode"
                     type="button"
                     class="btn btn-primary o_list_button_add_codes"
@@ -36,7 +36,21 @@
                     title="Create a New Benefit Code"
                     t-on-click="load_benefit_code_wizard">
                     Create Code
+                </button> -->
+               <button
+                    t-if="model.root.resModel == 'g2p.benefit.codes' and permissions.canCreateBenefitCode"
+                    type="button"
+                    class="btn btn-primary o_list_button_add_codes"
+                    accesskey="p"
+                    title="Create a New Benefit Code"
+                    t-on-click="load_benefit_code_wizard">
+
+                    <!-- <t t-esc="env._t('Create Code')"/> -->
+                    <t t-esc="this._t('Create Code')"/>
+
                 </button>
+
+
                 <button
                     t-if="model.root.resModel == 'g2p.program.definition' and permissions.canCreateProgram"
                     type="button"
