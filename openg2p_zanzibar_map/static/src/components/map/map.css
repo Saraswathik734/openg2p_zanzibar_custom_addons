@@ -1,79 +1,80 @@
-
-
-.o_map_container {
-    height: 100%;
-    width: 100%;
+/* --- DARK OCEAN BACKGROUND --- */
+.leaflet-container {
+    background: #e9ecef !important;
 }
 
-.card {
-    border-radius: 10px;
+/* --- GLOWING POLYGONS --- */
+/* This makes the map regions appear to "emit light" */
+.leaflet-interactive {
+    stroke: rgba(0, 0, 0, 0.8);
+    stroke-width: 1px;
+    /* The drop-shadow creates the neon glow effect around the shape */
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5)); 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    vector-effect: non-scaling-stroke;
 }
 
-.o_map_container {
-    background: transparent !important;
-        flex-grow: 1;          /* Take all available space */
-    height: 100% !important; 
-    width: 100% !important;
-    background: transparent !important;
-    min-height: 600px;  /* Ensure it doesn't collapse on small screens */
+
+.leaflet-interactive:hover {
+    stroke: #000;
+    stroke-width: 1px;
+    z-index: 999;
 }
 
-/* Style for the District Labels on the Map */
-.district-label {
-    /* Semi-transparent white */
-    text-align: center;
-    pointer-events: none; /* Let clicks pass through if needed */
+/* --- LABELS: BLACK WITH WHITE STROKE --- */
+.o_map_marker_wrap {
+    background: none !important;
+    border: none !important;
 }
 
-.label-name {
-    font-size: 10px;
-    font-weight: bold;
-    color: #2E7D32;
-    text-transform: uppercase;
+.o_map_text_label {
+    display: flex !important;
+    flex-direction: column !important; /* Name Top, Value Bottom */
+    align-items: center;
+    justify-content: center;
+    background: none !important; /* No box */
+    border: none !important;
+    box-shadow: none !important;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Click-through */
+    white-space: nowrap; /* No wrapping inside lines */
 }
 
-.label-value {
+/* Helper for the white stroke effect */
+
+.o_map_label_name {
     font-size: 12px;
     font-weight: 900;
-    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #000;
+    margin-bottom: 1px;
+    line-height: 1;
+
+    /* Black stroke */
+    text-shadow:
+        -1px -1px 0 #fff,
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff,
+         0   0   3px rgba(0,0,0,0.9);
 }
 
-/* Ensure Leaflet container fits */
-.leaflet-container {
-    background: transparent !important;
-    outline: 0;
-}
-/* dashboard.scss */
-
-/* Ensure the parent column is a flex container that lets the child grow */
-.col-lg-7.h-100 {
-    display: flex;
-    flex-direction: column;
-}
-
-.leaflet-tooltip {
-    text-align: center;
-    font-weight: 600;
-}
-
-
-.map-label {
-    background: rgba(255,255,255,0.85);
-    border-radius: 8px;
-    padding: 4px 8px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 1.2;
-    color: #222;
-    pointer-events: none;
-    white-space: nowrap;
-}
-
-.map-label small {
-    display: block;
-    font-weight: 500;
+.o_map_label_value {
+    color: #000;
     font-size: 11px;
-    opacity: 0.9;
+    font-weight: 800;
+    margin-top: 1px;
+
+    /* Black stroke */
+    text-shadow:
+        -1px -1px 0 #fff,
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff,
+         0   0   3px rgba(0,0,0,0.9);
 }
 
+
+/* --- REMOVE LEAFLET CLUTTER --- */
+.leaflet-control-attribution { display: none !important; }

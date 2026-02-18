@@ -5,6 +5,7 @@ import { useService } from "@web/core/utils/hooks";
 import { MapComponent } from "../components/map/map_component";
 import { ChartComponent } from "../components/chart/chart";
 import { KpiComponent } from "../components/kpi/kpi";
+
 export class ZDashboard extends Component {
     setup() {
         this.orm = useService("orm");
@@ -20,20 +21,17 @@ export class ZDashboard extends Component {
                 district: null,
             },
         });
+        
         this.applyFilterFromChart = this.applyFilterFromChart.bind(this);
-        // this.applyFilterFromMap = this.applyFilterFromMap.bind(this);
-        this.setFilterGender = this.setFilterGender.bind(this);
-        this.setFilterAgeBucket = this.setFilterAgeBucket.bind(this);
+        this.applyFilterFromMap = this.applyFilterFromMap.bind(this);
         this.clearFilters = this.clearFilters.bind(this);
         this.fetchData = this.fetchData.bind(this);
+        
         onWillStart(async () => {
             await this.fetchData();
         });
     }
-    get hasActiveFilters() {
-        const f = this.state.filters;
-        return f.gender || f.age_bucket || f.region || f.district;
-    }
+
     async fetchData() {
         this.state.loading = true;
         const filters = { ...this.state.filters };
@@ -43,59 +41,47 @@ export class ZDashboard extends Component {
         this.state.map_data = data.map_data || {};
         this.state.loading = false;
     }
-    clearFilters() {
-        this.state.filters = {
-            gender: null,
-            age_bucket: null,
-            region: null,
-            district: null,
-        };
-        this.fetchData();
-    }
+
+    /**
+     * Updated to be additive. Clicking a chart adds to existing filters.
+     */
     applyFilterFromChart(payload) {
         if (!payload || !payload.chartType) return;
+
         if (payload.chartType === "gender") {
             const g = payload.label === "Male" ? "male" : payload.label === "Female" ? "female" : null;
             this.state.filters.gender = this.state.filters.gender === g ? null : g;
-            this.state.filters.age_bucket = null;
-            this.state.filters.region = null;
-            this.state.filters.district = null;
         } else if (payload.chartType === "age") {
-            const ageKeys = ["18-69", "70-79", "80-89", "90+"];
-            const key = ageKeys.find((k) => payload.label === k) || null;
+            const key = payload.label;
             this.state.filters.age_bucket = this.state.filters.age_bucket === key ? null : key;
-            this.state.filters.gender = null;
-            this.state.filters.region = null;
-            this.state.filters.district = null;
         } else if (payload.chartType === "region") {
             this.state.filters.region = this.state.filters.region === payload.label ? null : payload.label;
-            this.state.filters.district = null;
-            this.state.filters.gender = null;
-            this.state.filters.age_bucket = null;
+            this.state.filters.district = null; // Clear district if region changes
         }
         this.fetchData();
     }
-    // applyFilterFromMap(payload) {
-    // if (!payload) return;
-    // if (payload.region !== undefined) {
-    // this.state.filters.region = payload.region === this.state.filters.region ? null : payload.region;
-    // this.state.filters.district = null;
-    // }
-    // if (payload.district !== undefined) {
-    // this.state.filters.district = payload.district === this.state.filters.district ? null : payload.district;
-    // }
-    // this.fetchData();
-    // }
-    setFilterGender(value) {
-        this.state.filters.gender = value || null;
-        this.state.filters.district = null;
-        this.state.filters.region = null;
+
+    /**
+     * Map Click Handler: Updates filters and triggers chart reload
+     */
+    applyFilterFromMap(payload) {
+        if (!payload) return;
+        
+        if (payload.region !== undefined) {
+            // If clicking the same region, we don't necessarily toggle off 
+            // because the map needs to stay drilled down.
+            this.state.filters.region = payload.region;
+            this.state.filters.district = null;
+        }
+        if (payload.district !== undefined) {
+            // Toggle district if clicked twice, otherwise set it
+            this.state.filters.district = this.state.filters.district === payload.district ? null : payload.district;
+        }
         this.fetchData();
     }
-    setFilterAgeBucket(value) {
-        this.state.filters.age_bucket = value || null;
-        this.state.filters.region = null;
-        this.state.filters.district = null;
+
+    clearFilters() {
+        this.state.filters = { gender: null, age_bucket: null, region: null, district: null };
         this.fetchData();
     }
 }

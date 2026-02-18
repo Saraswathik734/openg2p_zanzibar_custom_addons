@@ -80,7 +80,7 @@ class DashboardLogic(models.Model):
             ("is_group", "=", True),
         ]
         if filters.get("gender"):
-            group_domain.append(("gender", "=", filters["gender"]))
+            group_domain.append(("gender", "ilike", filters["gender"]))
         if region_districts:
             group_domain.append(("district", "in", region_districts.ids))
         if district:
@@ -190,10 +190,12 @@ class DashboardLogic(models.Model):
         }
 
     def _gender_distribution(self, partners):
-        result = {"Male": 0, "Female": 0}
+        result = {"Male": 0, "Female": 0, "Unknown": 0}
         for p in partners:
-            if p.gender == "male":
+            if p.gender is None:
+                result["Unknown"] += 1
+            elif p.gender.lower() == "male":
                 result["Male"] += 1
-            elif p.gender == "female":
+            elif p.gender.lower() == "female":
                 result["Female"] += 1
         return result

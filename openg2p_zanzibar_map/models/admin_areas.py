@@ -1,6 +1,6 @@
 from odoo import models, fields
 
-class ZanzibbarProvince(models.Model):
+class SriLankaProvince(models.Model):
     _inherit = 'g2p.region'
     _description = 'Province'
 
@@ -8,9 +8,9 @@ class ZanzibbarProvince(models.Model):
     code = fields.Char(string="Capitol")
 
 
-class ZanzibbarDistrict(models.Model):
+class SriLankaDistrict(models.Model):
     _inherit = 'g2p.district'
-    _description = 'Zanzibar District'
+    _description = 'Sri Lanka District'
     
     name = fields.Char(string="District Name", required=True)
     # Linking to the existing Region/Province table

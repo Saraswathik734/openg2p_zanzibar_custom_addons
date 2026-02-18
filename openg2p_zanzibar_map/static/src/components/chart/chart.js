@@ -38,19 +38,56 @@ export class ChartComponent extends Component {
   renderChart() {
         if (!this.canvasRef.el || !this.props.labels || !this.props.data) return;
         const ctx = this.canvasRef.el.getContext("2d");
+        const defaultColors = [
+                    '#3b82f6', // Blue
+                    '#ec4899', // Pink
+                    '#8b5cf6', // Violet
+                    '#10b981', // Emerald
+                    '#f59e0b', // Amber
+                    '#06b6d4', // Cyan
+                    '#ef4444', // Red
+                    '#6366f1'  // Indigo
+                ];
 
+        // Ensure Bar charts use multiple colors if only one is provided
+        let bgColors = this.props.backgroundColor;
+        if (!bgColors || bgColors.length <= 1) {
+            bgColors = defaultColors.slice(0, this.props.data.length);
+        }
         // Base options with datalabels enabled and sensible defaults
         let baseOptions = {
             maintainAspectRatio: false,
+            onClick: (event, elements) => {
+                if (elements.length > 0 && this.props.onSegmentClick) {
+                    const index = elements[0].index;
+                    const label = this.props.labels[index];
+                    const value = this.props.data[index];
+                    
+                    // Send info back to ZDashboard
+                    this.props.onSegmentClick({
+                        chartType: this.props.chartType,
+                        label: label,
+                        value: value
+                    });
+                }
+            },
             layout: {
                 padding: 10
             },
             plugins: {
                 legend: {
-                    display: false, // Default legend display
+                    display: this.props.type === 'pie' || this.props.type === 'doughnut',
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 12,
+                        font: {
+                            size: 11
+                        }
+                    }
                 },
                 datalabels: {
-                       display: (context) => {
+                    display: (context) => {
                         const value = context.dataset.data[context.dataIndex];
                         return value !== 0;
                     },
@@ -97,18 +134,18 @@ export class ChartComponent extends Component {
             };
         }
 
-        this.chartInstance = new Chart(ctx, {
+this.chartInstance = new Chart(ctx, {
             type: this.props.type,
             data: {
                 labels: this.props.labels,
                 datasets: [{
                     data: this.props.data,
-                    backgroundColor: this.props.backgroundColor,
+                    backgroundColor: bgColors,
                     borderWidth: 1,
                 }],
             },
             plugins: [ChartDataLabels],
-            options: finalOptions, // Use the carefully merged options
+            options: finalOptions,
         });
     }
 }
