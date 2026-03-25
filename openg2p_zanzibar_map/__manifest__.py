@@ -3,7 +3,7 @@
     'version': '1.0',
     'depends': ['base', 'mail', "g2p_social_registry",], 
     'data': [
-        'data/admin_areas_seed.xml',
+        # 'data/admin_areas_seed.xml',
         # 'data/geojson_seed_loader.xml',
         'views/admin_areas_menu.xml',
         'views/map_menu.xml'
