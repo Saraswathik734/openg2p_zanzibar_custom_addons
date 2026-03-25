@@ -56,6 +56,7 @@
                         data="state.map_data"
                         filters="state.filters"
                         province_data="state.province_data"
+                        map_geojson="state.map_geojson"
                         onMapClick="applyFilterFromMap"
                     />
                     <div class="o_map_kpi_floating">
